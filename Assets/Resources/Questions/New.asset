@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: New
   m_EditorClassIdentifier: 
   _info: 2+2=?
-  _answers: []
+  _answers:
+  - _info: 2
+    _isCorrect: 0
+  - _info: 5
+    _isCorrect: 0
+  - _info: 4
+    _isCorrect: 1
   _useTimer: 0
   _timer: 0
   _answerType: 0

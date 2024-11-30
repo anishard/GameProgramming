@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Test1
   m_EditorClassIdentifier: 
   _info: 'Choose correct answers:'
-  _answers: []
+  _answers:
+  - _info: 44
+    _isCorrect: 0
+  - _info: 21
+    _isCorrect: 1
   _useTimer: 0
   _timer: 0
   _answerType: 0
