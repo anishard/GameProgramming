@@ -94,9 +94,18 @@ public class CharacterWalk : MonoBehaviour
         if (xVal <= 385.53f) {
             xVal = 385.53f;
         }
-        transform.position = new Vector3(xVal, transform.position.y, transform.position.z + zdirection * velocity * Time.deltaTime);
+
+        float zVal = transform.position.z + zdirection * velocity * Time.deltaTime;
+        //make sure character doesn't go too far
+        if (zVal <= 235.7f) {
+            zVal = 235.7f;
+        }
+
+        if (zVal >= 280f)
+        {
+            zVal = 280f;
+        }
+        transform.position = new Vector3(xVal, transform.position.y, zVal);
         
     }
 }
-
-
