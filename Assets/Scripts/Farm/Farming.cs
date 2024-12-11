@@ -54,11 +54,23 @@ public class Farming : MonoBehaviour
 
     void Update()
     {
-        // left click
+        if (player.DetectObject("Town"))
+        {
+            EnterDiningRoom();
+            return;
+        }
+
+        // on left click
         if (Input.GetMouseButtonDown(0))
         {
             // ignore clicks over uGUI
             if (eventSys.IsPointerOverGameObject()) return;
+
+            if (player.DetectObject("Door"))
+            {
+                EnterHouse();
+                return;
+            }
 
             FarmSquare square = GetFarmSquare();
 
@@ -67,15 +79,28 @@ public class Farming : MonoBehaviour
 
             if (player.equipped == Equippable.Can)
                 UseCan(square);
-
-            if (player.DetectObject("Door"))
-                EnterHouse();
         }
+    }
+
+    void EnterDiningRoom()
+    {
+        Debug.Log("Switch scenes here");
     }
 
     void EnterHouse()
     {
         StartCoroutine(PlayAudio("OpenDoor", 0.3f));
+    }
+
+    bool DetectExitScene()
+    {
+        bool exitFound = true;
+
+        if (player.DetectObject("Door")) EnterHouse();
+        else if (player.DetectObject("Town")) EnterDiningRoom();
+        else exitFound = false;
+
+        return exitFound;
     }
 
     FarmSquare GetFarmSquare()
@@ -137,7 +162,7 @@ public class Farming : MonoBehaviour
 
         yield return new WaitForSeconds((float)delay);
 
-            audioSource.PlayOneShot(clip, (float)volumeScale);
+        audioSource.PlayOneShot(clip, (float)volumeScale);
     }
 
     void TillSquare(FarmSquare square)
@@ -175,13 +200,13 @@ public class Farming : MonoBehaviour
         else if (numPours <= 0) // can is empty
         {
             --numPours;
-            StartCoroutine(PlayAudio("Miss", 0.5f, 0.35f));
+            StartCoroutine(PlayAudio("Miss", 0.5f, 0.2f));
             StartCoroutine(PausePlayer(() => { }));
         }
         else
         {
             --numPours;
-            StartCoroutine(PlayAudio("PourCan", 0.3f, 0.20f));
+            StartCoroutine(PlayAudio("PourCan", 0.3f, 0.2f));
             StartCoroutine(PausePlayer(() => { }));
         }
     }
