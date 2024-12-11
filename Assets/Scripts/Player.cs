@@ -6,8 +6,12 @@ public class Player : MonoBehaviour
 {
     public float velocity;
     public float maxVelocity;
+    public bool pauseMovement;
     public Vector3 minBounds;
     public Vector3 maxBounds;
+    public AudioClip footstepAudio;
+
+    private AudioSource audioSource;
     private Animator controller;
     private Rigidbody rb;
 
@@ -15,16 +19,29 @@ public class Player : MonoBehaviour
     {
         velocity = 0f;
         maxVelocity = 6f;
+        pauseMovement = false;
+
+        audioSource = gameObject.GetComponent<AudioSource>();
         controller = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+
         rb.freezeRotation = true;
     }
 
     void Update()
     {
+        // stop character from moving
+        if (pauseMovement)
+        {
+            velocity = 0;
+            controller.SetBool("isWalking", false);
+            controller.SetBool("isJumping", false);
+            return;
+        }
+        
+        // rotation
         float horizontal = 0f;
 
-        // rotate character
         if (Input.GetKey(KeyCode.A)) horizontal = -1f;
         else if (Input.GetKey(KeyCode.D)) horizontal = 1f;
 
@@ -33,13 +50,14 @@ public class Player : MonoBehaviour
         float xdirection = Mathf.Sin(Mathf.Deg2Rad * transform.eulerAngles.y);
         float zdirection = Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.y);
 
-        // get character to walk
+        // walking
         controller.SetBool("isWalking", Input.GetKey(KeyCode.W));
 
-        if (controller.GetBool("isWalking") == true)
+        if (controller.GetBool("isWalking"))
         {
-            // gradual speed change
-            velocity += 0.1f;
+            if (!audioSource.isPlaying) audioSource.PlayOneShot(footstepAudio, 0.05f);
+
+            velocity += 0.1f; // gradual speed change
             if (velocity > maxVelocity) velocity = maxVelocity;
         }
         else
@@ -47,14 +65,12 @@ public class Player : MonoBehaviour
             velocity = 0.0f;
         }
 
-        // get character to jump
+        // jumping
         controller.SetBool("isJumping", Input.GetKey(KeyCode.Space));
 
-        // get character to walk when click up arrow
-        if (controller.GetBool("isJumping") == true)
+        if (controller.GetBool("isJumping"))
         {
-            // gradual speed change
-            velocity += 0.1f;
+            velocity += 0.1f; // gradual speed change
             if (velocity > 6f) velocity = 6f;
         }
 
@@ -62,11 +78,13 @@ public class Player : MonoBehaviour
         float xVal = transform.position.x + xdirection * velocity * Time.deltaTime;
         float zVal = transform.position.z + zdirection * velocity * Time.deltaTime;
 
-        if (minBounds != Vector3.zero) {
+        if (minBounds != Vector3.zero)
+        {
             if (xVal <= minBounds.x) xVal = minBounds.x;
             if (zVal <= minBounds.z) zVal = minBounds.z;
         }
-        if (maxBounds != Vector3.zero) {
+        if (maxBounds != Vector3.zero)
+        {
             if (xVal >= maxBounds.x) xVal = maxBounds.x;
             if (zVal >= maxBounds.z) zVal = maxBounds.z;
         }

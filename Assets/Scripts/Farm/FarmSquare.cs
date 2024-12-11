@@ -1,11 +1,16 @@
+using UnityEngine;
+
 public class FarmSquare
 {
+    public static readonly float length = 1.25f;
+    public readonly Vector3 position;
+    
+    public GameObject gameObject;
     public FarmSquareState state;
     public bool isWatered;
     public float rightBound;
     public float lowerBound;
-    public float? timePlanted;
-    public readonly float length = 2.5f;
+    public float timePlanted;
 
     public FarmSquare(float maxX, float minZ)
     {
@@ -13,5 +18,7 @@ public class FarmSquare
         isWatered = false;
         rightBound = maxX;
         lowerBound = minZ;
+
+        position = new Vector3(rightBound - length / 2, 0.3f, lowerBound + length / 2);
     }
 }
