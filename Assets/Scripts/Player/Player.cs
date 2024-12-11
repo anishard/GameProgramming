@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
+    public Equippable equipped;
     public float velocity;
     public float maxVelocity;
     public bool pauseMovement;
@@ -17,6 +20,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        equipped = Equippable.None;
         velocity = 0f;
         maxVelocity = 6f;
         pauseMovement = false;
@@ -38,7 +42,7 @@ public class Player : MonoBehaviour
             controller.SetBool("isJumping", false);
             return;
         }
-        
+
         // rotation
         float horizontal = 0f;
 
@@ -90,5 +94,34 @@ public class Player : MonoBehaviour
         }
 
         transform.position = new Vector3(xVal, transform.position.y, zVal);
+    }
+
+    public void Equip(string itemName)
+    {
+        Equippable item;
+
+        if (!Enum.TryParse(itemName, out item))
+            throw new Exception(itemName + " does not exist in enum Equippable");
+
+        bool isNotEquipped = item != equipped;
+
+        equipped = isNotEquipped ? item : Equippable.None;
+
+        // (de)activate the game object
+        foreach (Transform t in GetTools())
+        {
+            if (t.name == itemName)
+                t.gameObject.SetActive(isNotEquipped);
+
+            else if (t.name != "ToolContainer")
+                t.gameObject.SetActive(false);
+        }
+    }
+
+    Transform[] GetTools()
+    {
+        return GameObject
+            .Find("ToolContainer")
+            .GetComponentsInChildren<Transform>(true);
     }
 }

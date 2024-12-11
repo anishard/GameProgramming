@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Farming : MonoBehaviour
 {
@@ -14,12 +15,18 @@ public class Farming : MonoBehaviour
     private FarmSquare[,] farmland;
     private GameObject[] crops;
     private AudioClip[] audioClips;
+    private EventSystem eventSys;
 
     void Start()
     {
         player = gameObject.GetComponent<Player>();
         audioSource = gameObject.GetComponent<AudioSource>();
         activeArea = GameObject.Find("ActiveArea");
+        eventSys = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+
+        // load resources
+        crops = Resources.LoadAll<GameObject>("Farming/Crops");
+        audioClips = Resources.LoadAll<AudioClip>("Farming/SFX");
 
         // bounds of farmland
         minBounds = new Vector3(-11.25f, float.MaxValue, -6.25f);
@@ -36,18 +43,20 @@ public class Farming : MonoBehaviour
                 float lowerBound = maxBounds.z - FarmSquare.length * (col + 1);
                 farmland[row, col] = new FarmSquare(rightBound, lowerBound);
             }
-
-        crops = Resources.LoadAll<GameObject>("Farming/Crops");
-        audioClips = Resources.LoadAll<AudioClip>("Farming/SFX");
-
     }
 
     void Update()
     {
+        // left click
         if (Input.GetMouseButtonDown(0))
         {
+            // ignore clicks over uGUI
+            if (eventSys.IsPointerOverGameObject()) return;
+
             FarmSquare square = GetFarmSquare();
-            TillSquare(square);
+
+            if (player.equipped == Equippable.Hoe)
+                TillSquare(square);
         }
     }
 
@@ -103,7 +112,6 @@ public class Farming : MonoBehaviour
         yield return new WaitForSeconds((float)delay);
         audioSource.PlayOneShot(clip, (float)volumeScale);
     }
-
 
     IEnumerator PausePlayer(Action callback)
     {
