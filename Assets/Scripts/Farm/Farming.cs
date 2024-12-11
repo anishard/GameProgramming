@@ -10,12 +10,17 @@ public class Farming : MonoBehaviour
     private Player player;
     private AudioSource audioSource;
     private GameObject activeArea;
+    private EventSystem eventSys;
+
     private Vector3 minBounds;
     private Vector3 maxBounds;
     private FarmSquare[,] farmland;
+
+    private int numPours;
+    private const int MAX_POURS = 5;
+
     private GameObject[] crops;
     private AudioClip[] audioClips;
-    private EventSystem eventSys;
 
     void Start()
     {
@@ -43,6 +48,8 @@ public class Farming : MonoBehaviour
                 float lowerBound = maxBounds.z - FarmSquare.length * (col + 1);
                 farmland[row, col] = new FarmSquare(rightBound, lowerBound);
             }
+
+        numPours = MAX_POURS;
     }
 
     void Update()
@@ -57,7 +64,18 @@ public class Farming : MonoBehaviour
 
             if (player.equipped == Equippable.Hoe)
                 TillSquare(square);
+
+            if (player.equipped == Equippable.Can)
+                UseCan(square);
+
+            if (player.DetectObject("Door"))
+                EnterHouse();
         }
+    }
+
+    void EnterHouse()
+    {
+        StartCoroutine(PlayAudio("OpenDoor", 0.3f));
     }
 
     FarmSquare GetFarmSquare()
@@ -102,6 +120,14 @@ public class Farming : MonoBehaviour
             && pos.z <= maxBounds.z;
     }
 
+    IEnumerator PausePlayer(Action callback)
+    {
+        player.pauseMovement = true;
+        yield return new WaitForSeconds(1);
+        callback();
+        player.pauseMovement = false;
+    }
+
     IEnumerator PlayAudio(string clipName, float? volumeScale = 1f, float? delay = 0f)
     {
         AudioClip clip = Array.Find(audioClips, (e) => e.name == clipName);
@@ -110,15 +136,8 @@ public class Farming : MonoBehaviour
             throw new Exception(name + " does not exist in the given array");
 
         yield return new WaitForSeconds((float)delay);
-        audioSource.PlayOneShot(clip, (float)volumeScale);
-    }
 
-    IEnumerator PausePlayer(Action callback)
-    {
-        player.pauseMovement = true;
-        yield return new WaitForSeconds(1);
-        callback();
-        player.pauseMovement = false;
+            audioSource.PlayOneShot(clip, (float)volumeScale);
     }
 
     void TillSquare(FarmSquare square)
@@ -139,6 +158,31 @@ public class Farming : MonoBehaviour
                 square.gameObject = InstantiateByName("Dirt_Pile", crops, square.position);
                 square.state = FarmSquareState.Tilled;
             }));
+        }
+    }
+
+    void UseCan(FarmSquare square)
+    {
+        Animator anim = GameObject.Find("Can").GetComponent<Animator>();
+        anim.SetTrigger("isActive");
+
+        if (player.DetectObject("Well")) // refill
+        {
+            numPours = MAX_POURS;
+            StartCoroutine(PlayAudio("FillCan", 0.3f, 0f));
+            StartCoroutine(PausePlayer(() => { }));
+        }
+        else if (numPours <= 0) // can is empty
+        {
+            --numPours;
+            StartCoroutine(PlayAudio("Miss", 0.5f, 0.35f));
+            StartCoroutine(PausePlayer(() => { }));
+        }
+        else
+        {
+            --numPours;
+            StartCoroutine(PlayAudio("PourCan", 0.3f, 0.20f));
+            StartCoroutine(PausePlayer(() => { }));
         }
     }
 }

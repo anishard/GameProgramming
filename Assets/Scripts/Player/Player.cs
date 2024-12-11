@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     private AudioSource audioSource;
     private Animator controller;
     private Rigidbody rb;
+    private GameObject activeArea;
 
     void Start()
     {
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
         controller = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        activeArea = GameObject.Find("ActiveArea");
 
         rb.freezeRotation = true;
     }
@@ -103,25 +106,24 @@ public class Player : MonoBehaviour
         if (!Enum.TryParse(itemName, out item))
             throw new Exception(itemName + " does not exist in enum Equippable");
 
-        bool isNotEquipped = item != equipped;
+        bool notAlreadyEquipped = item != equipped;
 
-        equipped = isNotEquipped ? item : Equippable.None;
+        equipped = notAlreadyEquipped ? item : Equippable.None;
 
-        // (de)activate the game object
-        foreach (Transform t in GetTools())
+        foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
         {
-            if (t.name == itemName)
-                t.gameObject.SetActive(isNotEquipped);
-
-            else if (t.name != "ToolContainer")
-                t.gameObject.SetActive(false);
+            var renderer = tool.GetComponent<MeshRenderer>();
+            if (tool.name == itemName) renderer.enabled = notAlreadyEquipped;
+            else renderer.enabled = false;
         }
     }
 
-    Transform[] GetTools()
+    public bool DetectObject(string objectName)
     {
-        return GameObject
-            .Find("ToolContainer")
-            .GetComponentsInChildren<Transform>(true);
+        Collider[] colliders = Physics.OverlapSphere(
+            activeArea.transform.position, 0.75f
+        );
+
+        return Array.Find(colliders, (c) => c.name == objectName);
     }
 }
