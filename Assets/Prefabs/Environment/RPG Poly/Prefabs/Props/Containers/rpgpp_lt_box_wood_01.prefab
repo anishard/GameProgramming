@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4202655646031778}
   - component: {fileID: 33188084988294994}
   - component: {fileID: 23632355988759734}
-  - component: {fileID: 6707462234847243075}
+  - component: {fileID: 7207654197817879795}
   m_Layer: 0
   m_Name: rpgpp_lt_box_wood_01
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3999999, y: 1.4, z: 1.3999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6707462234847243075
+--- !u!65 &7207654197817879795
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,5 +103,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.92379576, y: 0.8136057, z: 1.1716424}
-  m_Center: {x: -0.002606273, y: -0.0029441563, z: 0.00088217866}
+  m_Size: {x: 0.9237959, y: 0.8136058, z: 1.1716425}
+  m_Center: {x: -0.0026062734, y: -0.0029441565, z: 0.000882298}

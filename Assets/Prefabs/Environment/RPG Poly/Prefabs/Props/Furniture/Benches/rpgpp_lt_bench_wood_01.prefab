@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4415611076490568}
   - component: {fileID: 33211992749801436}
   - component: {fileID: 23659940725593842}
-  - component: {fileID: 3414791112464327341}
+  - component: {fileID: 2705201982805623588}
   m_Layer: 0
   m_Name: rpgpp_lt_bench_wood_01
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3414791112464327341
+--- !u!65 &2705201982805623588
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

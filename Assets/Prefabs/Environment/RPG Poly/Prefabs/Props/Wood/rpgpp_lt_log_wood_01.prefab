@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4201503581178414}
   - component: {fileID: 33946187946896712}
   - component: {fileID: 23468884316666696}
-  - component: {fileID: 6481498104868080813}
+  - component: {fileID: 9070859861427633352}
   m_Layer: 0
   m_Name: rpgpp_lt_log_wood_01
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6481498104868080813
+--- !u!65 &9070859861427633352
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

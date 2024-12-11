@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4538438218131234}
   - component: {fileID: 33869879136648782}
   - component: {fileID: 23848439975947470}
-  - component: {fileID: 4772122163549132003}
+  - component: {fileID: 2735070561429667366}
   m_Layer: 0
   m_Name: rpgpp_lt_sky_01
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4772122163549132003
+--- !u!64 &2735070561429667366
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
