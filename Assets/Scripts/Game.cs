@@ -60,12 +60,12 @@ public class Game : MonoBehaviour
     public bool ClickDetected()
     {
         bool detected = false;
-        
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
-        {
-            bool uiClicked = eventSys && eventSys.IsPointerOverGameObject();
-            if (!uiClicked) detected = true;
-        }
+
+        bool mouseClicked = Input.GetMouseButtonDown(0);
+        bool uiClicked = eventSys && eventSys.IsPointerOverGameObject();
+
+        if ((mouseClicked && !uiClicked) || Input.GetKeyDown(KeyCode.J))
+            detected = true;
 
         return detected;
     }
