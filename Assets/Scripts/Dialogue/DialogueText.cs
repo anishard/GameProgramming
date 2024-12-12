@@ -9,6 +9,7 @@ public class DialogueText : MonoBehaviour
     public TMP_Text nameBox;
     public TMP_Text textBox;
 
+    private Game game;
     private TextAsset file;
     private List<string> lines;
     private float textSpeed;
@@ -16,6 +17,7 @@ public class DialogueText : MonoBehaviour
 
     void Start()
     {
+        game = GameObject.Find("GameManager").GetComponent<Game>();
         file = gameObject.transform.parent.gameObject.GetComponent<Dialogue>().file;
         lines = new List<string>();
         lines.AddRange(file.text.Split(Environment.NewLine));
@@ -30,7 +32,7 @@ public class DialogueText : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (game.ClickDetected())
         {
             if (textBox.text == lines[index])
             {
@@ -54,7 +56,7 @@ public class DialogueText : MonoBehaviour
         }
         else
         {
-            GameObject.Find("Interface").GetComponent<Canvas>().enabled = true;
+            game.ToggleUI(true);
             Destroy(GameObject.FindWithTag("Dialogue"));
         }
     }

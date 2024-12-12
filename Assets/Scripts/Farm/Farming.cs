@@ -40,6 +40,8 @@ public class Farming : MonoBehaviour
             }
 
         numPours = MAX_POURS;
+
+        // game.ActivateDialogue("GameIntro");
     }
 
     void Update()
@@ -54,7 +56,7 @@ public class Farming : MonoBehaviour
 
     void EnterHouse()
     {
-        StartCoroutine(PlayAudio("OpenDoor", 0.3f));
+        StartCoroutine(game.PlayAudio("OpenDoor", 0.3f));
     }
 
     void EnterTown() { }
@@ -116,7 +118,7 @@ public class Farming : MonoBehaviour
 
     void OpenBin()
     {
-        StartCoroutine(PlayAudio("ShippingBin", 0.15f));
+        StartCoroutine(game.PlayAudio("ShippingBin", 0.15f));
     }
 
     IEnumerator PausePlayer(Action callback)
@@ -127,18 +129,6 @@ public class Farming : MonoBehaviour
         player.pauseMovement = false;
     }
 
-    IEnumerator PlayAudio(string clipName, float? volumeScale = 1f, float? delay = 0f)
-    {
-        AudioClip clip = game.GetAudioClip(clipName);
-
-        if (clip == null)
-            throw new Exception(name + " does not exist in the given array");
-
-        yield return new WaitForSeconds((float)delay);
-
-        game.audioSource.PlayOneShot(clip, (float)volumeScale);
-    }
-
     void TillSquare(FarmSquare square)
     {
         Animator anim = GameObject.Find("Hoe").GetComponent<Animator>();
@@ -146,12 +136,12 @@ public class Farming : MonoBehaviour
 
         if (square == null || square.state != FarmSquareState.Untilled)
         {
-            StartCoroutine(PlayAudio("Miss", 0.5f, 0.35f));
+            StartCoroutine(game.PlayAudio("Miss", 0.5f, 0.35f));
             StartCoroutine(PausePlayer(() => { }));
         }
         else
         {
-            StartCoroutine(PlayAudio("Till", 0.6f, 0.4f));
+            StartCoroutine(game.PlayAudio("Till", 0.6f, 0.4f));
             StartCoroutine(PausePlayer(() =>
             {
                 square.gameObject = InstantiateByName("Dirt_Pile", crops, square.position);
@@ -168,19 +158,19 @@ public class Farming : MonoBehaviour
         if (player.ObjectDetected("Well")) // refill
         {
             numPours = MAX_POURS;
-            StartCoroutine(PlayAudio("FillCan", 0.2f, 0f));
+            StartCoroutine(game.PlayAudio("FillCan", 0.2f, 0f));
             StartCoroutine(PausePlayer(() => { }));
         }
         else if (numPours <= 0) // can is empty
         {
             --numPours;
-            StartCoroutine(PlayAudio("Miss", 0.5f, 0.2f));
+            StartCoroutine(game.PlayAudio("Miss", 0.5f, 0.2f));
             StartCoroutine(PausePlayer(() => { }));
         }
         else
         {
             --numPours;
-            StartCoroutine(PlayAudio("PourCan", 0.3f, 0.2f));
+            StartCoroutine(game.PlayAudio("PourCan", 0.3f, 0.2f));
             StartCoroutine(PausePlayer(() => { }));
         }
     }

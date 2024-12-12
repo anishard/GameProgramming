@@ -7,6 +7,7 @@ TagManager:
   - PuzzleButton
   - Tool
   - Dialogue
+  - Tip
   layers:
   - Default
   - TransparentFX
