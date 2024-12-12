@@ -55,7 +55,7 @@ public class Farming : MonoBehaviour
     {
         if (player.DetectObject("Town"))
         {
-            EnterDiningRoom();
+            EnterTown();
             return;
         }
 
@@ -87,10 +87,7 @@ public class Farming : MonoBehaviour
         }
     }
 
-    void EnterDiningRoom()
-    {
-        StartCoroutine(PausePlayer(() => SceneManager.LoadScene("DiningRoom")));
-    }
+    void EnterTown() { }
 
     void EnterHouse()
     {

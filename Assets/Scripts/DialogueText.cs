@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Dialogue : MonoBehaviour
+public class DialogueText : MonoBehaviour
 {
     public TextAsset file;
     public TMP_Text nameBox;
@@ -54,7 +54,7 @@ public class Dialogue : MonoBehaviour
         else
         {
             GameObject.Find("Interface").GetComponent<Canvas>().enabled = true;
-            Destroy(GameObject.FindWithTag("Walkthrough"));
+            Destroy(GameObject.FindWithTag("Dialogue"));
         }
     }
 
