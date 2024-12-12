@@ -1,5 +1,9 @@
 using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -17,9 +21,18 @@ public class Player : MonoBehaviour
     private Animator controller;
     private Rigidbody rb;
 
+    //ADDED CODE FOR INVENTORY
+    Camera cam;
+
+    public Interactable focus;
+//     Interactable interact = new Interactable();
+// MyScript scriptInstance = newObject.AddComponent<MyScript>()
     void Start()
     {
         activeArea = GameObject.Find("ActiveArea");
+
+        //ADDED CODE FOR INVENTORY
+        cam = Camera.main;
 
         equipped = Equippable.None;
         velocity = 0f;
@@ -36,6 +49,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // check if hovering over UI (inventory), if so then don't move player 
+        if (EventSystem.current.IsPointerOverGameObject()) {
+            return;
+        }
         // stop character from moving
         if (pauseMovement)
         {
@@ -96,6 +113,50 @@ public class Player : MonoBehaviour
         }
 
         transform.position = new Vector3(xVal, transform.position.y, zVal);
+
+        //ADDED CODE FOR PICKING UP STUFF FOR INVENTORY - Claire
+        // if (Input.GetMouseButtonDown(1)) {
+        //     RemoveFocus();
+        // }
+        if (Input.GetMouseButtonDown(1)) {
+            RemoveFocus();
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100)) {
+                // Check if we hit an interactable
+                //  if we did, log that we found an interactable object
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                //GameObject obj = hit.collider.GetComponent<GameObject>();
+                
+                if (interactable != null) {
+                    // SetFocus(interactable);
+                    Debug.Log("Found an interactable object");
+                    //Destroy(obj);
+                    SetFocus(interactable);
+                }
+            }
+        }
+    }  
+
+    void SetFocus (Interactable newFocus) {
+        if (newFocus != focus) {
+            if (focus != null) {
+                focus.OnDefocused();
+            }
+            focus = newFocus;
+        }
+        newFocus.OnFocused(transform); 
+    }  
+
+    void RemoveFocus() {
+        if (focus != null) {
+            focus.OnDefocused();
+        }
+        focus = null;
     }
 
     public void Equip(string itemName)
