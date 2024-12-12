@@ -20,7 +20,7 @@ public class Game : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
         dialogues = Resources.LoadAll<GameObject>("Dialogues");
 
-        ActivateDialogue("GameIntro");
+        // ActivateDialogue("GameIntro");
     }
 
     void Update()
