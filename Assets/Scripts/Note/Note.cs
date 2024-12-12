@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class Tip : MonoBehaviour
+public class Note : MonoBehaviour
 {
     public string title;
     public string text;

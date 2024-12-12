@@ -11,10 +11,9 @@ public class Game : MonoBehaviour
 
     private Player player;
     private GameObject ui;
-    private EventSystem eventSys;
     private AudioClip[] audioClips;
     private GameObject[] dialogues;
-    private GameObject[] tips;
+    private GameObject[] notes;
 
     private float startTime;
     private readonly int gameHourInRealMinutes = 1;
@@ -28,7 +27,6 @@ public class Game : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
         player = GameObject.Find("Player").GetComponent<Player>();
         ui = GameObject.Find("UI");
-        eventSys = GameObject.Find("EventSystem")?.GetComponent<EventSystem>();
     }
 
     void Update()
@@ -56,16 +54,16 @@ public class Game : MonoBehaviour
         Instantiate(dialogue, Vector3.zero, Quaternion.identity);
     }
 
-    public void ActivateTip(string name)
+    public void ActivateNote(string name)
     {
-        tips ??= Resources.LoadAll<GameObject>("Tips");
+        notes ??= Resources.LoadAll<GameObject>("Notes");
 
-        GameObject tip = FindInArray(tips, name, true);
+        GameObject note = FindInArray(notes, name, true);
 
-        if (tip != null)
+        if (note != null)
         {
-            GameObject obj = Instantiate(tip, Vector3.zero, Quaternion.identity, ui.transform);
-            obj.transform.position = Tip.position;
+            GameObject obj = Instantiate(note, Vector3.zero, Quaternion.identity, ui.transform);
+            obj.transform.position = Note.position;
         }
     }
 
@@ -74,7 +72,7 @@ public class Game : MonoBehaviour
         bool detected = false;
 
         bool mouseClicked = Input.GetMouseButtonDown(0);
-        bool uiClicked = eventSys && eventSys.IsPointerOverGameObject();
+        bool uiClicked = EventSystem.current.IsPointerOverGameObject();
 
         if ((mouseClicked && !uiClicked) || Input.GetKeyDown(KeyCode.J))
             detected = true;
@@ -88,10 +86,10 @@ public class Game : MonoBehaviour
         return Array.Find(audioClips, (e) => e.name == name);
     }
 
-    public void RemoveTip()
+    public void RemoveNote()
     {
-        GameObject tip = GameObject.FindWithTag("Tip");
-        if (tip) Destroy(tip);
+        GameObject note = GameObject.FindWithTag("Note");
+        if (note) Destroy(note);
     }
 
     public IEnumerator PlayAudio(string clipName, float volumeScale = 1f, float delay = 0f)

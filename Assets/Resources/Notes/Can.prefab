@@ -26,6 +26,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Can
       objectReference: {fileID: 0}
+    - target: {fileID: 6314894843428804233, guid: 1fd1d5f2c50e19244ade47f1521d2cd4, type: 3}
+      propertyPath: m_TagString
+      value: Note
+      objectReference: {fileID: 0}
     - target: {fileID: 7572583190791410398, guid: 1fd1d5f2c50e19244ade47f1521d2cd4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
