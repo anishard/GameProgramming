@@ -1,12 +1,13 @@
 using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
+    public GameObject activeArea;
     public Equippable equipped;
     public float velocity;
     public float maxVelocity;
@@ -15,10 +16,10 @@ public class Player : MonoBehaviour
     public Vector3 maxBounds;
     public AudioClip footstepAudio;
 
+    private Game game;
     private AudioSource audioSource;
     private Animator controller;
     private Rigidbody rb;
-    private GameObject activeArea;
 
     //ADDED CODE FOR INVENTORY
     Camera cam;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
 // MyScript scriptInstance = newObject.AddComponent<MyScript>()
     void Start()
     {
+        activeArea = GameObject.Find("ActiveArea");
         //ADDED CODE FOR INVENTORY
         cam = Camera.main;
 
@@ -36,10 +38,10 @@ public class Player : MonoBehaviour
         maxVelocity = 6f;
         pauseMovement = false;
 
+        game = GameObject.Find("GameManager").GetComponent<Game>();
         audioSource = gameObject.GetComponent<AudioSource>();
         controller = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        activeArea = GameObject.Find("ActiveArea");
 
         rb.freezeRotation = true;
     }
@@ -156,30 +158,6 @@ public class Player : MonoBehaviour
         focus = null;
     }
 
-    // public void PickUp(Interactable interactable) {
-    //     Debug.Log("Picking up item");// + item.name);
-    //     //Add item to inventory
-    
-    //     //remove item from scene
-    //     Destroy(interactable);
-    // }
-    // void RemoveFocus() {
-    //     if (focus != null) {
-    //         focus.OnDefocused();
-    //     }
-    //     focus = null;
-    // }
-
-    // void SetFocus(Interactable newFocus) {
-
-    //     if (newFocus != focus) {
-    //         if (focus != null) {
-    //             focus.OnDefocused();
-    //             focus = newFocus;
-    //         }
-    //     }
-    //     newFocus.OnFocused(transform);
-    // }
     public void Equip(string itemName)
     {
         Equippable item;
@@ -197,9 +175,12 @@ public class Player : MonoBehaviour
             if (tool.name == itemName) renderer.enabled = notAlreadyEquipped;
             else renderer.enabled = false;
         }
+
+        game.RemoveTip();
+        if (notAlreadyEquipped) game.ActivateTip(itemName);
     }
 
-    public bool DetectObject(string objectName)
+    public bool ObjectDetected(string objectName)
     {
         Collider[] colliders = Physics.OverlapSphere(
             activeArea.transform.position, 0.75f
