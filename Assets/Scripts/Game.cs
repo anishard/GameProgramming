@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,9 +12,10 @@ public class Game : MonoBehaviour
 
     private Player player;
     private GameObject ui;
+    private Note uiNote;
     private AudioClip[] audioClips;
     private GameObject[] dialogues;
-    private GameObject[] notes;
+    private TextAsset[] notes;
 
     private float startTime;
     private readonly int gameHourInRealMinutes = 1;
@@ -27,6 +29,7 @@ public class Game : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
         player = GameObject.Find("Player").GetComponent<Player>();
         ui = GameObject.Find("UI");
+        uiNote = GameObject.Find("Note").GetComponent<Note>();
     }
 
     void Update()
@@ -56,15 +59,21 @@ public class Game : MonoBehaviour
 
     public void ActivateNote(string name)
     {
-        notes ??= Resources.LoadAll<GameObject>("Notes");
+        notes ??= Resources.LoadAll<TextAsset>("Notes");
 
-        GameObject note = FindInArray(notes, name, true);
+        List<string> lines = new();
+
+        TextAsset note = Array.Find(notes, (file) =>
+        {
+            lines.Clear();
+            lines.AddRange(file.text.Split(Environment.NewLine));
+            return lines[0] == name;
+        });
 
         if (note != null)
-        {
-            GameObject obj = Instantiate(note, Vector3.zero, Quaternion.identity, ui.transform);
-            obj.transform.position = Note.position;
-        }
+            uiNote.ToggleNote(lines[1], lines[2]);
+        else
+            throw new Exception(name + " does not exist in Resources/Notes");
     }
 
     public bool ClickDetected()
@@ -88,8 +97,7 @@ public class Game : MonoBehaviour
 
     public void RemoveNote()
     {
-        GameObject note = GameObject.FindWithTag("Note");
-        if (note) Destroy(note);
+        if (uiNote != null) uiNote.ToggleNote();
     }
 
     public IEnumerator PlayAudio(string clipName, float volumeScale = 1f, float delay = 0f)
@@ -109,12 +117,12 @@ public class Game : MonoBehaviour
         if (ui) ui.GetComponent<Canvas>().enabled = isEnabled;
     }
 
-    private GameObject FindInArray(GameObject[] array, string name, bool nullable = false)
+    private GameObject FindInArray(GameObject[] array, string name)
     {
         GameObject obj = Array.Find(array, (o) => o.name == name);
 
-        if (!nullable && obj == null)
-            throw new Exception(name + " does not exist in the given array");
+        if (obj == null)
+            throw new Exception(name + " does not exist in Assets/Resources");
 
         return obj;
     }
