@@ -1,15 +1,11 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class Farming : MonoBehaviour
 {
     private Player player;
-    private AudioSource audioSource;
-    private GameObject activeArea;
-    private EventSystem eventSys;
+    private Game game;
 
     private Vector3 minBounds;
     private Vector3 maxBounds;
@@ -17,20 +13,15 @@ public class Farming : MonoBehaviour
 
     private int numPours;
     private const int MAX_POURS = 5;
-
     private GameObject[] crops;
-    private AudioClip[] audioClips;
 
     void Start()
     {
         player = gameObject.GetComponent<Player>();
-        audioSource = gameObject.GetComponent<AudioSource>();
-        activeArea = GameObject.Find("ActiveArea");
-        eventSys = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        game = GameObject.Find("GameManager").GetComponent<Game>();
 
         // load resources
         crops = Resources.LoadAll<GameObject>("Farming/Crops");
-        audioClips = Resources.LoadAll<AudioClip>("Farming/SFX");
 
         // bounds of farmland
         minBounds = new Vector3(-11.25f, float.MaxValue, -6.25f);
@@ -53,19 +44,11 @@ public class Farming : MonoBehaviour
 
     void Update()
     {
-        if (player.DetectObject("Town"))
+        if (game.ClickDetected())
         {
-            EnterTown();
-            return;
-        }
+            if (InteractableObjectFound()) return;
 
-        // on left click or "J"
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
-        {
-            // ignore clicks over uGUI
-            if (eventSys.IsPointerOverGameObject()) return;
-
-            InitiateActivity();
+            UseFarmTool();
         }
     }
 
@@ -80,7 +63,7 @@ public class Farming : MonoBehaviour
     {
         if (IsOnFarmland())
         {
-            Vector3 pos = activeArea.transform.position;
+            Vector3 pos = player.activeArea.transform.position;
             FarmSquare square;
 
             for (int row = 0; row < farmland.GetLength(0); ++row)
@@ -98,19 +81,6 @@ public class Farming : MonoBehaviour
         return null;
     }
 
-    void InitiateActivity()
-    {
-        if (InteractableObjectFound()) return;
-
-        FarmSquare square = GetFarmSquare();
-
-        if (player.equipped == Equippable.Hoe)
-            TillSquare(square);
-
-        if (player.equipped == Equippable.Can)
-            UseCan(square);
-    }
-
     GameObject InstantiateByName(string name, GameObject[] array, Vector3 position)
     {
         GameObject obj = Array.Find(array, (e) => e.name == name);
@@ -126,8 +96,9 @@ public class Farming : MonoBehaviour
     {
         bool objectFound = true;
 
-        if (player.DetectObject("Door")) EnterHouse();
-        else if (player.DetectObject("ShippingBin")) OpenBin();
+        if (player.ObjectDetected("Town")) EnterTown();
+        else if (player.ObjectDetected("Door")) EnterHouse();
+        else if (player.ObjectDetected("ShippingBin")) OpenBin();
         else objectFound = false;
 
         return objectFound;
@@ -136,7 +107,7 @@ public class Farming : MonoBehaviour
 
     bool IsOnFarmland()
     {
-        Vector3 pos = activeArea.transform.position;
+        Vector3 pos = player.activeArea.transform.position;
         return pos.x >= minBounds.x
             && pos.x <= maxBounds.x
             && pos.z >= minBounds.z
@@ -158,14 +129,14 @@ public class Farming : MonoBehaviour
 
     IEnumerator PlayAudio(string clipName, float? volumeScale = 1f, float? delay = 0f)
     {
-        AudioClip clip = Array.Find(audioClips, (e) => e.name == clipName);
+        AudioClip clip = game.GetAudioClip(clipName);
 
         if (clip == null)
             throw new Exception(name + " does not exist in the given array");
 
         yield return new WaitForSeconds((float)delay);
 
-        audioSource.PlayOneShot(clip, (float)volumeScale);
+        game.audioSource.PlayOneShot(clip, (float)volumeScale);
     }
 
     void TillSquare(FarmSquare square)
@@ -194,7 +165,7 @@ public class Farming : MonoBehaviour
         Animator anim = GameObject.Find("Can").GetComponent<Animator>();
         anim.SetTrigger("isActive");
 
-        if (player.DetectObject("Well")) // refill
+        if (player.ObjectDetected("Well")) // refill
         {
             numPours = MAX_POURS;
             StartCoroutine(PlayAudio("FillCan", 0.2f, 0f));
@@ -212,5 +183,16 @@ public class Farming : MonoBehaviour
             StartCoroutine(PlayAudio("PourCan", 0.3f, 0.2f));
             StartCoroutine(PausePlayer(() => { }));
         }
+    }
+
+    void UseFarmTool()
+    {
+        FarmSquare square = GetFarmSquare();
+
+        if (player.equipped == Equippable.Hoe)
+            TillSquare(square);
+
+        if (player.equipped == Equippable.Can)
+            UseCan(square);
     }
 }
