@@ -1263,7 +1263,6 @@ GameObject:
   - component: {fileID: 4309083140675381039}
   - component: {fileID: 3161642430683101277}
   - component: {fileID: 6006710827293322314}
-  - component: {fileID: 2993217198897491032}
   - component: {fileID: 1769658051490169925}
   - component: {fileID: 6086650472035324600}
   m_Layer: 0
@@ -1363,19 +1362,7 @@ MonoBehaviour:
   pauseMovement: 0
   minBounds: {x: 0, y: 0, z: 0}
   maxBounds: {x: 0, y: 0, z: 0}
-  footstepAudio: {fileID: 8300000, guid: ce875fde86cd3cc499440e426929c8f2, type: 3}
---- !u!114 &2993217198897491032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7378879919806818287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f218ff4ff1b844d4f9170199ac542c0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  footstepAudio: {fileID: 8300000, guid: da80608fd0bee004588842dfdb4b3494, type: 3}
 --- !u!136 &1769658051490169925
 CapsuleCollider:
   m_ObjectHideFlags: 0

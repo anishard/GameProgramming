@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public GameObject activeArea;
     public Equippable equipped;
     public float velocity;
     public float maxVelocity;
@@ -14,7 +15,6 @@ public class Player : MonoBehaviour
     private AudioSource audioSource;
     private Animator controller;
     private Rigidbody rb;
-    private GameObject activeArea;
 
     void Start()
     {
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool DetectObject(string objectName)
+    public bool ObjectDetected(string objectName)
     {
         Collider[] colliders = Physics.OverlapSphere(
             activeArea.transform.position, 0.75f
