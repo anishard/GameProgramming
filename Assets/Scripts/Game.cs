@@ -115,7 +115,7 @@ public class Game : MonoBehaviour
     {
         GameObject obj = Array.Find(array, (o) => o.name == name);
 
-        if (nullable && obj == null)
+        if (!nullable && obj == null)
             throw new Exception(name + " does not exist in the given array");
 
         return obj;
