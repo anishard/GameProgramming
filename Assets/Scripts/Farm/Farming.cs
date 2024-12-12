@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Farming : MonoBehaviour
 {
@@ -56,7 +55,7 @@ public class Farming : MonoBehaviour
     {
         if (player.DetectObject("Town"))
         {
-            EnterDiningRoom();
+            EnterTown();
             return;
         }
 
@@ -72,6 +71,12 @@ public class Farming : MonoBehaviour
                 return;
             }
 
+            if (player.DetectObject("ShippingBin"))
+            {
+                OpenBin();
+                return;
+            }
+
             FarmSquare square = GetFarmSquare();
 
             if (player.equipped == Equippable.Hoe)
@@ -82,25 +87,11 @@ public class Farming : MonoBehaviour
         }
     }
 
-    void EnterDiningRoom()
-    {
-        Debug.Log("Switch scenes here");
-    }
+    void EnterTown() { }
 
     void EnterHouse()
     {
         StartCoroutine(PlayAudio("OpenDoor", 0.3f));
-    }
-
-    bool DetectExitScene()
-    {
-        bool exitFound = true;
-
-        if (player.DetectObject("Door")) EnterHouse();
-        else if (player.DetectObject("Town")) EnterDiningRoom();
-        else exitFound = false;
-
-        return exitFound;
     }
 
     FarmSquare GetFarmSquare()
@@ -145,6 +136,11 @@ public class Farming : MonoBehaviour
             && pos.z <= maxBounds.z;
     }
 
+    void OpenBin()
+    {
+        StartCoroutine(PlayAudio("ShippingBin", 0.15f));
+    }
+
     IEnumerator PausePlayer(Action callback)
     {
         player.pauseMovement = true;
@@ -177,7 +173,7 @@ public class Farming : MonoBehaviour
         }
         else
         {
-            StartCoroutine(PlayAudio("Till", 0.5f, 0.35f));
+            StartCoroutine(PlayAudio("Till", 0.6f, 0.4f));
             StartCoroutine(PausePlayer(() =>
             {
                 square.gameObject = InstantiateByName("Dirt_Pile", crops, square.position);
@@ -194,7 +190,7 @@ public class Farming : MonoBehaviour
         if (player.DetectObject("Well")) // refill
         {
             numPours = MAX_POURS;
-            StartCoroutine(PlayAudio("FillCan", 0.3f, 0f));
+            StartCoroutine(PlayAudio("FillCan", 0.2f, 0f));
             StartCoroutine(PausePlayer(() => { }));
         }
         else if (numPours <= 0) // can is empty

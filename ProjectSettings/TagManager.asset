@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PuzzleButton
   - Tool
+  - Dialogue
   layers:
   - Default
   - TransparentFX
