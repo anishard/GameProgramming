@@ -177,8 +177,8 @@ public class Player : MonoBehaviour
             else renderer.enabled = false;
         }
 
-        game.RemoveTip();
-        if (notAlreadyEquipped) game.ActivateTip(itemName);
+        game.RemoveNote();
+        if (notAlreadyEquipped) game.ActivateNote(itemName);
     }
 
     public bool ObjectDetected(string objectName)
