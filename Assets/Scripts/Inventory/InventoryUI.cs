@@ -23,16 +23,18 @@ public class InventoryUI : MonoBehaviour
     {
         if (Input.GetButtonDown("Inventory")) {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
+            UpdateUI();
         }
     }
 
     void UpdateUI() {
-        
+        Debug.Log("updating UI....");
         for (int i=0; i<slots.Length; i++) {
             if (i < inventory.items.Count) {
                 slots[i].AddItem(inventory.items[i]);
+                Debug.Log("made it into the for loop...");
                 slots[i].itemAmount.enabled = true;
-                Debug.Log("the amount of items is: " + inventory.items[i].itemAmount);
+                //Debug.Log("the amount of items is: " + inventory.items[i].itemAmount);
                 slots[i].itemAmount.text = inventory.items[i].itemAmount.ToString("n0");
             }
             else {
