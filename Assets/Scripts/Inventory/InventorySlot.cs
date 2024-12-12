@@ -1,12 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 
 public class InventorySlot : MonoBehaviour
 {
     public Image icon;
     public Button removeButton;
+    public TextMeshProUGUI itemAmount;
 
     Item item;
+
+    // public delegate void OnItemChanged();
+    // public OnItemChanged onItemChangedCallback;
+
+    void Start() {
+        itemAmount.enabled = false;
+    }
 
     public void AddItem(Item newItem) {
         item = newItem;
@@ -28,7 +39,15 @@ public class InventorySlot : MonoBehaviour
 
     public void UseItem() {
         if (item != null) {
-            item.Use();
+            if (item.itemAmount >= 1) {
+                item.Use();
+                item.itemAmount--;
+                itemAmount.text = item.itemAmount.ToString("n0");
+                if (item.itemAmount == 0) {
+                    ClearSlot();
+                    itemAmount.enabled = false;
+                }
+            }
         }
     }
 }

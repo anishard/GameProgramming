@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -30,9 +31,13 @@ public class InventoryUI : MonoBehaviour
         for (int i=0; i<slots.Length; i++) {
             if (i < inventory.items.Count) {
                 slots[i].AddItem(inventory.items[i]);
+                slots[i].itemAmount.enabled = true;
+                Debug.Log("the amount of items is: " + inventory.items[i].itemAmount);
+                slots[i].itemAmount.text = inventory.items[i].itemAmount.ToString("n0");
             }
             else {
                 slots[i].ClearSlot();
+                slots[i].itemAmount.enabled = false;
             }
         }
     }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b649c8379b01d2488d68feb634f7438, type: 3}
-  m_Name: Corn_Item
+  m_Name: Eggplant_Item
   m_EditorClassIdentifier: 
-  name: Corn
-  icon: {fileID: 21300000, guid: eb7e3a2b280b7f54aaa25760bc8fdfb9, type: 3}
+  name: Eggplant
+  icon: {fileID: 21300000, guid: 8461ee4a42b654941b52655b49875c9f, type: 3}
   isDefaultItem: 0
   itemAmount: 1
