@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Vector3 maxBounds;
     public AudioClip footstepAudio;
 
+    private Game game;
     private AudioSource audioSource;
     private Animator controller;
     private Rigidbody rb;
@@ -19,12 +20,13 @@ public class Player : MonoBehaviour
     void Start()
     {
         activeArea = GameObject.Find("ActiveArea");
-        
+
         equipped = Equippable.None;
         velocity = 0f;
         maxVelocity = 6f;
         pauseMovement = false;
 
+        game = GameObject.Find("GameManager").GetComponent<Game>();
         audioSource = gameObject.GetComponent<AudioSource>();
         controller = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -113,6 +115,9 @@ public class Player : MonoBehaviour
             if (tool.name == itemName) renderer.enabled = notAlreadyEquipped;
             else renderer.enabled = false;
         }
+
+        game.RemoveTip();
+        if (notAlreadyEquipped) game.ActivateTip(itemName);
     }
 
     public bool ObjectDetected(string objectName)

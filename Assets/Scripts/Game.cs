@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,9 +10,11 @@ public class Game : MonoBehaviour
     public int hour;
 
     private Player player;
+    private GameObject ui;
     private EventSystem eventSys;
     private AudioClip[] audioClips;
     private GameObject[] dialogues;
+    private GameObject[] tips;
 
     private float startTime;
     private readonly int gameHourInRealMinutes = 1;
@@ -24,6 +27,7 @@ public class Game : MonoBehaviour
 
         audioSource = gameObject.GetComponent<AudioSource>();
         player = GameObject.Find("Player").GetComponent<Player>();
+        ui = GameObject.Find("UI");
         eventSys = GameObject.Find("EventSystem")?.GetComponent<EventSystem>();
     }
 
@@ -44,17 +48,25 @@ public class Game : MonoBehaviour
 
     public void ActivateDialogue(string name)
     {
-        var ui = GameObject.Find("Interface")?.GetComponent<Canvas>();
-        if (ui != null) ui.enabled = false;
+        if (ui != null) ToggleUI(false);
 
         dialogues ??= Resources.LoadAll<GameObject>("Dialogues");
 
-        GameObject dialogue = Array.Find(dialogues, (d) => d.name == name);
-
-        if (dialogue == null)
-            throw new Exception(name + " does not exist in the given array");
-
+        GameObject dialogue = FindInArray(dialogues, name);
         Instantiate(dialogue, Vector3.zero, Quaternion.identity);
+    }
+
+    public void ActivateTip(string name)
+    {
+        tips ??= Resources.LoadAll<GameObject>("Tips");
+
+        GameObject tip = FindInArray(tips, name, true);
+
+        if (tip != null)
+        {
+            GameObject obj = Instantiate(tip, Vector3.zero, Quaternion.identity, ui.transform);
+            obj.transform.position = Tip.position;
+        }
     }
 
     public bool ClickDetected()
@@ -74,5 +86,38 @@ public class Game : MonoBehaviour
     {
         audioClips ??= Resources.LoadAll<AudioClip>("AudioClips");
         return Array.Find(audioClips, (e) => e.name == name);
+    }
+
+    public void RemoveTip()
+    {
+        GameObject tip = GameObject.FindWithTag("Tip");
+        if (tip) Destroy(tip);
+    }
+
+    public IEnumerator PlayAudio(string clipName, float volumeScale = 1f, float delay = 0f)
+    {
+        AudioClip clip = GetAudioClip(clipName);
+
+        if (clip == null)
+            throw new Exception(clipName + " does not exist in Resources/AudioClips");
+
+        yield return new WaitForSeconds((float)delay);
+
+        audioSource.PlayOneShot(clip, (float)volumeScale);
+    }
+
+    public void ToggleUI(bool isEnabled)
+    {
+        if (ui) ui.GetComponent<Canvas>().enabled = isEnabled;
+    }
+
+    private GameObject FindInArray(GameObject[] array, string name, bool nullable = false)
+    {
+        GameObject obj = Array.Find(array, (o) => o.name == name);
+
+        if (nullable && obj == null)
+            throw new Exception(name + " does not exist in the given array");
+
+        return obj;
     }
 }
