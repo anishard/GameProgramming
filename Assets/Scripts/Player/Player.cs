@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        activeArea = GameObject.Find("ActiveArea");
+        
         equipped = Equippable.None;
         velocity = 0f;
         maxVelocity = 6f;
@@ -26,7 +28,6 @@ public class Player : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
         controller = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        activeArea = GameObject.Find("ActiveArea");
 
         rb.freezeRotation = true;
     }
