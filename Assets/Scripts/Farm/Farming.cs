@@ -59,40 +59,22 @@ public class Farming : MonoBehaviour
             return;
         }
 
-        // on left click
-        if (Input.GetMouseButtonDown(0))
+        // on left click or "J"
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
         {
             // ignore clicks over uGUI
             if (eventSys.IsPointerOverGameObject()) return;
 
-            if (player.DetectObject("Door"))
-            {
-                EnterHouse();
-                return;
-            }
-
-            if (player.DetectObject("ShippingBin"))
-            {
-                OpenBin();
-                return;
-            }
-
-            FarmSquare square = GetFarmSquare();
-
-            if (player.equipped == Equippable.Hoe)
-                TillSquare(square);
-
-            if (player.equipped == Equippable.Can)
-                UseCan(square);
+            InitiateActivity();
         }
     }
-
-    void EnterTown() { }
 
     void EnterHouse()
     {
         StartCoroutine(PlayAudio("OpenDoor", 0.3f));
     }
+
+    void EnterTown() { }
 
     FarmSquare GetFarmSquare()
     {
@@ -116,6 +98,19 @@ public class Farming : MonoBehaviour
         return null;
     }
 
+    void InitiateActivity()
+    {
+        if (InteractableObjectFound()) return;
+
+        FarmSquare square = GetFarmSquare();
+
+        if (player.equipped == Equippable.Hoe)
+            TillSquare(square);
+
+        if (player.equipped == Equippable.Can)
+            UseCan(square);
+    }
+
     GameObject InstantiateByName(string name, GameObject[] array, Vector3 position)
     {
         GameObject obj = Array.Find(array, (e) => e.name == name);
@@ -124,6 +119,18 @@ public class Farming : MonoBehaviour
             throw new Exception(name + " does not exist in the given array");
 
         return Instantiate(obj, position, Quaternion.identity);
+
+    }
+
+    bool InteractableObjectFound()
+    {
+        bool objectFound = true;
+
+        if (player.DetectObject("Door")) EnterHouse();
+        else if (player.DetectObject("ShippingBin")) OpenBin();
+        else objectFound = false;
+
+        return objectFound;
 
     }
 

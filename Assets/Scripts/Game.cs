@@ -18,9 +18,6 @@ public class Game : MonoBehaviour
         startTime = Time.time;
 
         player = GameObject.Find("Player").GetComponent<Player>();
-        dialogues = Resources.LoadAll<GameObject>("Dialogues");
-
-        // ActivateDialogue("GameIntro");
     }
 
     void Update()
@@ -40,10 +37,14 @@ public class Game : MonoBehaviour
 
     public void ActivateDialogue(string name)
     {
-        GameObject.Find("Interface").GetComponent<Canvas>().enabled = false;
+        var ui = GameObject.Find("Interface");
+        if (ui != null) ui.GetComponent<Canvas>().enabled = false;
+
+        if (dialogues == null)
+            dialogues = Resources.LoadAll<GameObject>("Dialogues");
 
         GameObject dialogue = Array.Find(dialogues, (d) => d.name == name);
-
+        
         if (dialogue == null)
             throw new Exception(name + " does not exist in the given array");
 

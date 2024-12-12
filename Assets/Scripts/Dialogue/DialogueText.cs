@@ -6,16 +6,17 @@ using TMPro;
 
 public class DialogueText : MonoBehaviour
 {
-    public TextAsset file;
     public TMP_Text nameBox;
     public TMP_Text textBox;
 
+    private TextAsset file;
     private List<string> lines;
     private float textSpeed;
     private int index;
 
     void Start()
     {
+        file = gameObject.transform.parent.gameObject.GetComponent<Dialogue>().file;
         lines = new List<string>();
         lines.AddRange(file.text.Split(Environment.NewLine));
 
