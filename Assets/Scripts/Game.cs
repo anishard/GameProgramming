@@ -72,7 +72,7 @@ public class Game : MonoBehaviour
 
     public AudioClip GetAudioClip(string name)
     {
-        audioClips ??= Resources.LoadAll<AudioClip>("Farming/SFX");
+        audioClips ??= Resources.LoadAll<AudioClip>("AudioClips");
         return Array.Find(audioClips, (e) => e.name == name);
     }
 }
