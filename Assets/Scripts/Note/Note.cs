@@ -1,15 +1,34 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using System;
+using System.Collections.Generic;
 
 public class Note : MonoBehaviour
 {
-    public string title;
-    public string text;
-    public static readonly Vector3 position = new(640 - 438f, 360 - 270f, 0f);
+    private TMP_Text titleObj;
+    private TMP_Text textObj;
+    private TMP_Text textOnlyObj;
 
     void Start()
     {
-        transform.Find("Title").GetComponent<TMP_Text>().text = title;
-        transform.Find("Text").GetComponent<TMP_Text>().text = text;
+        titleObj = transform.Find("Title").GetComponent<TMP_Text>();
+        textObj = transform.Find("Text").GetComponent<TMP_Text>();
+        textOnlyObj = transform.Find("TextOnly").GetComponent<TMP_Text>();
+    }
+
+    public void ToggleNote(string title = "", string text = "")
+    {
+        bool isEnabled = !string.IsNullOrEmpty(text);
+        bool isTextOnly = string.IsNullOrEmpty(title);
+
+        gameObject.GetComponent<Image>().enabled = isEnabled;
+        titleObj.enabled = isEnabled;
+        textObj.enabled = !isTextOnly;
+        textOnlyObj.enabled = isTextOnly;
+
+        titleObj.text = title;
+        if (!isTextOnly) textObj.text = text;
+        else textOnlyObj.text = text;
     }
 }
