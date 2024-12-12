@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Farm.unity
+    guid: c7c024841485de747852a3df8a1a2760
+  - enabled: 1
     path: Assets/Scenes/DiningRoom.unity
     guid: 36e57d2c9c58caf4b8ab42bd72d5794c
-  - enabled: 1
-    path: Assets/Scenes/OpeningScene.unity
-    guid: e018874fb72a23b47928aafc73042149
   - enabled: 1
     path: Assets/Scenes/QuizMinigame.unity
     guid: 3a281e06019b44243a1d7d87b6cf401a

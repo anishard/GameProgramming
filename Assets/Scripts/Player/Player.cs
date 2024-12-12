@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         activeArea = GameObject.Find("ActiveArea");
+
         //ADDED CODE FOR INVENTORY
         cam = Camera.main;
 

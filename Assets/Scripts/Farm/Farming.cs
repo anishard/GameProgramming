@@ -1,16 +1,11 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Farming : MonoBehaviour
 {
     private Player player;
-    private AudioSource audioSource;
-    private GameObject activeArea;
-    private EventSystem eventSys;
+    private Game game;
 
     private Vector3 minBounds;
     private Vector3 maxBounds;
@@ -18,20 +13,15 @@ public class Farming : MonoBehaviour
 
     private int numPours;
     private const int MAX_POURS = 5;
-
     private GameObject[] crops;
-    private AudioClip[] audioClips;
 
     void Start()
     {
         player = gameObject.GetComponent<Player>();
-        audioSource = gameObject.GetComponent<AudioSource>();
-        activeArea = GameObject.Find("ActiveArea");
-        eventSys = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        game = GameObject.Find("GameManager").GetComponent<Game>();
 
         // load resources
         crops = Resources.LoadAll<GameObject>("Farming/Crops");
-        audioClips = Resources.LoadAll<AudioClip>("Farming/SFX");
 
         // bounds of farmland
         minBounds = new Vector3(-11.25f, float.MaxValue, -6.25f);
@@ -50,64 +40,32 @@ public class Farming : MonoBehaviour
             }
 
         numPours = MAX_POURS;
+
+        // game.ActivateDialogue("GameIntro");
     }
 
     void Update()
     {
-        if (player.DetectObject("Town"))
+        if (game.ClickDetected())
         {
-            EnterDiningRoom();
-            return;
+            if (InteractableObjectFound()) return;
+
+            UseFarmTool();
         }
-
-        // on left click
-        if (Input.GetMouseButtonDown(0))
-        {
-            // ignore clicks over uGUI
-            if (eventSys.IsPointerOverGameObject()) return;
-
-            if (player.DetectObject("Door"))
-            {
-                EnterHouse();
-                return;
-            }
-
-            FarmSquare square = GetFarmSquare();
-
-            if (player.equipped == Equippable.Hoe)
-                TillSquare(square);
-
-            if (player.equipped == Equippable.Can)
-                UseCan(square);
-        }
-    }
-
-    void EnterDiningRoom()
-    {
-        Debug.Log("Switch scenes here");
     }
 
     void EnterHouse()
     {
-        StartCoroutine(PlayAudio("OpenDoor", 0.3f));
+        StartCoroutine(game.PlayAudio("OpenDoor", 0.3f));
     }
 
-    bool DetectExitScene()
-    {
-        bool exitFound = true;
-
-        if (player.DetectObject("Door")) EnterHouse();
-        else if (player.DetectObject("Town")) EnterDiningRoom();
-        else exitFound = false;
-
-        return exitFound;
-    }
+    void EnterTown() { }
 
     FarmSquare GetFarmSquare()
     {
         if (IsOnFarmland())
         {
-            Vector3 pos = activeArea.transform.position;
+            Vector3 pos = player.activeArea.transform.position;
             FarmSquare square;
 
             for (int row = 0; row < farmland.GetLength(0); ++row)
@@ -136,13 +94,31 @@ public class Farming : MonoBehaviour
 
     }
 
+    bool InteractableObjectFound()
+    {
+        bool objectFound = true;
+
+        if (player.ObjectDetected("Town")) EnterTown();
+        else if (player.ObjectDetected("Door")) EnterHouse();
+        else if (player.ObjectDetected("ShippingBin")) OpenBin();
+        else objectFound = false;
+
+        return objectFound;
+
+    }
+
     bool IsOnFarmland()
     {
-        Vector3 pos = activeArea.transform.position;
+        Vector3 pos = player.activeArea.transform.position;
         return pos.x >= minBounds.x
             && pos.x <= maxBounds.x
             && pos.z >= minBounds.z
             && pos.z <= maxBounds.z;
+    }
+
+    void OpenBin()
+    {
+        StartCoroutine(game.PlayAudio("ShippingBin", 0.15f));
     }
 
     IEnumerator PausePlayer(Action callback)
@@ -153,18 +129,6 @@ public class Farming : MonoBehaviour
         player.pauseMovement = false;
     }
 
-    IEnumerator PlayAudio(string clipName, float? volumeScale = 1f, float? delay = 0f)
-    {
-        AudioClip clip = Array.Find(audioClips, (e) => e.name == clipName);
-
-        if (clip == null)
-            throw new Exception(name + " does not exist in the given array");
-
-        yield return new WaitForSeconds((float)delay);
-
-        audioSource.PlayOneShot(clip, (float)volumeScale);
-    }
-
     void TillSquare(FarmSquare square)
     {
         Animator anim = GameObject.Find("Hoe").GetComponent<Animator>();
@@ -172,12 +136,12 @@ public class Farming : MonoBehaviour
 
         if (square == null || square.state != FarmSquareState.Untilled)
         {
-            StartCoroutine(PlayAudio("Miss", 0.5f, 0.35f));
+            StartCoroutine(game.PlayAudio("Miss", 0.5f, 0.35f));
             StartCoroutine(PausePlayer(() => { }));
         }
         else
         {
-            StartCoroutine(PlayAudio("Till", 0.5f, 0.35f));
+            StartCoroutine(game.PlayAudio("Till", 0.6f, 0.4f));
             StartCoroutine(PausePlayer(() =>
             {
                 square.gameObject = InstantiateByName("Dirt_Pile", crops, square.position);
@@ -191,23 +155,34 @@ public class Farming : MonoBehaviour
         Animator anim = GameObject.Find("Can").GetComponent<Animator>();
         anim.SetTrigger("isActive");
 
-        if (player.DetectObject("Well")) // refill
+        if (player.ObjectDetected("Well")) // refill
         {
             numPours = MAX_POURS;
-            StartCoroutine(PlayAudio("FillCan", 0.3f, 0f));
+            StartCoroutine(game.PlayAudio("FillCan", 0.2f, 0f));
             StartCoroutine(PausePlayer(() => { }));
         }
         else if (numPours <= 0) // can is empty
         {
             --numPours;
-            StartCoroutine(PlayAudio("Miss", 0.5f, 0.2f));
+            StartCoroutine(game.PlayAudio("Miss", 0.5f, 0.2f));
             StartCoroutine(PausePlayer(() => { }));
         }
         else
         {
             --numPours;
-            StartCoroutine(PlayAudio("PourCan", 0.3f, 0.2f));
+            StartCoroutine(game.PlayAudio("PourCan", 0.3f, 0.2f));
             StartCoroutine(PausePlayer(() => { }));
         }
+    }
+
+    void UseFarmTool()
+    {
+        FarmSquare square = GetFarmSquare();
+
+        if (player.equipped == Equippable.Hoe)
+            TillSquare(square);
+
+        if (player.equipped == Equippable.Can)
+            UseCan(square);
     }
 }
