@@ -1,0 +1,3 @@
+- If the note is to appear when an object is equipped, the first line should be the name of the object. Otherwise, create an empty line.
+- If the note has a title, the second line should be the title. Otherwise, create an empty line.
+- The third line is the content of the note.
