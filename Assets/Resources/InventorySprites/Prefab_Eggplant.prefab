@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2629283506490142508}
   - component: {fileID: 2595797147493036160}
   - component: {fileID: 2603807318571413936}
-  - component: {fileID: 2634743474120957192}
   - component: {fileID: 6912547844823327045}
+  - component: {fileID: 6405495267833083506}
   m_Layer: 0
   m_Name: Prefab_Eggplant
   m_TagString: Interactable
@@ -85,8 +85,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2634743474120957192
-MeshCollider:
+--- !u!114 &6912547844823327045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2625791099854491334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96bd1824605e3354daec18232b6d8f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: f2e3ee604670d1c4a9297a74494b8b85, type: 2}
+--- !u!136 &6405495267833083506
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,21 +116,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: b69b26c8b73b8bd49bf243bbe541a2e0, type: 3}
---- !u!114 &6912547844823327045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2625791099854491334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96bd1824605e3354daec18232b6d8f32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 3
-  item: {fileID: 11400000, guid: f2e3ee604670d1c4a9297a74494b8b85, type: 2}
+  serializedVersion: 2
+  m_Radius: 0.20085932
+  m_Height: 0.21559751
+  m_Direction: 1
+  m_Center: {x: 0.000104825944, y: -0.037949476, z: -0.15814255}

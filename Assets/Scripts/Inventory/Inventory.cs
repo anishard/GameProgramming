@@ -33,7 +33,6 @@ public class Inventory : MonoBehaviour
     public int space = 15;
 
     public List<Item> items = new List<Item>();
-
     
     public bool Add (Item item) {
         //stacking

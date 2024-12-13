@@ -889,7 +889,7 @@ Transform:
   m_GameObject: {fileID: 5041418219604089970}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.157, y: 0.384, z: -0.229}
+  m_LocalPosition: {x: 0.15699983, y: 0.384, z: -0.22899985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1356,13 +1356,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe79b7f780740140a5c6abf1d06bfc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipped: 0
   velocity: 0
   maxVelocity: 0
-  pauseMovement: 0
   minBounds: {x: 0, y: 0, z: 0}
   maxBounds: {x: 0, y: 0, z: 0}
   footstepAudio: {fileID: 8300000, guid: da80608fd0bee004588842dfdb4b3494, type: 3}
+  focus: {fileID: 0}
 --- !u!136 &1769658051490169925
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1721,7 +1720,7 @@ Transform:
   m_GameObject: {fileID: 8253623933788525492}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.701, y: 0.14999998, z: 0.012}
+  m_LocalPosition: {x: 0.7009997, y: 0.14999998, z: 0.0119998455}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

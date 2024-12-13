@@ -23,7 +23,7 @@ public class InventoryUI : MonoBehaviour
     void Update()
     {
         // OPEN OR CLOSE the inventory when the Inventory button is clicked
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory(); 
         }

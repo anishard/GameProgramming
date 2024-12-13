@@ -12,34 +12,28 @@ public class Player : MonoBehaviour
     public Vector3 maxBounds;
     public AudioClip footstepAudio;
 
+    public static Transform playerTransform;
     public static GameObject activeArea;
     public static Equippable equipped;
+    public static GameObject equippedInteractable;
     public static bool pauseMovement;
 
-    private Game game;
     private AudioSource audioSource;
     private Animator controller;
     private Rigidbody rb;
-
-    //ADDED CODE FOR INVENTORY
-    Camera cam;
-
     public Interactable focus;
-    //     Interactable interact = new Interactable();
-    // MyScript scriptInstance = newObject.AddComponent<MyScript>()
+
     void Start()
     {
         activeArea = GameObject.Find("ActiveArea");
 
-        //ADDED CODE FOR INVENTORY
-        cam = Camera.main;
-
         equipped = Equippable.None;
+        equippedInteractable = null;
         velocity = 0f;
         maxVelocity = 6f;
         pauseMovement = false;
 
-        game = GameObject.Find("GameManager").GetComponent<Game>();
+        playerTransform = gameObject.transform;
         audioSource = gameObject.GetComponent<AudioSource>();
         controller = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -94,50 +88,49 @@ public class Player : MonoBehaviour
 
         if (controller.GetBool("isJumping"))
         {
-            velocity += 0.1f; // gradual speed change
+            velocity += 0.1f;
             if (velocity > 6f) velocity = 6f;
         }
 
-        // keep character within bounds
         float xVal = transform.position.x + xdirection * velocity * Time.deltaTime;
         float zVal = transform.position.z + zdirection * velocity * Time.deltaTime;
-
-        if (minBounds != Vector3.zero)
-        {
-            if (xVal <= minBounds.x) xVal = minBounds.x;
-            if (zVal <= minBounds.z) zVal = minBounds.z;
-        }
-        if (maxBounds != Vector3.zero)
-        {
-            if (xVal >= maxBounds.x) xVal = maxBounds.x;
-            if (zVal >= maxBounds.z) zVal = maxBounds.z;
-        }
-
         transform.position = new Vector3(xVal, transform.position.y, zVal);
 
-        if (Game.ClickDetected())
-        {
-            var other = InteractableDetected();
-            if (other != null) SetFocus(other.GetComponent<Interactable>());
-        }
+        if (Game.ClickDetected()) Interact();
+        if (Input.GetKeyDown(KeyCode.U)) AddToInventory();
 
-        if (Input.GetKeyDown("space"))
-        {
-            SceneManager.LoadScene("DiningRoom");
-        }
+        if (Input.GetKeyDown("space")) SceneManager.LoadScene("DiningRoom");
     }
 
-    void SetFocus(Interactable newFocus)
+    public void AddToInventory()
     {
+        Interactable newFocus = equippedInteractable?.GetComponent<Interactable>();
+
+        if (newFocus == null) return;
+
         if (newFocus != focus)
         {
-            if (focus != null)
-            {
-                focus.OnDefocused();
-            }
+            if (focus != null) focus.OnDefocused();
             focus = newFocus;
         }
-        newFocus.OnFocused(transform);
+
+        newFocus.OnFocused();
+        equipped = Equippable.None;
+        equippedInteractable = null;
+    }
+
+    public static void EquipInteractable(GameObject other)
+    {
+        other.transform.parent = playerTransform;
+        equipped = Equippable.Interactable;
+        equippedInteractable = other;
+    }
+
+    public static void DequipInteractable()
+    {
+        equippedInteractable.transform.parent = null;
+        equipped = Equippable.None;
+        equippedInteractable = null;
     }
 
     public static void EquipTool(string itemName)
@@ -145,9 +138,9 @@ public class Player : MonoBehaviour
         Equippable item;
 
         if (!Enum.TryParse(itemName, out item))
-            throw new Exception(itemName + " does not exist in enum Equippable");
+            throw new Exception(itemName + " does not exist in Equippable");
 
-        bool notAlreadyEquipped = item != equipped;
+        bool notAlreadyEquipped = (item != equipped) && (equipped == Equippable.None);
 
         equipped = notAlreadyEquipped ? item : Equippable.None;
 
@@ -160,6 +153,19 @@ public class Player : MonoBehaviour
 
         Note.Remove();
         if (notAlreadyEquipped) Note.Activate(itemName);
+    }
+
+    public static void Interact()
+    {
+        var other = InteractableDetected();
+
+        if (other == null) return;
+
+        if (equipped == Equippable.None)
+            EquipInteractable(other);
+
+        else if (equipped == Equippable.Interactable)
+            DequipInteractable();
     }
 
     public static bool ObjectDetected(string objectName)
