@@ -14,7 +14,7 @@ public class Farming : MonoBehaviour
     void Start()
     {
         // load resources
-        crops = Resources.LoadAll<GameObject>("Farming/Crops");
+        crops = Resources.LoadAll<GameObject>("InventorySprites");
 
         // bounds of farmland
         minBounds = new Vector3(-11.25f, float.MaxValue, -6.25f);
@@ -34,7 +34,7 @@ public class Farming : MonoBehaviour
 
         numPours = MAX_POURS;
 
-        // Game.ActivateDialogue("GameIntro");
+        Dialogue.Activate("GameIntro");
     }
 
     void Update()
@@ -121,12 +121,12 @@ public class Farming : MonoBehaviour
         if (square == null || square.state != FarmSquareState.Untilled)
         {
             StartCoroutine(Game.PlayAudio("Miss", 0.5f, 0.35f));
-            StartCoroutine(Player.PausePlayer(() => { }));
+            StartCoroutine(Player.Pause(() => { }));
         }
         else
         {
             StartCoroutine(Game.PlayAudio("Till", 0.6f, 0.4f));
-            StartCoroutine(Player.PausePlayer(() =>
+            StartCoroutine(Player.Pause(() =>
             {
                 square.gameObject = InstantiateByName("Dirt_Pile", crops, square.position);
                 square.state = FarmSquareState.Tilled;
@@ -143,19 +143,19 @@ public class Farming : MonoBehaviour
         {
             numPours = MAX_POURS;
             StartCoroutine(Game.PlayAudio("FillCan", 0.2f, 0f));
-            StartCoroutine(Player.PausePlayer(() => { }));
+            StartCoroutine(Player.Pause(() => { }));
         }
         else if (numPours <= 0) // can is empty
         {
             --numPours;
             StartCoroutine(Game.PlayAudio("Miss", 0.5f, 0.2f));
-            StartCoroutine(Player.PausePlayer(() => { }));
+            StartCoroutine(Player.Pause(() => { }));
         }
         else
         {
             --numPours;
             StartCoroutine(Game.PlayAudio("PourCan", 0.3f, 0.2f));
-            StartCoroutine(Player.PausePlayer(() => { }));
+            StartCoroutine(Player.Pause(() => { }));
         }
     }
 
