@@ -68,9 +68,6 @@ public class InventorySlot : MonoBehaviour
                 item.itemAmount--; //decrease the item amount each time an item is used
                 itemAmount.text = item.itemAmount.ToString("n0"); //make sure the slot UI is updated
                 //Instantiate the 3d prefab item back into the scene
-                //placeItemBack = Resources.Load("InventorySprites/Corn_ItemPrefab", GameObject) as GameObject;
-                //GameObject placeItemBack = (GameObject)Resources.Load("InventorySprites/Corn_ItemPrefab", typeof(GameObject));
-
                 Vector3 playerPos = player.transform.position;
                 Vector3 playerForward = player.transform.forward;
                 string pathname = "InventorySprites/Prefab_" + item.name;

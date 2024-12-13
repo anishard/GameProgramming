@@ -9,11 +9,6 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
 
     void Awake() {
-        // if (instance != null) {
-        //     Debug.LogWarning("More than one instance of inventory found");
-        //     return;
-        // }
-        // instance = this;
         // if instance is not yet set, set it and make it persistent between scenes
         if (instance == null)
         {
@@ -73,9 +68,9 @@ public class Inventory : MonoBehaviour
         items.Remove(item);
         // stacking
         for (int i=0; i<items.Count; i++) {
-                if (items[i].name == item.name) {
-                    items[i].itemAmount--;
-                }
+            if (items[i].name == item.name) {
+                items[i].itemAmount--;
+            }
         }
 
         if (onItemChangedCallback != null) {
