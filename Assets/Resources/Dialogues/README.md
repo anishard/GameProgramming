@@ -10,6 +10,4 @@
 3. Rename the Dialogue prefab so it has the same name as the txt file. Drag and drop it into Assets/Resources/Dialogues to create a prefab variant.
   - REMOVE the prefab from your scene.
 
-4. Add an instance of the GameManager prefab (Assets/Prefabs/Game) to your scene if it does not already exist.
-
-5. When you want to start the dialogue, call: GameObject.Find("GameManager").GetComponent<Game>().ActivateDialogue("NAME OF THE TXT FILE");
+4. When you want to start the dialogue, call: Game.ActivateDialogue("NAME OF THE TXT FILE");

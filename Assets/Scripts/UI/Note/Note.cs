@@ -4,30 +4,32 @@ using TMPro;
 
 public class Note : MonoBehaviour
 {
-    private TMP_Text titleObj;
-    private TMP_Text bodyObj;
-    private TMP_Text bodyOnlyObj;
+    private static Image backgroundImg;
+    private static TMP_Text titleText;
+    private static TMP_Text bodyText;
+    private static TMP_Text bodyOnlyText;
 
     void Start()
     {
-        titleObj = transform.Find("Title").GetComponent<TMP_Text>();
-        bodyObj = transform.Find("Body").GetComponent<TMP_Text>();
-        bodyOnlyObj = transform.Find("BodyOnly").GetComponent<TMP_Text>();
+        backgroundImg = gameObject.GetComponent<Image>();
+        titleText = transform.Find("Title").GetComponent<TMP_Text>();
+        bodyText = transform.Find("Body").GetComponent<TMP_Text>();
+        bodyOnlyText = transform.Find("BodyOnly").GetComponent<TMP_Text>();
     }
 
-    public void ToggleNote(string title = "", string body = "")
+    public static void ToggleNote(string title = "", string body = "")
     {
         bool isEnabled = !string.IsNullOrEmpty(body);
         bool hasTitle = !string.IsNullOrEmpty(title);
 
-        gameObject.GetComponent<Image>().enabled = isEnabled;
+        backgroundImg.enabled = isEnabled;
 
-        titleObj.enabled = true;
-        bodyObj.enabled = isEnabled && hasTitle;
-        bodyOnlyObj.enabled = isEnabled && !hasTitle;
+        titleText.enabled = true;
+        bodyText.enabled = isEnabled && hasTitle;
+        bodyOnlyText.enabled = isEnabled && !hasTitle;
 
-        titleObj.text = title;
-        if (hasTitle) bodyObj.text = body;
-        else bodyOnlyObj.text = body;
+        titleText.text = title;
+        if (hasTitle) bodyText.text = body;
+        else bodyOnlyText.text = body;
     }
 }
