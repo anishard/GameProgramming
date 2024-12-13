@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SkyLerp : MonoBehaviour
+public class SkyTransition : MonoBehaviour
 {
     enum TransitionTime
     {
@@ -34,10 +34,6 @@ public class SkyLerp : MonoBehaviour
         dayColor = CreateColor(255, 244, 214);
         nightColor = CreateColor(121, 152, 255);
 
-        (Material, Color) data = GetDataFromHour(Clock.hour);
-        rend.material = data.Item1;
-        lightSource.color = data.Item2;
-
         StartCoroutine(Transition());
     }
 
@@ -59,11 +55,8 @@ public class SkyLerp : MonoBehaviour
     {
         isTransitioning = true;
 
-        Material material1 = GetDataFromHour(Clock.hour - 1).Item1;
-        Material material2 = GetDataFromHour(Clock.hour).Item1;
-
-        bool addDayColor = Clock.hour == (int)TransitionTime.Morning;
-        bool addNightColor = Clock.hour == (int)TransitionTime.Night;
+        (Material, Color) first = GetDataFromHour(Clock.hour - 1);
+        (Material, Color) second = GetDataFromHour(Clock.hour);
 
         float curTime = 0;
 
@@ -71,19 +64,16 @@ public class SkyLerp : MonoBehaviour
         {
             float t = curTime / duration;
 
-            rend.material.Lerp(material1, material2, t);
-
-            if (addDayColor)
-                lightSource.color = Color.Lerp(nightColor, dayColor, t);
-
-            if (addNightColor)
-                lightSource.color = Color.Lerp(dayColor, nightColor, t);
+            rend.material.Lerp(first.Item1, second.Item1, t);
+            lightSource.color = Color.Lerp(first.Item2, second.Item2, t);
 
             curTime += Time.deltaTime;
+
             yield return null;
         }
 
-        rend.material = material2;
+        rend.material = second.Item1;
+        lightSource.color = second.Item2;
 
         isTransitioning = false;
     }
