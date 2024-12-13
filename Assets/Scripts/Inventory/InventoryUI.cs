@@ -21,11 +21,13 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
-
         bool clickedOutsideInventory = Input.GetMouseButtonDown(0)
             && !EventSystem.current.IsPointerOverGameObject();
 
-        if (Input.GetButtonDown("Inventory") || clickedOutsideInventory)
+        if (
+            Input.GetButtonDown("Inventory") ||
+            (inventoryUI.activeSelf && clickedOutsideInventory)
+        )
             ToggleInventory();
     }
 
