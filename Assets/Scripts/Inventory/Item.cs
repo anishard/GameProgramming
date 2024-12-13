@@ -9,7 +9,7 @@ public class Item : ScriptableObject
     public bool isDefaultItem = false;
 
     //for stacking items
-    public int itemAmount;
+    public int itemAmount = 1;
 
     void Start() {
         itemAmount = 1;

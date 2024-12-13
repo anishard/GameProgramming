@@ -119,10 +119,10 @@ public class Player : MonoBehaviour
         // if (Input.GetMouseButtonDown(1)) {
         //     RemoveFocus();
         // }
-        if (Input.GetMouseButtonDown(1))
-        {
-            RemoveFocus();
-        }
+        // if (Input.GetMouseButtonDown(1))
+        // {
+        //     RemoveFocus();
+        // }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -164,14 +164,14 @@ public class Player : MonoBehaviour
         newFocus.OnFocused(transform);
     }
 
-    void RemoveFocus()
-    {
-        if (focus != null)
-        {
-            focus.OnDefocused();
-        }
-        focus = null;
-    }
+    // void RemoveFocus()
+    // {
+    //     if (focus != null)
+    //     {
+    //         focus.OnDefocused();
+    //     }
+    //     focus = null;
+    // }
 
     public static void EquipTool(string itemName)
     {
