@@ -34,7 +34,9 @@ public class InventoryUI : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.U))
+        {
             AddToInventory();
+        }
 
         // OPEN OR CLOSE the inventory when the Inventory button is clicked
         if (Input.GetKeyDown(KeyCode.I))
@@ -65,6 +67,8 @@ public class InventoryUI : MonoBehaviour
         newFocus.OnFocused();
         Player.equipped = Equippable.None;
         equippedInteractable = null;
+
+        StartCoroutine(Game.PlayAudio("Inventory", 0.4f));
     }
 
     private static void EquipInteractable()

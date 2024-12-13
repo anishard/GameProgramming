@@ -98,12 +98,14 @@ public class Player : MonoBehaviour
 
     public static void EquipTool(string itemName)
     {
+        if (equipped == Equippable.Interactable) return;
+        
         Equippable item;
 
         if (!Enum.TryParse(itemName, out item))
             throw new Exception(itemName + " does not exist in Equippable");
 
-        bool notAlreadyEquipped = (item != equipped) && (equipped == Equippable.None);
+        bool notAlreadyEquipped = (item != equipped);
 
         equipped = notAlreadyEquipped ? item : Equippable.None;
 
