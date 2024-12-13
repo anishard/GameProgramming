@@ -22,14 +22,24 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
-        bool clickedOutsideInventory = Input.GetMouseButtonDown(0)
-            && !EventSystem.current.IsPointerOverGameObject();
+        // OPEN OR CLOSE the inventory when the Inventory button is clicked
+        if (Input.GetButtonDown("Inventory"))
+        {
+            ToggleInventory(); 
+        }
 
-        if (
-            Input.GetButtonDown("Inventory") ||
-            (inventoryUI.activeSelf && clickedOutsideInventory)
-        )
-            ToggleInventory();
+        // if inventory is ALREADY OPEN and click outside of it, close it
+        bool clickedOutsideInventory = Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject();
+        if (clickedOutsideInventory && IsInventoryOpen()) // Only close inventory if it's open
+        {
+            ToggleInventory(); 
+        }
+    }
+
+    // check if the inventory is already open
+    bool IsInventoryOpen()
+    {
+        return inventoryUI.activeSelf; 
     }
 
     void UpdateUI()
@@ -39,11 +49,17 @@ public class InventoryUI : MonoBehaviour
         {
             if (i < inventory.items.Count)
             {
-                slots[i].AddItem(inventory.items[i]);
-                //Debug.Log("made it into the for loop...");
-                slots[i].itemAmount.enabled = true;
-                //Debug.Log("the amount of items is: " + inventory.items[i].itemAmount);
-                slots[i].itemAmount.text = inventory.items[i].itemAmount.ToString("n0");
+                if (inventory.items[i].itemAmount > 0) {
+                    slots[i].AddItem(inventory.items[i]);
+                    //Debug.Log("made it into the for loop...");
+                    slots[i].itemAmount.enabled = true;
+                    //Debug.Log("the amount of items is: " + inventory.items[i].itemAmount);
+                    slots[i].itemAmount.text = inventory.items[i].itemAmount.ToString("n0");
+                }
+                else {
+                    slots[i].ClearSlot();
+                    slots[i].itemAmount.enabled = false;
+                }
             }
             else
             {
