@@ -24,20 +24,7 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
-        // OPEN OR CLOSE the inventory when the Inventory button is clicked
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            ToggleInventory();
-        }
-
-        // if inventory is ALREADY OPEN and click outside of it, close it
-        bool clickedOutsideInventory = Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject();
-        if (clickedOutsideInventory && IsInventoryOpen()) // Only close inventory if it's open
-        {
-            ToggleInventory();
-        }
-
-        if (Game.ClickDetected())
+        if (Game.ClickDetected() && !InventoryIsOpen())
         {
             if (Player.equipped == Equippable.None)
                 EquipInteractable();
@@ -48,6 +35,19 @@ public class InventoryUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U))
             AddToInventory();
+
+        // OPEN OR CLOSE the inventory when the Inventory button is clicked
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleInventory();
+        }
+
+        // if inventory is ALREADY OPEN and click outside of it, close it
+        bool clickedOutsideInventory = Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject();
+        if (clickedOutsideInventory && InventoryIsOpen()) // Only close inventory if it's open
+        {
+            ToggleInventory();
+        }
     }
 
     public void AddToInventory()
@@ -96,7 +96,7 @@ public class InventoryUI : MonoBehaviour
     }
 
     // check if the inventory is already open
-    bool IsInventoryOpen()
+    bool InventoryIsOpen()
     {
         return inventoryUI.activeSelf;
     }
@@ -129,7 +129,7 @@ public class InventoryUI : MonoBehaviour
 
     public void ToggleInventory()
     {
-        bool setActive = !IsInventoryOpen();
+        bool setActive = !InventoryIsOpen();
 
         if (setActive) Clock.Pause();
         else Clock.Resume();
