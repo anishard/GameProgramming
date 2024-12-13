@@ -38,8 +38,6 @@ public class SkyLerp : MonoBehaviour
         rend.material = data.Item1;
         lightSource.color = data.Item2;
 
-        Clock.hour = 18;
-
         StartCoroutine(Transition());
     }
 
