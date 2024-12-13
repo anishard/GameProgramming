@@ -4,11 +4,11 @@ using TMPro;
 public class Clock : MonoBehaviour
 {
     public static int hour, day;
+    public static float gameHourInRealMinutes = 0.02f;
 
     private TMP_Text clockTime;
     private TMP_Text clockDay;
     private float lastTimestamp;
-    private float gameHourInRealMinutes = 0.02f;
 
     void Start()
     {
