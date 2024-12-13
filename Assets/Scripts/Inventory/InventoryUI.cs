@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -20,10 +21,12 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Inventory"))
-        {
+
+        bool clickedOutsideInventory = Input.GetMouseButtonDown(0)
+            && !EventSystem.current.IsPointerOverGameObject();
+
+        if (Input.GetButtonDown("Inventory") || clickedOutsideInventory)
             ToggleInventory();
-        }
     }
 
     void UpdateUI()
