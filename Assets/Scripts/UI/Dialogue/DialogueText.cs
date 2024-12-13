@@ -54,8 +54,8 @@ public class DialogueText : MonoBehaviour
         }
         else
         {
-            Game.ToggleUI(true);
-            Player.TogglePlayer(true);
+            UI.Toggle(true);
+            Player.Toggle(true);
             Destroy(GameObject.FindWithTag("Dialogue"));
         }
     }

@@ -173,7 +173,7 @@ public class Player : MonoBehaviour
         focus = null;
     }
 
-    public static void Equip(string itemName)
+    public static void EquipTool(string itemName)
     {
         Equippable item;
 
@@ -191,8 +191,8 @@ public class Player : MonoBehaviour
             else renderer.enabled = false;
         }
 
-        Game.RemoveNote();
-        if (notAlreadyEquipped) Game.ActivateNote(itemName);
+        Note.Remove();
+        if (notAlreadyEquipped) Note.Activate(itemName);
     }
 
     public static bool ObjectDetected(string objectName)
@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
         return Array.Find(colliders, (c) => c.name == objectName);
     }
 
-    public static IEnumerator PausePlayer(Action callback, float seconds = 1)
+    public static IEnumerator Pause(Action callback, float seconds = 1)
     {
         pauseMovement = true;
         yield return new WaitForSeconds(seconds);
@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
         pauseMovement = false;
     }
 
-    public static void TogglePlayer(bool isEnabled)
+    public static void Toggle(bool isEnabled)
     {
         Transform[] children = GameObject.Find("Player").GetComponentsInChildren<Transform>();
         foreach (var child in children)
