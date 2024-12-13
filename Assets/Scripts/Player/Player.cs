@@ -1,21 +1,20 @@
 using System;
-using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public GameObject activeArea;
-    public Equippable equipped;
     public float velocity;
     public float maxVelocity;
-    public bool pauseMovement;
     public Vector3 minBounds;
     public Vector3 maxBounds;
     public AudioClip footstepAudio;
+
+    public static GameObject activeArea;
+    public static Equippable equipped;
+    public static bool pauseMovement;
 
     private Game game;
     private AudioSource audioSource;
@@ -26,8 +25,8 @@ public class Player : MonoBehaviour
     Camera cam;
 
     public Interactable focus;
-//     Interactable interact = new Interactable();
-// MyScript scriptInstance = newObject.AddComponent<MyScript>()
+    //     Interactable interact = new Interactable();
+    // MyScript scriptInstance = newObject.AddComponent<MyScript>()
     void Start()
     {
         activeArea = GameObject.Find("ActiveArea");
@@ -51,7 +50,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         // check if hovering over UI (inventory), if so then don't move player 
-        if (EventSystem.current.IsPointerOverGameObject()) {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
             return;
         }
         // stop character from moving
@@ -119,21 +119,25 @@ public class Player : MonoBehaviour
         // if (Input.GetMouseButtonDown(1)) {
         //     RemoveFocus();
         // }
-        if (Input.GetMouseButtonDown(1)) {
+        if (Input.GetMouseButtonDown(1))
+        {
             RemoveFocus();
         }
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0))
+        {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100)) {
+            if (Physics.Raycast(ray, out hit, 100))
+            {
                 // Check if we hit an interactable
                 //  if we did, log that we found an interactable object
                 Interactable interactable = hit.collider.GetComponent<Interactable>();
                 //GameObject obj = hit.collider.GetComponent<GameObject>();
-                
-                if (interactable != null) {
+
+                if (interactable != null)
+                {
                     // SetFocus(interactable);
                     //Debug.Log("Found an interactable object");
                     //Destroy(obj);
@@ -147,24 +151,29 @@ public class Player : MonoBehaviour
         }
     }  
 
-    void SetFocus (Interactable newFocus) {
-        if (newFocus != focus) {
-            if (focus != null) {
+    void SetFocus(Interactable newFocus)
+    {
+        if (newFocus != focus)
+        {
+            if (focus != null)
+            {
                 focus.OnDefocused();
             }
             focus = newFocus;
         }
-        newFocus.OnFocused(transform); 
-    }  
+        newFocus.OnFocused(transform);
+    }
 
-    void RemoveFocus() {
-        if (focus != null) {
+    void RemoveFocus()
+    {
+        if (focus != null)
+        {
             focus.OnDefocused();
         }
         focus = null;
     }
 
-    public void Equip(string itemName)
+    public static void Equip(string itemName)
     {
         Equippable item;
 
@@ -182,16 +191,34 @@ public class Player : MonoBehaviour
             else renderer.enabled = false;
         }
 
-        game.RemoveNote();
-        if (notAlreadyEquipped) game.ActivateNote(itemName);
+        Game.RemoveNote();
+        if (notAlreadyEquipped) Game.ActivateNote(itemName);
     }
 
-    public bool ObjectDetected(string objectName)
+    public static bool ObjectDetected(string objectName)
     {
         Collider[] colliders = Physics.OverlapSphere(
             activeArea.transform.position, 0.75f
         );
 
         return Array.Find(colliders, (c) => c.name == objectName);
+    }
+
+    public static IEnumerator PausePlayer(Action callback, float seconds = 1)
+    {
+        pauseMovement = true;
+        yield return new WaitForSeconds(seconds);
+        callback();
+        pauseMovement = false;
+    }
+
+    public static void TogglePlayer(bool isEnabled)
+    {
+        Transform[] children = GameObject.Find("Player").GetComponentsInChildren<Transform>();
+        foreach (var child in children)
+        {
+            var renderer = child.gameObject.GetComponent<SkinnedMeshRenderer>();
+            if (renderer != null) renderer.enabled = isEnabled;
+        }
     }
 }
