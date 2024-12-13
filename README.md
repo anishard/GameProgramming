@@ -19,6 +19,7 @@ This project was built with Unity as a semester-long group project for the cours
 - [Pixel art Menu package (5 sets)](https://assetstore.unity.com/packages/2d/gui/pixel-art-menu-package-5-sets-275304)
 
 ### Sound
+- [FREE Casual Game SFX Pack](https://assetstore.unity.com/packages/audio/sound-fx/free-casual-game-sfx-pack-54116)
 - [Small Sound Kit](https://assetstore.unity.com/packages/audio/sound-fx/small-sound-kit-300582)
 
 ### Characters

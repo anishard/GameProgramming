@@ -6,7 +6,15 @@ using UnityEngine.EventSystems;
 public class Game : MonoBehaviour
 {
     public static AudioSource audioSource;
-    private static AudioClip[] audioClips;
+    public static AudioClip[] audioClips
+    {
+        get
+        {
+            clips ??= Resources.LoadAll<AudioClip>("AudioClips");
+            return clips;
+        }
+    }
+    private static AudioClip[] clips;
 
     void Start()
     {
@@ -29,7 +37,6 @@ public class Game : MonoBehaviour
 
     public static IEnumerator PlayAudio(string clipName, float volumeScale = 1f, float delay = 0f)
     {
-        audioClips ??= Resources.LoadAll<AudioClip>("AudioClips");
         AudioClip clip = Array.Find(audioClips, (e) => e.name == clipName);
 
         if (clip == null)

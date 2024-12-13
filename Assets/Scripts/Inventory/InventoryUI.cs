@@ -11,6 +11,8 @@ public class InventoryUI : MonoBehaviour
     InventorySlot[] slots;
     public static GameObject equippedInteractable;
     public Interactable focus;
+    private static AudioClip equipClip;
+    private static AudioClip dequipClip;
 
     void Start()
     {
@@ -81,6 +83,9 @@ public class InventoryUI : MonoBehaviour
         other.transform.localPosition = Vector3.zero;
         Player.equipped = Equippable.Interactable;
         equippedInteractable = other;
+
+        equipClip ??= Array.Find(Game.audioClips, (e) => e.name == "Equip");
+        Game.audioSource.PlayOneShot(equipClip, 0.3f);
     }
 
     private static void DequipInteractable()
@@ -88,6 +93,9 @@ public class InventoryUI : MonoBehaviour
         equippedInteractable.transform.parent = null;
         Player.equipped = Equippable.None;
         equippedInteractable = null;
+
+        dequipClip ??= Array.Find(Game.audioClips, (e) => e.name == "Dequip");
+        Game.audioSource.PlayOneShot(dequipClip, 0.3f);
     }
 
     private static GameObject InteractableDetected()
