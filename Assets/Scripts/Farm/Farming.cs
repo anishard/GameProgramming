@@ -49,7 +49,7 @@ public class Farming : MonoBehaviour
 
     void EnterHouse()
     {
-        StartCoroutine(Game.PlayAudio("OpenDoor", 0.3f));
+        StartCoroutine(Game.PlayAudio("OpenDoor", 0.5f));
     }
 
     void EnterTown() { }
