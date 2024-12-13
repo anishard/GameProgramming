@@ -3,7 +3,7 @@ using TMPro;
 
 public class Clock : MonoBehaviour
 {
-    public static int hour, day;
+    public static int hour = 7, day = 1;
     public static float gameHourInRealMinutes = 0.02f;
 
     private TMP_Text clockTime;
@@ -15,8 +15,6 @@ public class Clock : MonoBehaviour
 
     void Start()
     {
-        hour = 8;
-        day = 1;
         lastTimestamp = Time.time;
         pauseDuration = 0;
         isPaused = false;
