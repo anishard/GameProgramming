@@ -2146,8 +2146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4cf3f072568834ea1c9ea271082c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hour: 0
-  day: 0
 --- !u!4 &467970704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 919915781321202912, guid: a598e80007fac304c9bed9c008bc76f9, type: 3}
@@ -13245,6 +13243,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 788238811}
+    - target: {fileID: 5581774843211141975, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
+      propertyPath: m_Name
+      value: Body
+      objectReference: {fileID: 0}
     - target: {fileID: 5755559940489827259, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
       propertyPath: m_SizeDelta.x
       value: 113
@@ -13281,6 +13283,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1209923028}
+    - target: {fileID: 8507246152828296970, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
+      propertyPath: m_Name
+      value: BodyOnly
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

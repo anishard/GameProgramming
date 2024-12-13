@@ -39,29 +39,33 @@ public class Game : MonoBehaviour
     {
         notes ??= Resources.LoadAll<TextAsset>("Notes");
 
-        List<string> lines = new();
+        NoteData data = null;
 
-        TextAsset note = Array.Find(notes, (file) =>
+        foreach (var file in notes)
         {
-            lines.Clear();
-            lines.AddRange(file.text.Split(Environment.NewLine));
-            return lines[0] == name;
-        });
+            var json = JsonUtility.FromJson<NoteData>(file.text);
+            if (json.objectName == name)
+            {
+                data = json;
+                break;
+            }
+        }
 
-        if (note != null)
-            uiNote.ToggleNote(lines[1], lines[2]);
+        if (data != null)
+            uiNote.ToggleNote(data.title, data.body);
         else
             throw new Exception(name + " does not exist in Resources/Notes");
     }
 
-    public bool ClickDetected()
+    public bool ClickDetected(bool allowUI = false)
     {
         bool detected = false;
 
         bool mouseClicked = Input.GetMouseButtonDown(0);
+        bool buttonClicked = Input.GetKeyDown(KeyCode.J);
         bool uiClicked = EventSystem.current.IsPointerOverGameObject();
 
-        if ((mouseClicked && !uiClicked) || Input.GetKeyDown(KeyCode.J))
+        if ((mouseClicked && (allowUI || !uiClicked)) || buttonClicked)
             detected = true;
 
         return detected;
