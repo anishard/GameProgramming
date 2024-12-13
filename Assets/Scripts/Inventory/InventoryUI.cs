@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class InventoryUI : MonoBehaviour
 {
+    
     public GameObject inventoryUI;
     public Transform itemsParent;
     Inventory inventory;
@@ -33,12 +34,13 @@ public class InventoryUI : MonoBehaviour
 
     void UpdateUI()
     {
+        //Debug.Log("updating UI....");
         for (int i = 0; i < slots.Length; i++)
         {
             if (i < inventory.items.Count)
             {
                 slots[i].AddItem(inventory.items[i]);
-                Debug.Log("made it into the for loop...");
+                //Debug.Log("made it into the for loop...");
                 slots[i].itemAmount.enabled = true;
                 //Debug.Log("the amount of items is: " + inventory.items[i].itemAmount);
                 slots[i].itemAmount.text = inventory.items[i].itemAmount.ToString("n0");

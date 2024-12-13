@@ -9,11 +9,25 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
 
     void Awake() {
-        if (instance != null) {
-            Debug.LogWarning("More than one instance of inventory found");
-            return;
+        // if (instance != null) {
+        //     Debug.LogWarning("More than one instance of inventory found");
+        //     return;
+        // }
+        // instance = this;
+        // if instance is not yet set, set it and make it persistent between scenes
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        instance = this;
+        else
+        {
+            // if instance is already set and this is not the same object, destroy it
+            if (this != instance) 
+            { 
+                Destroy(gameObject); 
+            }
+        }
     }
 
     #endregion 
@@ -31,14 +45,14 @@ public class Inventory : MonoBehaviour
         Item copyItem = Instantiate(item);
         if (!item.isDefaultItem) {
             if (items.Count >= space) {
-                Debug.Log("Not enough room.");
+                //Debug.Log("Not enough room.");
                 return false;
             }
             //for stacking
             for (int i=0; i<items.Count; i++) {
                 if (items[i].name == item.name) {
                     items[i].itemAmount++;
-                    Debug.Log("there are: " + items[i].itemAmount + " " + item.name);
+                    //Debug.Log("there are: " + items[i].itemAmount + " " + item.name);
                     if (onItemChangedCallback != null) {
                         onItemChangedCallback.Invoke();
                     }       
@@ -57,6 +71,13 @@ public class Inventory : MonoBehaviour
 
     public void Remove(Item item) {
         items.Remove(item);
+        // stacking
+        for (int i=0; i<items.Count; i++) {
+                if (items[i].name == item.name) {
+                    items[i].itemAmount--;
+                }
+        }
+
         if (onItemChangedCallback != null) {
             onItemChangedCallback.Invoke();
         }

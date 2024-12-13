@@ -16,6 +16,26 @@ public class InventorySlot : MonoBehaviour
     // public delegate void OnItemChanged();
     // public OnItemChanged onItemChangedCallback;
 
+    // public static Image icon;
+
+    // void Awake() {
+    //     // if instance is not yet set, set it and make it persistent between scenes
+    //     if (icon == null)
+    //     {
+    //         icon = this;
+    //         DontDestroyOnLoad(gameObject);
+    //     }
+    //     else
+    //     {
+    //         // if instance is already set and this is not the same object, destroy it
+    //         if (this != icon) 
+    //         { 
+    //             Destroy(gameObject); 
+    //         }
+    //     }
+    // }
+
+
     void Start() {
         itemAmount.enabled = false;
         player = GameObject.Find("Player");

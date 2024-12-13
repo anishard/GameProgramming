@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -138,13 +139,17 @@ public class Player : MonoBehaviour
                 if (interactable != null)
                 {
                     // SetFocus(interactable);
-                    Debug.Log("Found an interactable object");
+                    //Debug.Log("Found an interactable object");
                     //Destroy(obj);
                     SetFocus(interactable);
                 }
             }
         }
-    }
+
+        if (Input.GetKeyDown("space")) {
+            SceneManager.LoadScene("DiningRoom");
+        }
+    }  
 
     void SetFocus(Interactable newFocus)
     {
