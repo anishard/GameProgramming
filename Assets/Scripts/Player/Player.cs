@@ -15,20 +15,17 @@ public class Player : MonoBehaviour
     public static Transform playerTransform;
     public static GameObject activeArea;
     public static Equippable equipped;
-    public static GameObject equippedInteractable;
     public static bool pauseMovement;
 
     private AudioSource audioSource;
     private Animator controller;
     private Rigidbody rb;
-    public Interactable focus;
 
     void Start()
     {
         activeArea = GameObject.Find("ActiveArea");
 
         equipped = Equippable.None;
-        equippedInteractable = null;
         velocity = 0f;
         maxVelocity = 6f;
         pauseMovement = false;
@@ -96,41 +93,7 @@ public class Player : MonoBehaviour
         float zVal = transform.position.z + zdirection * velocity * Time.deltaTime;
         transform.position = new Vector3(xVal, transform.position.y, zVal);
 
-        if (Game.ClickDetected()) Interact();
-        if (Input.GetKeyDown(KeyCode.U)) AddToInventory();
-
         if (Input.GetKeyDown("space")) SceneManager.LoadScene("DiningRoom");
-    }
-
-    public void AddToInventory()
-    {
-        Interactable newFocus = equippedInteractable?.GetComponent<Interactable>();
-
-        if (newFocus == null) return;
-
-        if (newFocus != focus)
-        {
-            if (focus != null) focus.OnDefocused();
-            focus = newFocus;
-        }
-
-        newFocus.OnFocused();
-        equipped = Equippable.None;
-        equippedInteractable = null;
-    }
-
-    public static void EquipInteractable(GameObject other)
-    {
-        other.transform.parent = playerTransform;
-        equipped = Equippable.Interactable;
-        equippedInteractable = other;
-    }
-
-    public static void DequipInteractable()
-    {
-        equippedInteractable.transform.parent = null;
-        equipped = Equippable.None;
-        equippedInteractable = null;
     }
 
     public static void EquipTool(string itemName)
@@ -155,19 +118,6 @@ public class Player : MonoBehaviour
         if (notAlreadyEquipped) Note.Activate(itemName);
     }
 
-    public static void Interact()
-    {
-        var other = InteractableDetected();
-
-        if (other == null) return;
-
-        if (equipped == Equippable.None)
-            EquipInteractable(other);
-
-        else if (equipped == Equippable.Interactable)
-            DequipInteractable();
-    }
-
     public static bool ObjectDetected(string objectName)
     {
         Collider[] colliders = Physics.OverlapSphere(
@@ -175,15 +125,6 @@ public class Player : MonoBehaviour
         );
 
         return Array.Find(colliders, (c) => c.name == objectName);
-    }
-
-    public static GameObject InteractableDetected()
-    {
-        Collider[] colliders = Physics.OverlapSphere(
-            activeArea.transform.position, 0.75f
-        );
-
-        return Array.Find(colliders, (c) => c.CompareTag("Interactable"))?.gameObject;
     }
 
     public static IEnumerator Pause(Action callback, float seconds = 1)
@@ -196,7 +137,9 @@ public class Player : MonoBehaviour
 
     public static void Toggle(bool isEnabled)
     {
-        Transform[] children = GameObject.Find("Player").GetComponentsInChildren<Transform>();
+        Transform[] children = GameObject
+            .Find("Player")
+            .GetComponentsInChildren<Transform>();
         foreach (var child in children)
         {
             var renderer = child.gameObject.GetComponent<SkinnedMeshRenderer>();
