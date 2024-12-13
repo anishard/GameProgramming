@@ -9,7 +9,7 @@ public class InventoryUI : MonoBehaviour
     public Transform itemsParent;
     Inventory inventory;
     InventorySlot[] slots;
-    // Start is called before the first frame update
+
     void Start()
     {
         inventory = Inventory.instance;
@@ -18,7 +18,6 @@ public class InventoryUI : MonoBehaviour
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Inventory"))
@@ -29,7 +28,6 @@ public class InventoryUI : MonoBehaviour
 
     void UpdateUI()
     {
-        Debug.Log("updating UI....");
         for (int i = 0; i < slots.Length; i++)
         {
             if (i < inventory.items.Count)
@@ -50,7 +48,11 @@ public class InventoryUI : MonoBehaviour
 
     public void ToggleInventory()
     {
-        inventoryUI.SetActive(!inventoryUI.activeSelf);
+        bool setActive = !inventoryUI.activeSelf;
+
+        inventoryUI.SetActive(setActive);
+        Player.pauseMovement = setActive;
+
         UpdateUI();
     }
 }

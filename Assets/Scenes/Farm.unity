@@ -7959,6 +7959,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.421
       objectReference: {fileID: 0}
+    - target: {fileID: 1769658051490169925, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: m_Height
+      value: 1.2105548
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769658051490169925, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: m_Center.y
+      value: 0.61360705
+      objectReference: {fileID: 0}
     - target: {fileID: 1896838967072325135, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -13243,6 +13251,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 788238811}
+    - target: {fileID: 3564805927456900663, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
+      propertyPath: m_TagString
+      value: Note
+      objectReference: {fileID: 0}
     - target: {fileID: 5581774843211141975, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
       propertyPath: m_Name
       value: Body

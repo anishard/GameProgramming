@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class Farming : MonoBehaviour
 {
-    private Player player;
-    private Game game;
-
     private Vector3 minBounds;
     private Vector3 maxBounds;
     private FarmSquare[,] farmland;
@@ -17,9 +13,6 @@ public class Farming : MonoBehaviour
 
     void Start()
     {
-        player = gameObject.GetComponent<Player>();
-        game = GameObject.Find("GameManager").GetComponent<Game>();
-
         // load resources
         crops = Resources.LoadAll<GameObject>("Farming/Crops");
 
@@ -41,12 +34,12 @@ public class Farming : MonoBehaviour
 
         numPours = MAX_POURS;
 
-        // game.ActivateDialogue("GameIntro");
+        // Game.ActivateDialogue("GameIntro");
     }
 
     void Update()
     {
-        if (game.ClickDetected())
+        if (Game.ClickDetected())
         {
             if (InteractableObjectFound()) return;
 
@@ -56,7 +49,7 @@ public class Farming : MonoBehaviour
 
     void EnterHouse()
     {
-        StartCoroutine(game.PlayAudio("OpenDoor", 0.3f));
+        StartCoroutine(Game.PlayAudio("OpenDoor", 0.3f));
     }
 
     void EnterTown() { }
@@ -65,7 +58,7 @@ public class Farming : MonoBehaviour
     {
         if (IsOnFarmland())
         {
-            Vector3 pos = player.activeArea.transform.position;
+            Vector3 pos = Player.activeArea.transform.position;
             FarmSquare square;
 
             for (int row = 0; row < farmland.GetLength(0); ++row)
@@ -98,18 +91,17 @@ public class Farming : MonoBehaviour
     {
         bool objectFound = true;
 
-        if (player.ObjectDetected("Town")) EnterTown();
-        else if (player.ObjectDetected("Door")) EnterHouse();
-        else if (player.ObjectDetected("ShippingBin")) OpenBin();
+        if (Player.ObjectDetected("Town")) EnterTown();
+        else if (Player.ObjectDetected("Door")) EnterHouse();
+        else if (Player.ObjectDetected("ShippingBin")) OpenBin();
         else objectFound = false;
 
         return objectFound;
-
     }
 
     bool IsOnFarmland()
     {
-        Vector3 pos = player.activeArea.transform.position;
+        Vector3 pos = Player.activeArea.transform.position;
         return pos.x >= minBounds.x
             && pos.x <= maxBounds.x
             && pos.z >= minBounds.z
@@ -118,15 +110,7 @@ public class Farming : MonoBehaviour
 
     void OpenBin()
     {
-        StartCoroutine(game.PlayAudio("ShippingBin", 0.15f));
-    }
-
-    IEnumerator PausePlayer(Action callback)
-    {
-        player.pauseMovement = true;
-        yield return new WaitForSeconds(1);
-        callback();
-        player.pauseMovement = false;
+        StartCoroutine(Game.PlayAudio("ShippingBin", 0.15f));
     }
 
     void TillSquare(FarmSquare square)
@@ -136,13 +120,13 @@ public class Farming : MonoBehaviour
 
         if (square == null || square.state != FarmSquareState.Untilled)
         {
-            StartCoroutine(game.PlayAudio("Miss", 0.5f, 0.35f));
-            StartCoroutine(PausePlayer(() => { }));
+            StartCoroutine(Game.PlayAudio("Miss", 0.5f, 0.35f));
+            StartCoroutine(Player.PausePlayer(() => { }));
         }
         else
         {
-            StartCoroutine(game.PlayAudio("Till", 0.6f, 0.4f));
-            StartCoroutine(PausePlayer(() =>
+            StartCoroutine(Game.PlayAudio("Till", 0.6f, 0.4f));
+            StartCoroutine(Player.PausePlayer(() =>
             {
                 square.gameObject = InstantiateByName("Dirt_Pile", crops, square.position);
                 square.state = FarmSquareState.Tilled;
@@ -155,23 +139,23 @@ public class Farming : MonoBehaviour
         Animator anim = GameObject.Find("Can").GetComponent<Animator>();
         anim.SetTrigger("isActive");
 
-        if (player.ObjectDetected("Well")) // refill
+        if (Player.ObjectDetected("Well")) // refill
         {
             numPours = MAX_POURS;
-            StartCoroutine(game.PlayAudio("FillCan", 0.2f, 0f));
-            StartCoroutine(PausePlayer(() => { }));
+            StartCoroutine(Game.PlayAudio("FillCan", 0.2f, 0f));
+            StartCoroutine(Player.PausePlayer(() => { }));
         }
         else if (numPours <= 0) // can is empty
         {
             --numPours;
-            StartCoroutine(game.PlayAudio("Miss", 0.5f, 0.2f));
-            StartCoroutine(PausePlayer(() => { }));
+            StartCoroutine(Game.PlayAudio("Miss", 0.5f, 0.2f));
+            StartCoroutine(Player.PausePlayer(() => { }));
         }
         else
         {
             --numPours;
-            StartCoroutine(game.PlayAudio("PourCan", 0.3f, 0.2f));
-            StartCoroutine(PausePlayer(() => { }));
+            StartCoroutine(Game.PlayAudio("PourCan", 0.3f, 0.2f));
+            StartCoroutine(Player.PausePlayer(() => { }));
         }
     }
 
@@ -179,10 +163,10 @@ public class Farming : MonoBehaviour
     {
         FarmSquare square = GetFarmSquare();
 
-        if (player.equipped == Equippable.Hoe)
+        if (Player.equipped == Equippable.Hoe)
             TillSquare(square);
 
-        if (player.equipped == Equippable.Can)
+        if (Player.equipped == Equippable.Can)
             UseCan(square);
     }
 }
