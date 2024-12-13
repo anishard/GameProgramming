@@ -40,21 +40,19 @@ public class Inventory : MonoBehaviour
         Item copyItem = Instantiate(item);
         if (!item.isDefaultItem) {
             if (items.Count >= space) {
-                //Debug.Log("Not enough room.");
                 return false;
             }
             //for stacking
             for (int i=0; i<items.Count; i++) {
                 if (items[i].name == item.name) {
                     items[i].itemAmount++;
-                    //Debug.Log("there are: " + items[i].itemAmount + " " + item.name);
                     if (onItemChangedCallback != null) {
                         onItemChangedCallback.Invoke();
                     }       
                     return true;
                 }
             }
-            //items.Add(item);
+            
             //stacking
             items.Add(copyItem);
             if (onItemChangedCallback != null) {

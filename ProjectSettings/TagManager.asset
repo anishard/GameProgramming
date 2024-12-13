@@ -8,6 +8,8 @@ TagManager:
   - Tool
   - Dialogue
   - Note
+  - Tip
+  - Interactable
   layers:
   - Default
   - TransparentFX

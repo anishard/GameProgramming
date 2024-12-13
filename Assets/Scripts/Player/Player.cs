@@ -115,41 +115,17 @@ public class Player : MonoBehaviour
 
         transform.position = new Vector3(xVal, transform.position.y, zVal);
 
-        //ADDED CODE FOR PICKING UP STUFF FOR INVENTORY - Claire
-        // if (Input.GetMouseButtonDown(1)) {
-        //     RemoveFocus();
-        // }
-        if (Input.GetMouseButtonDown(1))
+        if (Game.ClickDetected())
         {
-            RemoveFocus();
+            var other = InteractableDetected();
+            if (other != null) SetFocus(other.GetComponent<Interactable>());
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown("space"))
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                // Check if we hit an interactable
-                //  if we did, log that we found an interactable object
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                //GameObject obj = hit.collider.GetComponent<GameObject>();
-
-                if (interactable != null)
-                {
-                    // SetFocus(interactable);
-                    //Debug.Log("Found an interactable object");
-                    //Destroy(obj);
-                    SetFocus(interactable);
-                }
-            }
-        }
-
-        if (Input.GetKeyDown("space")) {
             SceneManager.LoadScene("DiningRoom");
         }
-    }  
+    }
 
     void SetFocus(Interactable newFocus)
     {
@@ -162,15 +138,6 @@ public class Player : MonoBehaviour
             focus = newFocus;
         }
         newFocus.OnFocused(transform);
-    }
-
-    void RemoveFocus()
-    {
-        if (focus != null)
-        {
-            focus.OnDefocused();
-        }
-        focus = null;
     }
 
     public static void EquipTool(string itemName)
@@ -202,6 +169,15 @@ public class Player : MonoBehaviour
         );
 
         return Array.Find(colliders, (c) => c.name == objectName);
+    }
+
+    public static GameObject InteractableDetected()
+    {
+        Collider[] colliders = Physics.OverlapSphere(
+            activeArea.transform.position, 0.75f
+        );
+
+        return Array.Find(colliders, (c) => c.CompareTag("Interactable"))?.gameObject;
     }
 
     public static IEnumerator Pause(Action callback, float seconds = 1)
