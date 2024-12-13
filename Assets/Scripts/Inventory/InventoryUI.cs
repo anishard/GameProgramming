@@ -55,6 +55,9 @@ public class InventoryUI : MonoBehaviour
     {
         bool setActive = !inventoryUI.activeSelf;
 
+        if (setActive) Clock.Pause();
+        else Clock.Resume();
+
         inventoryUI.SetActive(setActive);
         Player.pauseMovement = setActive;
 

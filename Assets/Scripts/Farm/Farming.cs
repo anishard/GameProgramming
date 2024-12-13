@@ -34,7 +34,7 @@ public class Farming : MonoBehaviour
 
         numPours = MAX_POURS;
 
-        Dialogue.Activate("GameIntro");
+        // Dialogue.Activate("GameIntro");
     }
 
     void Update()
