@@ -3,7 +3,7 @@ using TMPro;
 
 public class Clock : MonoBehaviour
 {
-    public int hour, day;
+    public static int hour, day;
 
     private TMP_Text clockTime;
     private TMP_Text clockDay;
