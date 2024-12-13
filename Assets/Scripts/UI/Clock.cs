@@ -3,18 +3,22 @@ using TMPro;
 
 public class Clock : MonoBehaviour
 {
-    public static int hour, day;
+    public static int hour = 7, day = 1;
     public static float gameHourInRealMinutes = 0.02f;
 
     private TMP_Text clockTime;
     private TMP_Text clockDay;
     private float lastTimestamp;
+    private static float pauseDuration;
+    private static bool isPaused;
+    private static bool stopPause;
 
     void Start()
     {
-        hour = 8;
-        day = 1;
         lastTimestamp = Time.time;
+        pauseDuration = 0;
+        isPaused = false;
+        stopPause = false;
 
         clockDay = gameObject.transform.Find("Date").GetComponent<TMP_Text>();
         clockTime = gameObject.transform.Find("Time").GetComponent<TMP_Text>();
@@ -25,7 +29,14 @@ public class Clock : MonoBehaviour
 
     void Update()
     {
-        if (Time.time - lastTimestamp >= 60 * gameHourInRealMinutes)
+        if (isPaused && stopPause)
+        {
+            lastTimestamp += pauseDuration;
+            isPaused = false;
+            stopPause = false;
+        }
+
+        if (!isPaused && (Time.time - lastTimestamp >= 60 * gameHourInRealMinutes))
         {
             hour++;
             lastTimestamp = Time.time;
@@ -38,6 +49,18 @@ public class Clock : MonoBehaviour
                 SetClockDate();
             }
         }
+    }
+
+    public static void Pause()
+    {
+        pauseDuration = Time.time;
+        isPaused = true;
+    }
+
+    public static void Resume()
+    {
+        pauseDuration = Time.time - pauseDuration;
+        stopPause = true;
     }
 
     private void SetClockDate()

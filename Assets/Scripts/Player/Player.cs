@@ -12,34 +12,25 @@ public class Player : MonoBehaviour
     public Vector3 maxBounds;
     public AudioClip footstepAudio;
 
+    public static Transform playerTransform;
     public static GameObject activeArea;
     public static Equippable equipped;
     public static bool pauseMovement;
 
-    private Game game;
     private AudioSource audioSource;
     private Animator controller;
     private Rigidbody rb;
 
-    //ADDED CODE FOR INVENTORY
-    Camera cam;
-
-    public Interactable focus;
-    //     Interactable interact = new Interactable();
-    // MyScript scriptInstance = newObject.AddComponent<MyScript>()
     void Start()
     {
         activeArea = GameObject.Find("ActiveArea");
-
-        //ADDED CODE FOR INVENTORY
-        cam = Camera.main;
 
         equipped = Equippable.None;
         velocity = 0f;
         maxVelocity = 6f;
         pauseMovement = false;
 
-        game = GameObject.Find("GameManager").GetComponent<Game>();
+        playerTransform = gameObject.transform;
         audioSource = gameObject.GetComponent<AudioSource>();
         controller = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -94,83 +85,15 @@ public class Player : MonoBehaviour
 
         if (controller.GetBool("isJumping"))
         {
-            velocity += 0.1f; // gradual speed change
+            velocity += 0.1f;
             if (velocity > 6f) velocity = 6f;
         }
 
-        // keep character within bounds
         float xVal = transform.position.x + xdirection * velocity * Time.deltaTime;
         float zVal = transform.position.z + zdirection * velocity * Time.deltaTime;
-
-        if (minBounds != Vector3.zero)
-        {
-            if (xVal <= minBounds.x) xVal = minBounds.x;
-            if (zVal <= minBounds.z) zVal = minBounds.z;
-        }
-        if (maxBounds != Vector3.zero)
-        {
-            if (xVal >= maxBounds.x) xVal = maxBounds.x;
-            if (zVal >= maxBounds.z) zVal = maxBounds.z;
-        }
-
         transform.position = new Vector3(xVal, transform.position.y, zVal);
 
-        //ADDED CODE FOR PICKING UP STUFF FOR INVENTORY - Claire
-        // if (Input.GetMouseButtonDown(1)) {
-        //     RemoveFocus();
-        // }
-        if (Input.GetMouseButtonDown(1))
-        {
-            RemoveFocus();
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                // Check if we hit an interactable
-                //  if we did, log that we found an interactable object
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                //GameObject obj = hit.collider.GetComponent<GameObject>();
-
-                if (interactable != null)
-                {
-                    // SetFocus(interactable);
-                    //Debug.Log("Found an interactable object");
-                    //Destroy(obj);
-                    SetFocus(interactable);
-                }
-            }
-        }
-
-        if (Input.GetKeyDown("space")) {
-            SceneManager.LoadScene("DiningRoom");
-        }
-    }  
-
-    void SetFocus(Interactable newFocus)
-    {
-        if (newFocus != focus)
-        {
-            if (focus != null)
-            {
-                focus.OnDefocused();
-            }
-            focus = newFocus;
-        }
-        newFocus.OnFocused(transform);
-    }
-
-    void RemoveFocus()
-    {
-        if (focus != null)
-        {
-            focus.OnDefocused();
-        }
-        focus = null;
+        if (Input.GetKeyDown("space")) SceneManager.LoadScene("DiningRoom");
     }
 
     public static void EquipTool(string itemName)
@@ -178,9 +101,9 @@ public class Player : MonoBehaviour
         Equippable item;
 
         if (!Enum.TryParse(itemName, out item))
-            throw new Exception(itemName + " does not exist in enum Equippable");
+            throw new Exception(itemName + " does not exist in Equippable");
 
-        bool notAlreadyEquipped = item != equipped;
+        bool notAlreadyEquipped = (item != equipped) && (equipped == Equippable.None);
 
         equipped = notAlreadyEquipped ? item : Equippable.None;
 
@@ -214,7 +137,9 @@ public class Player : MonoBehaviour
 
     public static void Toggle(bool isEnabled)
     {
-        Transform[] children = GameObject.Find("Player").GetComponentsInChildren<Transform>();
+        Transform[] children = GameObject
+            .Find("Player")
+            .GetComponentsInChildren<Transform>();
         foreach (var child in children)
         {
             var renderer = child.gameObject.GetComponent<SkinnedMeshRenderer>();

@@ -33,22 +33,20 @@ public class SkyTransition : MonoBehaviour
 
         dayColor = CreateColor(255, 244, 214);
         nightColor = CreateColor(121, 152, 255);
-
-        StartCoroutine(Transition());
     }
 
     void Update()
     {
-        if (!isTransitioning)
-        {
-            if (
-                Clock.hour == (int)TransitionTime.Morning  // transition to morning
-             || Clock.hour == (int)TransitionTime.Day      // to day
-             || Clock.hour == (int)TransitionTime.Evening  // to evening
-             || Clock.hour == (int)TransitionTime.Night    // to night
-             )
-                StartCoroutine(Transition());
-        }
+        if (!isTransitioning && IsTransitionTime())
+            StartCoroutine(Transition());
+    }
+
+    bool IsTransitionTime()
+    {
+        return Clock.hour == (int)TransitionTime.Morning  // transition to morning
+            || Clock.hour == (int)TransitionTime.Day      // to day
+            || Clock.hour == (int)TransitionTime.Evening  // to evening
+            || Clock.hour == (int)TransitionTime.Night;    // to night
     }
 
     IEnumerator Transition()

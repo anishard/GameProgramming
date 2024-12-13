@@ -80,7 +80,12 @@ public class InventorySlot : MonoBehaviour
                 itemPosition.y = collHeight / 2;
                 
                 //add the prefab back into the game at a position slightly in front of the player
-                Instantiate(placeItemBack, itemPosition, Quaternion.identity);
+                var parent = GameObject.Find("InteractableContainer").GetComponent<Transform>();
+                var newItem = Instantiate(placeItemBack, Vector3.zero, Quaternion.identity, parent);
+                newItem.transform.localPosition = Vector3.zero;
+                Player.equipped = Equippable.Interactable;
+                InventoryUI.equippedInteractable = newItem;
+
                 if (item.itemAmount == 0) { //if decrease from 1 to 0, disable the slot UI text
                     ClearSlot();
                     itemAmount.enabled = false;
