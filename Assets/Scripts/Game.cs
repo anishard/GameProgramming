@@ -7,45 +7,23 @@ using UnityEngine.EventSystems;
 public class Game : MonoBehaviour
 {
     public AudioSource audioSource;
-    public int day;
-    public int hour;
 
-    private Player player;
     private GameObject ui;
     private Note uiNote;
     private AudioClip[] audioClips;
     private GameObject[] dialogues;
     private TextAsset[] notes;
 
-    private float startTime;
-    private readonly int gameHourInRealMinutes = 1;
 
     void Start()
     {
-        day = 0;
-        hour = 0;
-        startTime = Time.time;
-
         audioSource = gameObject.GetComponent<AudioSource>();
-        player = GameObject.Find("Player").GetComponent<Player>();
+
         ui = GameObject.Find("UI");
         uiNote = GameObject.Find("Note").GetComponent<Note>();
     }
 
-    void Update()
-    {
-        if (Time.time - startTime >= 60 * gameHourInRealMinutes)
-        {
-            hour++;
-            startTime = Time.time;
-        }
-
-        if (hour == 24)
-        {
-            day++;
-            hour = 0;
-        }
-    }
+    void Update() {}
 
     public void ActivateDialogue(string name)
     {
