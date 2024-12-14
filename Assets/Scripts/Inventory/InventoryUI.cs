@@ -121,6 +121,7 @@ public class InventoryUI : MonoBehaviour
             {
                 if (inventory.items[i].itemAmount > 0)
                 {
+                    //Debug.Log("adding item to inventory");
                     slots[i].AddItem(inventory.items[i]);
                     slots[i].itemAmount.enabled = true;
                     slots[i].itemAmount.text = inventory.items[i].itemAmount.ToString("n0");
