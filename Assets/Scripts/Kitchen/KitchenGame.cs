@@ -58,7 +58,14 @@ public class KitchenGame : MonoBehaviour
                     break;
                 case Todo.CLEAN:
                     // Generate spills to be cleaned
-                    GetComponent<SpillCleaning>().enabled = true;
+                    SpillCleaning spillCleaning = GetComponent<SpillCleaning>();
+                    spillCleaning.enabled = true;
+
+                    // End task when player has cleaned all spills
+                    if (spillCleaning.cleanedSpills == spillCleaning.spillCount) {
+                        spillCleaning.enabled = false;
+                        StartNextTodo();
+                    }
                     break;
                 case Todo.COOK:
                     break;

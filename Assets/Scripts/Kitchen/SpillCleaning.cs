@@ -9,10 +9,11 @@ public class SpillCleaning : MonoBehaviour
     public int spillCount = 3;
 
     private GameObject[] spills;      
-    private float minSpillDist = 3.5f; 
+    private readonly float minSpillDist = 3.5f; 
 
     // State changed by Spill.cs
     internal GameObject curSpill; 
+    internal int cleanedSpills = 0;
 
     void Start()
     {
@@ -83,6 +84,6 @@ public class SpillCleaning : MonoBehaviour
         gameObject.GetComponent<AudioSource>().PlayOneShot(cleanSound);
         Destroy(spill);
         curSpill = null;
-
+        cleanedSpills++;
     }
 }
