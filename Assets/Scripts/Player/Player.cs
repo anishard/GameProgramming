@@ -101,7 +101,10 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(xVal, transform.position.y, zVal);
 
         if (Game.ClickDetected(false) && IsTool(equipped))
-            DequipTool(Equippable.None);
+        {
+            Equippable toEquip = InventoryUI.InteractableDetected() ? Equippable.Interactable : Equippable.None;
+            DequipTool(toEquip);
+        }
 
         if (Input.GetKeyDown("space")) SceneManager.LoadScene("DiningRoom");
     }
@@ -123,32 +126,32 @@ public class Player : MonoBehaviour
         {
             equipped = item;
 
-            Debug.Log("searching" + itemName);
             foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
             {
                 if (tool.name == itemName)
                 {
-                    Debug.Log("found" + itemName);
                     tool.GetComponent<MeshRenderer>().enabled = true;
                 }
             }
 
-            // Game.audioSource.PlayOneShot(InventoryUI.equipClip);
+            Game.audioSource.PlayOneShot(InventoryUI.equipClip);
+
             Note.Activate(itemName);
         }
     }
 
     public static void DequipTool(Equippable toEquip)
     {
-        Debug.Log($"{Time.time} equipped={equipped} toEquip={toEquip}");
-        // if (equipped == toEquip) equipped = Equippable.None;
-
         foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
             tool.GetComponent<MeshRenderer>().enabled = false;
-        
+
+        bool noAudio = (toEquip == Equippable.Interactable) || (IsTool(equipped) && IsTool(toEquip));
+
         if (toEquip != equipped) equipped = Equippable.None;
 
-        // Game.audioSource.PlayOneShot(InventoryUI.dequipClip);
+        if (toEquip == equipped || !noAudio)
+            Game.audioSource.PlayOneShot(InventoryUI.dequipClip);
+
         Note.Remove();
     }
 

@@ -93,7 +93,7 @@ public class InventoryUI : MonoBehaviour
         Player.equipped = Equippable.Interactable;
         equippedInteractable = other;
 
-        // Game.audioSource.PlayOneShot(equipClip, 0.3f);
+        Game.audioSource.PlayOneShot(equipClip, 0.3f);
     }
 
     public static void DequipInteractable(GameObject other)
@@ -103,9 +103,11 @@ public class InventoryUI : MonoBehaviour
 
         equippedInteractable = null;
 
-        if (other != null) EquipInteractable(other);
+        if (other != null)
+            EquipInteractable(other);
 
-        // Game.audioSource.PlayOneShot(dequipClip, 0.3f);
+        else
+            Game.audioSource.PlayOneShot(dequipClip, 0.3f);
     }
 
     public static void DestroyInteractable()
