@@ -83,5 +83,6 @@ public class SpillCleaning : MonoBehaviour
         gameObject.GetComponent<AudioSource>().PlayOneShot(cleanSound);
         Destroy(spill);
         curSpill = null;
+
     }
 }

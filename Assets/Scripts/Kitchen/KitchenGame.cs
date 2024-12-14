@@ -1,8 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+
+enum Todo
+{
+    WASH = 0,
+    CLEAN = 1,
+    COOK = 2
+}
 
 public class KitchenGame : MonoBehaviour
 {
@@ -11,28 +16,34 @@ public class KitchenGame : MonoBehaviour
     public AudioClip washHandsSound;
 
     private float time = 60.0f;   
-    private List<string> todos;     
-    private int curTodoIndex;       
-    private bool run;               
+    private List<Todo> todos;     
+    private int curTodoIndex;   
+    private bool playing;     
+
+    // Map todo ID to its description
+    private readonly string[] todoDescs = new string[] {
+        "Wash your hands for food safety!",
+        "Whoops! You made a few spills. Press [F] on them to clean up!", 
+        "Go to the fire place and cook your food!"
+    };          
 
     void Start()
     {
-        todos = new List<string> {
-            "Wash your hands for food safety!",
-            "The kitchen is a mess, press [F] to clean up spills!", // TODO: middle section is randomized: spiders or cleanup
-            "Spiders are attacking the kitchen, squash them!", 
-            "Cook your food at the fireplace!"
+        // Todos that the player will have to complete 
+        todos = new List<Todo>
+        {
+            Todo.WASH,
+            Todo.CLEAN,
+            Todo.COOK
         };
-
         curTodoIndex = 0;
-        run = true;
-
+        playing = true;
         UpdateTodoText();
     }
 
     void Update()
     {
-        if (run)
+        if (playing)
         {
             time -= Time.deltaTime;
 
@@ -41,47 +52,45 @@ public class KitchenGame : MonoBehaviour
                 EndGame();
             }
 
-            UpdateTimerText();
+            switch (todos[curTodoIndex]) 
+            {
+                case Todo.WASH:
+                    break;
+                case Todo.CLEAN:
+                    // Generate spills to be cleaned
+                    GetComponent<SpillCleaning>().enabled = true;
+                    break;
+                case Todo.COOK:
+                    break;
+            }
+
+            timerText.text = "Timer: " + time.ToString("F1");
         }
     }
 
-    void UpdateTimerText()
-    {
-        timerText.text = "Timer: " + time.ToString("F1");
-    }
+    void StartNextTodo() {
+        curTodoIndex++;
+        UpdateTodoText();
+    }   
 
     void UpdateTodoText()
     {
-        if (curTodoIndex < todos.Count)
-        {
-            todoText.text = "Todo: " + todos[curTodoIndex];
-        }
-        else
-        {
-            todoText.text = "All tasks complete!";
-            EndGame();
-        }
-    }
-
-    void CompleteTodo()
-    {
-        curTodoIndex++; 
-        UpdateTodoText();
+        // Change text to todo's description
+        todoText.text = "Todo: " + todoDescs[(int)todos[curTodoIndex]];
     }
 
     void EndGame()
     {
         time = 0;
-        run = false;
+        playing = false;
         todoText.text = "Game Over!";
     }
 
-    /*
-     * Below are callbacks triggered when interacting with object of interest
-     */ 
-
     public void WashHands() {
-        Debug.Log("You washed your hands!");
+        // Update if this was the current todo
+        if (todos[curTodoIndex] == Todo.WASH) {
+            StartNextTodo();
+        }
         gameObject.GetComponent<AudioSource>().PlayOneShot(washHandsSound);
     }
 }
