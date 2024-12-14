@@ -48,7 +48,7 @@ public class FollowPlayer : MonoBehaviour
         LostFoundGame lfScript = muskrat.GetComponent<LostFoundGame>();
 
         // if game has started and player collides with monkey, end game
-        if (collision.gameObject.CompareTag("Player") && lfScript.hasPlayedIntroDialogue) {
+        if (collision.gameObject.CompareTag("Player") && lfScript.hasPlayedIntroDialogue && !lfScript.gameIsOver) {
             // lfScript.StopLostFoundGame();
             lfScript.StealFromInventory();
         }
