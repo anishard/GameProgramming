@@ -6,10 +6,10 @@ This project was built with Unity as a final project for the course *COMPSCI 576
 
 ## Authors
 - [Ashley Bhandari](https://github.com/ashleybhandari)
-- Eric Fournier
+- [Eric Fournier](https://github.com/edfournier)
 - [Anisha Sharda](https://github.com/anishard)
 - [Claire Takenaga](https://github.com/claireat)
-- Sriya Choudary Yalavarthy
+- [Sriya Choudary Yalavarthy](https://github.com/sriya632)
 
 ## Assets
 
