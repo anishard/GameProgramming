@@ -16,14 +16,12 @@ public class CookingGame : MonoBehaviour {
 
     void Update() {
         // Check if user stopped the meter
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (stop || Input.GetKeyDown(KeyCode.Return)) {
             stop = true;
-        }
-
-        if (stop) {
             return;
         }
 
+        // Increase meter
         if (meter.fillAmount < 1.0f) {
             meter.fillAmount += 0.5f * Time.deltaTime; 
         }
@@ -36,15 +34,12 @@ public class CookingGame : MonoBehaviour {
         // Determine target color based on meter height
         Color targetColor = meter.color;
         if (meterHeight < lowBarHeight) {
-            // Below bars
             targetColor = Color.yellow;
         }
         else if (meterHeight < highBarHeight) {
-            // Between bars 
             targetColor = new Color(1.0f, 0.64f, 0.0f); 
         }
         else {
-            // Above bars
             targetColor = Color.red;
         }
 

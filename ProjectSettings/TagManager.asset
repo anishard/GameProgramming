@@ -10,6 +10,7 @@ TagManager:
   - Note
   - Tip
   - Interactable
+  - Fireplace
   layers:
   - Default
   - TransparentFX
