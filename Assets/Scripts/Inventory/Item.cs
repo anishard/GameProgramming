@@ -18,6 +18,5 @@ public class Item : ScriptableObject
     //this method can be overridden
     public virtual void Use() {
         //use the item -- drop it in the scene ??
-        //Debug.Log("Using " + name);
     }
 }

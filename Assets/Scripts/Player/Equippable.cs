@@ -2,5 +2,6 @@ public enum Equippable
 {
     None,
     Hoe,
-    Can
+    Can,
+    Interactable
 }

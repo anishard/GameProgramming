@@ -14,7 +14,7 @@ public class Farming : MonoBehaviour
     void Start()
     {
         // load resources
-        crops = Resources.LoadAll<GameObject>("InventorySprites");
+        crops = Resources.LoadAll<GameObject>("Farming");
 
         // bounds of farmland
         minBounds = new Vector3(-11.25f, float.MaxValue, -6.25f);
@@ -34,7 +34,7 @@ public class Farming : MonoBehaviour
 
         numPours = MAX_POURS;
 
-        Dialogue.Activate("GameIntro");
+        // Dialogue.Activate("GameIntro");
     }
 
     void Update()
@@ -49,7 +49,7 @@ public class Farming : MonoBehaviour
 
     void EnterHouse()
     {
-        StartCoroutine(Game.PlayAudio("OpenDoor", 0.3f));
+        StartCoroutine(Game.PlayAudio("OpenDoor", 0.5f));
     }
 
     void EnterTown() { }

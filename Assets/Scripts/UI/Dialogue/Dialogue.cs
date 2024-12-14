@@ -8,6 +8,7 @@ public class Dialogue : MonoBehaviour
 
     public static void Activate(string name)
     {
+        Clock.Pause();
         UI.Toggle(false);
         Player.Toggle(false);
 
