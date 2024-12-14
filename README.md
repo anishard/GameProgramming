@@ -9,7 +9,7 @@ This project was built with Unity as a semester-long group project for the cours
 - Eric Fournier
 - [Anisha Sharda](https://github.com/anishard)
 - [Claire Takenaga](https://github.com/claireat)
-- Sriya Choudary Yalavarthy
+- [Sriya Choudary Yalavarthy](https://github.com/sriya632)
 
 ## Assets
 
