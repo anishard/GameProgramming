@@ -28,7 +28,7 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
-        if (Game.ClickDetected() && !InventoryIsOpen())
+        if (Game.ClickDetected(false) && !InventoryIsOpen())
         {
             if (Player.equipped == Equippable.None)
                 EquipInteractable();
@@ -96,6 +96,15 @@ public class InventoryUI : MonoBehaviour
         equippedInteractable = null;
 
         Game.audioSource.PlayOneShot(dequipClip, 0.3f);
+    }
+
+    public static void DestroyInteractable()
+    {
+        var obj = equippedInteractable;
+        equippedInteractable = null;
+        Destroy(obj);
+
+        Player.equipped = Equippable.None;
     }
 
     private static GameObject InteractableDetected()

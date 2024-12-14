@@ -30,7 +30,7 @@ public class DialogueText : MonoBehaviour
 
     void Update()
     {
-        if (Game.ClickDetected(true))
+        if (Game.ClickDetected(true, true))
         {
             if (textBox.text == lines[index])
             {

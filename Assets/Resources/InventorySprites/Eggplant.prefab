@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6912547844823327045}
   - component: {fileID: 6405495267833083506}
   m_Layer: 0
-  m_Name: Prefab_Eggplant
+  m_Name: Eggplant
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         float zdirection = Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.y);
 
         // walking
-        controller.SetBool("isWalking", Input.GetKey(KeyCode.W));
+        controller.SetBool("isWalking", Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S));
 
         if (controller.GetBool("isWalking"))
         {
@@ -89,39 +89,61 @@ public class Player : MonoBehaviour
             if (velocity > 6f) velocity = 6f;
         }
 
+        // backward
+        if (Input.GetKey(KeyCode.S))
+        {
+            xdirection *= -1;
+            zdirection *= -1;
+        }
+
         float xVal = transform.position.x + xdirection * velocity * Time.deltaTime;
         float zVal = transform.position.z + zdirection * velocity * Time.deltaTime;
         transform.position = new Vector3(xVal, transform.position.y, zVal);
+
+        bool toolEquipped = equipped == Equippable.Hoe || equipped == Equippable.Can;
+        if (Game.ClickDetected(false) && toolEquipped)
+            DequipTool();
 
         if (Input.GetKeyDown("space")) SceneManager.LoadScene("DiningRoom");
     }
 
     public static void EquipTool(string itemName)
     {
-        if (equipped == Equippable.Interactable) return;
-
         Equippable item;
 
         if (!Enum.TryParse(itemName, out item))
             throw new Exception(itemName + " does not exist in Equippable");
 
-        bool notAlreadyEquipped = item != equipped;
+        bool newToolEquipped = item != equipped;
 
-        equipped = notAlreadyEquipped ? item : Equippable.None;
+        DequipTool(newToolEquipped);
+
+        if (newToolEquipped)
+        {
+            equipped = item;
+
+            foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
+            {
+                if (tool.name == itemName)
+                    tool.GetComponent<MeshRenderer>().enabled = true;
+            }
+
+            Game.audioSource.PlayOneShot(InventoryUI.equipClip);
+            Note.Activate(itemName);
+        }
+    }
+
+    public static void DequipTool(bool playAudio = true)
+    {
+        if (equipped == Equippable.Interactable) return;
+
+        equipped = Equippable.None;
 
         foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
-        {
-            var renderer = tool.GetComponent<MeshRenderer>();
-            if (tool.name == itemName) renderer.enabled = notAlreadyEquipped;
-            else renderer.enabled = false;
-        }
-        
-        Game.audioSource.PlayOneShot(
-            equipped == Equippable.None ? InventoryUI.dequipClip : InventoryUI.equipClip
-        );
+            tool.GetComponent<MeshRenderer>().enabled = false;
 
+        if (playAudio) Game.audioSource.PlayOneShot(InventoryUI.dequipClip);
         Note.Remove();
-        if (notAlreadyEquipped) Note.Activate(itemName);
     }
 
     public static bool ObjectDetected(string objectName)

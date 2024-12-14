@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6497346529846629850}
   - component: {fileID: 6838354639157555267}
   m_Layer: 0
-  m_Name: Prefab_Pumpkin
+  m_Name: Pumpkin
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

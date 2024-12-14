@@ -59,8 +59,8 @@ public class InventorySlot : MonoBehaviour
                 //Instantiate the 3d prefab item back into the scene
                 Vector3 playerPos = player.transform.position;
                 Vector3 playerForward = player.transform.forward;
-                string pathname = "InventorySprites/Prefab_" + item.name;
-                GameObject placeItemBack = (GameObject)Resources.Load("InventorySprites/Prefab_" + item.name, typeof(GameObject));
+                string pathname = "InventorySprites/" + item.name;
+                GameObject placeItemBack = (GameObject)Resources.Load("InventorySprites/" + item.name, typeof(GameObject));
 
                 MeshRenderer collider = placeItemBack.GetComponent<MeshRenderer>();
                 float collHeight = collider.bounds.size.y;
