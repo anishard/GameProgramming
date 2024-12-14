@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MeterGame : MonoBehaviour {
+public class MeterMiniGame : MonoBehaviour {
     public Image meter;
     public Image lowBar;
     public Image highBar;
