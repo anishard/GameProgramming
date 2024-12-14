@@ -15,6 +15,7 @@ public class FarmSquare
 
     public List<GameObject> objects;
     public FarmSquareState state;
+    public Seed seed;
     public int timePlanted;
     public int timeLastWatered;
     public float rightBound;
@@ -22,41 +23,36 @@ public class FarmSquare
     public readonly Vector3 position;
 
     private int growTime;
-    private int missedDays;
 
     public FarmSquare(float maxX, float minZ)
     {
-
-        objects = new List<GameObject>();
-        state = FarmSquareState.Untilled;
-        timeLastWatered = 0;
-        timePlanted = 0;
-
         rightBound = maxX;
         lowerBound = minZ;
         position = new Vector3(rightBound - length / 2, 0.3f, lowerBound + length / 2);
 
-        growTime = 300; // TODO
-        missedDays = 0; // TODO
+        objects = new();
+        state = FarmSquareState.Untilled;
+        growTime = GetGrowTime();
     }
 
     public void Update()
     {
         int curTime = Clock.GetTotalHours();
 
-        if (curTime - timeLastWatered > 72) // die if unwatered for 3 days
+        if (CheckIfWatered())
         {
-            ShowAlert(CropAlert.Dead);
-            Kill();
-        }
+            if (curTime - timeLastWatered > 72) // die if unwatered for 3 days
+            {
+                ShowAlert(CropAlert.Dead);
+                Kill();
+            }
 
-        if (curTime - timeLastWatered > 24) // need water every day
-        {
-            ShowAlert(CropAlert.Water);
-            ChangeSoilColor(false);
+            if (timePlanted > 0 && curTime - timeLastWatered > 3) // need water every day
+            {
+                ShowAlert(CropAlert.Water);
+            }
         }
-
-        if (curTime - timePlanted > growTime * 24)
+        if (CheckIfMature())
         {
             ShowAlert(CropAlert.Harvest);
             state = FarmSquareState.Mature;
@@ -68,16 +64,20 @@ public class FarmSquare
         state = FarmSquareState.Tilled;
     }
 
-    public void PlantSeed()
+    public void PlantSeed(string item)
     {
+        Enum.TryParse(item[..^4], out seed);
+
         state = FarmSquareState.Seeds;
-        timePlanted = Clock.GetTotalHours();
+
+        int curTime = Clock.GetTotalHours();
+        timePlanted = curTime;
+        timeLastWatered = curTime;
     }
 
     public void Water()
     {
         timeLastWatered = Clock.GetTotalHours();
-        ChangeSoilColor(true);
     }
 
     public void Harvest()
@@ -100,17 +100,25 @@ public class FarmSquare
         Debug.Log(alert);
     }
 
-    private void ChangeSoilColor(bool toDark)
+    private int GetGrowTime()
     {
-        Renderer rend = objects?
-            .Find((o) => o.name.Contains("Dirt_Pile"))?
-            .GetComponent<MeshRenderer>();
+        if (seed == Seed.Carrot) return 7;
+        if (seed == Seed.Corn) return 9;
+        if (seed == Seed.Eggplant) return 7;
+        if (seed == Seed.Pumpkin) return 10;
+        if (seed == Seed.Tomato) return 12;
+        else return 7;
+    }
 
-        if (!rend) return;
+    private bool CheckIfWatered()
+    {
+        return timeLastWatered > 0 && timePlanted > 0;
 
-        Color c = rend.material.color;
-        float brightness = toDark ? 0.4f : 1f;
-        rend.material.color = new Color(c.r * brightness, c.g * brightness, c.b * brightness);
+    }
+
+    private bool CheckIfMature()
+    {
+        return (timePlanted > 0) && (Clock.GetTotalHours() - timePlanted > growTime * 24);
     }
 
 }

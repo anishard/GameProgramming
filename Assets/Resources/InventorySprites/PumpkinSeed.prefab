@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3732130825567395971}
   - component: {fileID: 4443436080765620050}
   m_Layer: 0
-  m_Name: Seed
+  m_Name: PumpkinSeed
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96bd1824605e3354daec18232b6d8f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 11400000, guid: 69efa0a4f92291047aeac0e4a857185a, type: 2}
 --- !u!136 &4443436080765620050
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -46,7 +46,7 @@ public class Farming : MonoBehaviour
             UseFarmTool();
 
         foreach (var square in farmland)
-            square.Update();
+            if (square != null) square.Update();
     }
 
     void EnterHouse()
@@ -111,7 +111,7 @@ public class Farming : MonoBehaviour
 
         GameObject interactable = InventoryUI.equippedInteractable;
 
-        if (interactable?.name == "Seed")
+        if (interactable != null && interactable.name.Contains("Seed"))
             PlantSeed(square);
 
         if (Player.equipped == Equippable.Hoe)
@@ -156,7 +156,7 @@ public class Farming : MonoBehaviour
             Vector3 pos = square.position;
             pos.y += 0.05f;
             square.objects.Add(InstantiateByName("SeedOpened", prefabs, pos));
-            square.PlantSeed();
+            square.PlantSeed(InventoryUI.equippedInteractable.name);
 
             InventoryUI.DestroyInteractable();
         }
