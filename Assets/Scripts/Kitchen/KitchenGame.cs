@@ -18,7 +18,9 @@ public class KitchenGame : MonoBehaviour
     {
         todos = new List<string> {
             "Wash your hands for food safety!",
-            "Clean up the spilsl!"
+            "The kitchen is a mess, press [F] to clean up spills!", // TODO: middle section is randomized: spiders or cleanup
+            "Spiders are attacking the kitchen, squash them!", 
+            "Cook your food at the fireplace!"
         };
 
         curTodoIndex = 0;
@@ -31,20 +33,16 @@ public class KitchenGame : MonoBehaviour
     {
         if (run)
         {
-            // Update the timer
             time -= Time.deltaTime;
 
             if (time <= 0)
             {
-                time = 0;
-                run = false;
                 EndGame();
             }
 
-            // Update the timer text
             UpdateTimerText();
 
-            // Check if the current todo is completed
+            // TODO: remove this, use callbacks
             if (Input.GetKeyDown(KeyCode.C)) 
             {
                 CompleteTodo();
@@ -66,7 +64,6 @@ public class KitchenGame : MonoBehaviour
         else
         {
             todoText.text = "All tasks complete!";
-            run = false; 
             EndGame();
         }
     }
@@ -79,6 +76,16 @@ public class KitchenGame : MonoBehaviour
 
     void EndGame()
     {
+        time = 0;
+        run = false;
         todoText.text = "Game Over!";
+    }
+
+    /*
+     * Below are callbacks triggered when interacting with object of interest
+     */ 
+
+    public void WashHands() {
+        Debug.Log("You washed your hands!");
     }
 }
