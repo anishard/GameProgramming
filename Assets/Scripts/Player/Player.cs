@@ -114,40 +114,41 @@ public class Player : MonoBehaviour
             throw new Exception(itemName + " does not exist in Equippable");
 
         if (equipped == Equippable.Interactable)
-            InventoryUI.DequipInteractable(null, false);
+            InventoryUI.DequipInteractable(null);
 
-        if (item == equipped) // dequip if same tool
+        if (item == equipped || IsTool(equipped) && IsTool(item)) // dequip if same tool
             DequipTool(item);
 
-        else
+        if (item != equipped)
         {
-            if (IsTool(equipped) && IsTool(item)) // dequip if switching tools
-                DequipTool(item, false);
-
-            // equip item
             equipped = item;
 
+            Debug.Log("searching" + itemName);
             foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
             {
                 if (tool.name == itemName)
+                {
+                    Debug.Log("found" + itemName);
                     tool.GetComponent<MeshRenderer>().enabled = true;
+                }
             }
 
-            Game.audioSource.PlayOneShot(InventoryUI.equipClip);
+            // Game.audioSource.PlayOneShot(InventoryUI.equipClip);
             Note.Activate(itemName);
         }
     }
 
-    public static void DequipTool(Equippable toEquip, bool playAudio = true)
+    public static void DequipTool(Equippable toEquip)
     {
-        if (equipped == toEquip) equipped = Equippable.None;
+        Debug.Log($"{Time.time} equipped={equipped} toEquip={toEquip}");
+        // if (equipped == toEquip) equipped = Equippable.None;
 
         foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
             tool.GetComponent<MeshRenderer>().enabled = false;
+        
+        if (toEquip != equipped) equipped = Equippable.None;
 
-        if (playAudio)
-            Game.audioSource.PlayOneShot(InventoryUI.dequipClip);
-
+        // Game.audioSource.PlayOneShot(InventoryUI.dequipClip);
         Note.Remove();
     }
 

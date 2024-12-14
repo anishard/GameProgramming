@@ -32,11 +32,11 @@ public class InventoryUI : MonoBehaviour
         {
             var other = InteractableDetected();
 
-            if (Player.equipped == Equippable.None) // holding nothing
+            if (other != null && Player.equipped == Equippable.None) // holding nothing
             {
                 EquipInteractable(other);
             }
-            else if (Player.IsTool(Player.equipped)) // holding tool
+            else if (other != null && Player.IsTool(Player.equipped)) // holding tool
             {
                 Player.DequipTool(Equippable.Interactable);
                 EquipInteractable(other);
@@ -88,25 +88,24 @@ public class InventoryUI : MonoBehaviour
     private static void EquipInteractable(GameObject other)
     {
         if (other == null) return;
-
         other.transform.parent = GameObject.Find("InteractableContainer").transform;
         other.transform.localPosition = Vector3.zero;
         Player.equipped = Equippable.Interactable;
         equippedInteractable = other;
 
-        Game.audioSource.PlayOneShot(equipClip, 0.3f);
+        // Game.audioSource.PlayOneShot(equipClip, 0.3f);
     }
 
-    public static void DequipInteractable(GameObject other, bool playAudio = true)
+    public static void DequipInteractable(GameObject other)
     {
         equippedInteractable.transform.parent = null;
         Player.equipped = Equippable.None;
 
         equippedInteractable = null;
 
-        if (playAudio) Game.audioSource.PlayOneShot(dequipClip, 0.3f);
-
         if (other != null) EquipInteractable(other);
+
+        // Game.audioSource.PlayOneShot(dequipClip, 0.3f);
     }
 
     public static void DestroyInteractable()
@@ -118,7 +117,7 @@ public class InventoryUI : MonoBehaviour
         Player.equipped = Equippable.None;
     }
 
-    private static GameObject InteractableDetected()
+    public static GameObject InteractableDetected()
     {
         Collider[] colliders = Physics.OverlapSphere(
             Player.activeArea.transform.position, 0.75f
