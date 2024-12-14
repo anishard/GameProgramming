@@ -1,12 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpillCleaning : MonoBehaviour
 {
     public GameObject spillZone; 
     public GameObject spillPrefab; 
+    public AudioClip cleanSound;
     public int spillCount = 3;
 
-    private GameObject[] spills;           
+    private GameObject[] spills;      
+    private float minSpillDist = 3.5f; 
 
     // State changed by Spill.cs
     internal GameObject curSpill; 
@@ -34,25 +37,50 @@ public class SpillCleaning : MonoBehaviour
         Vector3 zoneMin = zoneRenderer.bounds.min;
         Vector3 zoneMax = zoneRenderer.bounds.max;
 
+        // Create a list to store the positions of the spills
+        List<Vector3> spillPositions = new List<Vector3>();
+
         for (int i = 0; i < spillCount; i++)
         {
-            // Generate random position within the zone
-            Vector3 randomPosition = new Vector3(
-                Random.Range(zoneMin.x, zoneMax.x),
-                spillZone.transform.position.y, 
-                Random.Range(zoneMin.z, zoneMax.z)
-            );
+            Vector3 randomPosition;
+            bool positionFound = false;
 
-            // Instantiate the spill prefab at the random position
-            GameObject spill = Instantiate(spillPrefab, randomPosition, Quaternion.identity);
-            spills[i] = spill; 
+            // Try to find a valid position for the spill
+            while (!positionFound)
+            {
+                randomPosition = new Vector3(
+                    Random.Range(zoneMin.x, zoneMax.x),
+                    spillZone.transform.position.y, 
+                    Random.Range(zoneMin.z, zoneMax.z)
+                );
+
+                bool overlap = false;
+                foreach (var pos in spillPositions)
+                {
+                    // Check if the random position overlaps with any existing spill
+                    if (Vector3.Distance(pos, randomPosition) < minSpillDist)
+                    {
+                        overlap = true;
+                        break;
+                    }
+                }
+
+                // If there's no overlap, add the position and instantiate the spill
+                if (!overlap)
+                {
+                    positionFound = true;
+                    spillPositions.Add(randomPosition);
+                    GameObject spill = Instantiate(spillPrefab, randomPosition, Quaternion.identity);
+                    spills[i] = spill;
+                }
+            }
         }
     }
 
     private void CleanSpill(GameObject spill)
     {
         // Remove the spill
-        Debug.Log("Spill cleaned up!");
+        gameObject.GetComponent<AudioSource>().PlayOneShot(cleanSound);
         Destroy(spill);
         curSpill = null;
     }

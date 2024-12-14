@@ -8,10 +8,11 @@ public class KitchenGame : MonoBehaviour
 {
     public TextMeshProUGUI timerText; 
     public TextMeshProUGUI todoText;  
+    public AudioClip washHandsSound;
 
-    private float time = 60.0f;     // Total game time in seconds
-    private List<string> todos;     // List of todos
-    private int curTodoIndex;       // Index to track the current todo
+    private float time = 60.0f;   
+    private List<string> todos;     
+    private int curTodoIndex;       
     private bool run;               
 
     void Start()
@@ -41,12 +42,6 @@ public class KitchenGame : MonoBehaviour
             }
 
             UpdateTimerText();
-
-            // TODO: remove this, use callbacks
-            if (Input.GetKeyDown(KeyCode.C)) 
-            {
-                CompleteTodo();
-            }
         }
     }
 
@@ -87,5 +82,6 @@ public class KitchenGame : MonoBehaviour
 
     public void WashHands() {
         Debug.Log("You washed your hands!");
+        gameObject.GetComponent<AudioSource>().PlayOneShot(washHandsSound);
     }
 }

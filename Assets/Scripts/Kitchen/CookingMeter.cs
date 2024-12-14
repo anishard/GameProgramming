@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MeterMiniGame : MonoBehaviour {
+public class CookingMeter : MonoBehaviour {
     public Image meter;
     public Image lowBar;
     public Image highBar;
@@ -57,7 +57,7 @@ public class MeterMiniGame : MonoBehaviour {
         float highBarHeight = highBar.rectTransform.localPosition.y;
 
         // Determine target color based on meter height
-        Color targetColor = meter.color;
+        Color targetColor;
         if (meterHeight < lowBarHeight) {
             targetColor = Color.yellow;
         }
