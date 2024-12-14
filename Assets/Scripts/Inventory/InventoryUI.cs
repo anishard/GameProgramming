@@ -11,6 +11,8 @@ public class InventoryUI : MonoBehaviour
     InventorySlot[] slots;
     public static GameObject equippedInteractable;
     public Interactable focus;
+    public static AudioClip equipClip;
+    public static AudioClip dequipClip;
 
     void Start()
     {
@@ -20,21 +22,35 @@ public class InventoryUI : MonoBehaviour
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
 
         equippedInteractable = null;
+        equipClip = Array.Find(Game.audioClips, (e) => e.name == "Equip");
+        dequipClip = Array.Find(Game.audioClips, (e) => e.name == "Dequip");
     }
 
     void Update()
     {
-        if (Game.ClickDetected() && !InventoryIsOpen())
+        if (Game.ClickDetected(false) && !InventoryIsOpen())
         {
-            if (Player.equipped == Equippable.None)
-                EquipInteractable();
+            var other = InteractableDetected();
 
+            if (other != null && Player.equipped == Equippable.None) // holding nothing
+            {
+                EquipInteractable(other);
+            }
+            else if (other != null && Player.IsTool(Player.equipped)) // holding tool
+            {
+                Player.DequipTool(Equippable.Interactable);
+                EquipInteractable(other);
+            }
             else if (Player.equipped == Equippable.Interactable)
-                DequipInteractable();
+            {
+                DequipInteractable(other);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.U))
+        {
             AddToInventory();
+        }
 
         // OPEN OR CLOSE the inventory when the Inventory button is clicked
         if (Input.GetKeyDown(KeyCode.I))
@@ -65,34 +81,54 @@ public class InventoryUI : MonoBehaviour
         newFocus.OnFocused();
         Player.equipped = Equippable.None;
         equippedInteractable = null;
+
+        StartCoroutine(Game.PlayAudio("Inventory", 0.4f));
     }
 
-    private static void EquipInteractable()
+    private static void EquipInteractable(GameObject other)
     {
-        var other = InteractableDetected();
-
         if (other == null) return;
-
         other.transform.parent = GameObject.Find("InteractableContainer").transform;
         other.transform.localPosition = Vector3.zero;
         Player.equipped = Equippable.Interactable;
         equippedInteractable = other;
+
+        Game.audioSource.PlayOneShot(equipClip, 0.3f);
     }
 
-    private static void DequipInteractable()
+    public static void DequipInteractable(GameObject other)
     {
         equippedInteractable.transform.parent = null;
         Player.equipped = Equippable.None;
+
         equippedInteractable = null;
+
+        if (other != null)
+            EquipInteractable(other);
+
+        else
+            Game.audioSource.PlayOneShot(dequipClip, 0.3f);
     }
 
-    private static GameObject InteractableDetected()
+    public static void DestroyInteractable()
+    {
+        var obj = equippedInteractable;
+        equippedInteractable = null;
+        Destroy(obj);
+
+        Player.equipped = Equippable.None;
+    }
+
+    public static GameObject InteractableDetected()
     {
         Collider[] colliders = Physics.OverlapSphere(
             Player.activeArea.transform.position, 0.75f
         );
 
-        return Array.Find(colliders, (c) => c.CompareTag("Interactable"))?.gameObject;
+        return Array.Find(colliders, (c) =>
+            c.CompareTag("Interactable")
+            && !GameObject.ReferenceEquals(c.gameObject, equippedInteractable)
+        )?.gameObject;
     }
 
     // check if the inventory is already open
@@ -109,6 +145,7 @@ public class InventoryUI : MonoBehaviour
             {
                 if (inventory.items[i].itemAmount > 0)
                 {
+                    //Debug.Log("adding item to inventory");
                     slots[i].AddItem(inventory.items[i]);
                     slots[i].itemAmount.enabled = true;
                     slots[i].itemAmount.text = inventory.items[i].itemAmount.ToString("n0");
