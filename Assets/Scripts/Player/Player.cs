@@ -99,13 +99,13 @@ public class Player : MonoBehaviour
     public static void EquipTool(string itemName)
     {
         if (equipped == Equippable.Interactable) return;
-        
+
         Equippable item;
 
         if (!Enum.TryParse(itemName, out item))
             throw new Exception(itemName + " does not exist in Equippable");
 
-        bool notAlreadyEquipped = (item != equipped);
+        bool notAlreadyEquipped = item != equipped;
 
         equipped = notAlreadyEquipped ? item : Equippable.None;
 
@@ -115,6 +115,10 @@ public class Player : MonoBehaviour
             if (tool.name == itemName) renderer.enabled = notAlreadyEquipped;
             else renderer.enabled = false;
         }
+        
+        Game.audioSource.PlayOneShot(
+            equipped == Equippable.None ? InventoryUI.dequipClip : InventoryUI.equipClip
+        );
 
         Note.Remove();
         if (notAlreadyEquipped) Note.Activate(itemName);

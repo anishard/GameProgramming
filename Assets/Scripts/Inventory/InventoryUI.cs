@@ -11,8 +11,8 @@ public class InventoryUI : MonoBehaviour
     InventorySlot[] slots;
     public static GameObject equippedInteractable;
     public Interactable focus;
-    private static AudioClip equipClip;
-    private static AudioClip dequipClip;
+    public static AudioClip equipClip;
+    public static AudioClip dequipClip;
 
     void Start()
     {
@@ -22,6 +22,8 @@ public class InventoryUI : MonoBehaviour
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
 
         equippedInteractable = null;
+        equipClip = Array.Find(Game.audioClips, (e) => e.name == "Equip");
+        dequipClip = Array.Find(Game.audioClips, (e) => e.name == "Dequip");
     }
 
     void Update()
@@ -84,7 +86,6 @@ public class InventoryUI : MonoBehaviour
         Player.equipped = Equippable.Interactable;
         equippedInteractable = other;
 
-        equipClip ??= Array.Find(Game.audioClips, (e) => e.name == "Equip");
         Game.audioSource.PlayOneShot(equipClip, 0.3f);
     }
 
@@ -94,7 +95,6 @@ public class InventoryUI : MonoBehaviour
         Player.equipped = Equippable.None;
         equippedInteractable = null;
 
-        dequipClip ??= Array.Find(Game.audioClips, (e) => e.name == "Dequip");
         Game.audioSource.PlayOneShot(dequipClip, 0.3f);
     }
 
