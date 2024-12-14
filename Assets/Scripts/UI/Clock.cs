@@ -51,6 +51,11 @@ public class Clock : MonoBehaviour
         }
     }
 
+    public static int GetTotalHours()
+    {
+        return day * 24 + hour;
+    }
+
     public static void Pause()
     {
         pauseDuration = Time.time;

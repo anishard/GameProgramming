@@ -2,7 +2,7 @@
 
 Moondrop Dale is a game in which the player is responsible for growing crops, cooking nutritional meals, and completing quests for their fellow villagers—through this process, they learn how to take care of plants and sustain a healthy diet.
 
-This project was built with Unity as a semester-long group project for the course *COMPSCI 576 Game Programming* at UMass Amherst.
+This project was built with Unity as a final project for the course *COMPSCI 576 Game Programming* at UMass Amherst.
 
 ## Authors
 - [Ashley Bhandari](https://github.com/ashleybhandari)
