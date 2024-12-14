@@ -5286,21 +5286,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4063210846265680, guid: 186ecc7a1f977cc4fab5658c00fa3c4d, type: 3}
   m_PrefabInstance: {fileID: 1138663193}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1209923028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f0f0727465e244388c9594b331fe12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryUI: {fileID: 0}
-  itemsParent: {fileID: 0}
-  focus: {fileID: 0}
 --- !u!1001 &1213484852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7613,6 +7598,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 919915781321202912, guid: a598e80007fac304c9bed9c008bc76f9, type: 3}
   m_PrefabInstance: {fileID: 1280774792}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1562733355 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3696690834087769972, guid: ae2a9693886c7e44e86efa7283fb891a, type: 3}
+  m_PrefabInstance: {fileID: 199632906}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f0f0727465e244388c9594b331fe12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1562803179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11188,7 +11184,7 @@ PrefabInstance:
     - target: {fileID: 7505592218645018569, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1209923028}
+      objectReference: {fileID: 1562733355}
     - target: {fileID: 7505592218645018569, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AddToInventory
@@ -11200,7 +11196,11 @@ PrefabInstance:
     - target: {fileID: 7824409639110152714, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1209923028}
+      objectReference: {fileID: 1562733355}
+    - target: {fileID: 7824409639110152714, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleInventory
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
