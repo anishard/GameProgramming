@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
             throw new Exception(itemName + " does not exist in Equippable");
 
         if (equipped == Equippable.Interactable)
-            InventoryUI.DequipInteractable(false);
+            InventoryUI.DequipInteractable(null, false);
 
         if (item == equipped) // dequip if same tool
             DequipTool(item);
@@ -124,22 +124,18 @@ public class Player : MonoBehaviour
             if (IsTool(equipped) && IsTool(item)) // dequip if switching tools
                 DequipTool(item, false);
 
-            EquipItem(itemName, item);
+            // equip item
+            equipped = item;
+
+            foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
+            {
+                if (tool.name == itemName)
+                    tool.GetComponent<MeshRenderer>().enabled = true;
+            }
+
+            Game.audioSource.PlayOneShot(InventoryUI.equipClip);
+            Note.Activate(itemName);
         }
-    }
-
-    private static void EquipItem(string itemName, Equippable item)
-    {
-        equipped = item;
-
-        foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
-        {
-            if (tool.name == itemName)
-                tool.GetComponent<MeshRenderer>().enabled = true;
-        }
-
-        Game.audioSource.PlayOneShot(InventoryUI.equipClip);
-        Note.Activate(itemName);
     }
 
     public static void DequipTool(Equippable toEquip, bool playAudio = true)
@@ -149,7 +145,9 @@ public class Player : MonoBehaviour
         foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
             tool.GetComponent<MeshRenderer>().enabled = false;
 
-        if (playAudio) Game.audioSource.PlayOneShot(InventoryUI.dequipClip);
+        if (playAudio)
+            Game.audioSource.PlayOneShot(InventoryUI.dequipClip);
+
         Note.Remove();
     }
 
@@ -182,7 +180,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private static bool IsTool(Equippable item)
+    public static bool IsTool(Equippable item)
     {
         return item == Equippable.Can || item == Equippable.Hoe;
     }

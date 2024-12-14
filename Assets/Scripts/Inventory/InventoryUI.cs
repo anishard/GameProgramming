@@ -30,11 +30,21 @@ public class InventoryUI : MonoBehaviour
     {
         if (Game.ClickDetected(false) && !InventoryIsOpen())
         {
-            if (Player.equipped == Equippable.None)
-                EquipInteractable();
+            var other = InteractableDetected();
 
+            if (Player.equipped == Equippable.None) // holding nothing
+            {
+                EquipInteractable(other);
+            }
+            else if (Player.IsTool(Player.equipped)) // holding tool
+            {
+                Player.DequipTool(Equippable.Interactable);
+                EquipInteractable(other);
+            }
             else if (Player.equipped == Equippable.Interactable)
-                DequipInteractable();
+            {
+                DequipInteractable(other);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.U))
@@ -75,10 +85,8 @@ public class InventoryUI : MonoBehaviour
         StartCoroutine(Game.PlayAudio("Inventory", 0.4f));
     }
 
-    private static void EquipInteractable()
+    private static void EquipInteractable(GameObject other)
     {
-        var other = InteractableDetected();
-
         if (other == null) return;
 
         other.transform.parent = GameObject.Find("InteractableContainer").transform;
@@ -89,7 +97,7 @@ public class InventoryUI : MonoBehaviour
         Game.audioSource.PlayOneShot(equipClip, 0.3f);
     }
 
-    public static void DequipInteractable(bool playAudio = true)
+    public static void DequipInteractable(GameObject other, bool playAudio = true)
     {
         equippedInteractable.transform.parent = null;
         Player.equipped = Equippable.None;
@@ -97,6 +105,8 @@ public class InventoryUI : MonoBehaviour
         equippedInteractable = null;
 
         if (playAudio) Game.audioSource.PlayOneShot(dequipClip, 0.3f);
+
+        if (other != null) EquipInteractable(other);
     }
 
     public static void DestroyInteractable()
@@ -114,7 +124,10 @@ public class InventoryUI : MonoBehaviour
             Player.activeArea.transform.position, 0.75f
         );
 
-        return Array.Find(colliders, (c) => c.CompareTag("Interactable"))?.gameObject;
+        return Array.Find(colliders, (c) =>
+            c.CompareTag("Interactable")
+            && !GameObject.ReferenceEquals(c.gameObject, equippedInteractable)
+        )?.gameObject;
     }
 
     // check if the inventory is already open
