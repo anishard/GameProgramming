@@ -80,7 +80,6 @@ public class Farming : MonoBehaviour
 
     bool InteractableObjectFound()
     {
-        // TODO stop click from dropping an object
         bool objectFound = true;
 
         if (Player.ObjectDetected("Town")) EnterTown();

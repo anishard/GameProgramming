@@ -21,7 +21,7 @@ public class Game : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
     }
 
-    public static bool ClickDetected(bool isRightClick = true, bool allowUI = false)
+    public static bool ClickDetected(bool isRightClick = true)
     {
         bool detected = false;
 
@@ -29,7 +29,7 @@ public class Game : MonoBehaviour
         bool buttonClicked = Input.GetKeyDown(isRightClick ? KeyCode.J : KeyCode.K);
         bool uiClicked = EventSystem.current.IsPointerOverGameObject();
 
-        if ((mouseClicked && (allowUI || !uiClicked)) || buttonClicked)
+        if ((mouseClicked && !uiClicked) || buttonClicked)
             detected = true;
 
         return detected;
