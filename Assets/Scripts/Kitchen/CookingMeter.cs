@@ -59,7 +59,7 @@ public class CookingMeter : MonoBehaviour {
         // After countdown finishes, start filling the meter
         countdownFinished = true;
         if (countdownText != null) {
-            countdownText.text = "";  
+            countdownText.text = "Go!";  
         }
     }
 

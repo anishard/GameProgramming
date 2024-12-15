@@ -16,7 +16,7 @@ public class KitchenGame : MonoBehaviour
     public AudioClip washHandsSound;
     public Canvas meterGameUI;
 
-    private float time = 60.0f;   
+    private float time = 40.0f;   
     private List<Todo> todos;     
     private int curTodoIndex;   
     private bool playing;    
