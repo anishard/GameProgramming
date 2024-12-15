@@ -10,16 +10,29 @@ public class Tip : MonoBehaviour
     private static Image backgroundImg;
     private static TMP_Text bodyText;
     private static TextAsset[] tips;
+    private static float activateTime;
+    private static float duration;
 
     void Start()
     {
         isActive = false;
         backgroundImg = gameObject.GetComponent<Image>();
         bodyText = transform.Find("Body").GetComponent<TMP_Text>();
+
+        activateTime = 0;
+        duration = 0;
     }
 
-    public static void Activate(string name)
+    void Update()
     {
+        if (duration > 0 && Time.time - activateTime > duration)
+            Remove();
+    }
+
+    public static void Activate(string name, float tipDuration = 0)
+    {
+        Remove();
+
         tips ??= Resources.LoadAll<TextAsset>("Tips");
 
         var lines = new List<string>();
@@ -33,7 +46,10 @@ public class Tip : MonoBehaviour
         }
 
         if (lines[0] == name)
-            Tip.Toggle(lines[1]);
+        {
+            if (tipDuration > 0) duration = tipDuration;
+            Toggle(lines[1]);
+        }
         else
             throw new Exception(name + " does not exist in Resources/Tips");
     }
@@ -41,7 +57,6 @@ public class Tip : MonoBehaviour
     public static void Remove()
     {
         Toggle();
-        Tip.isActive = false;
     }
 
     public static void Toggle(string body = "")
@@ -51,6 +66,9 @@ public class Tip : MonoBehaviour
         backgroundImg.enabled = isEnabled;
         bodyText.enabled = isEnabled;
         bodyText.text = body;
-        Tip.isActive = true;
+
+        isActive = isEnabled;
+        activateTime = isEnabled ? Time.time : 0;
+        duration = isEnabled ? duration : 0;
     }
 }

@@ -106,7 +106,7 @@ public class InventoryUI : MonoBehaviour
         if (other != null)
             EquipInteractable(other);
 
-        if (other != null && !Player.IsTool(Player.equipped))
+        if (other == null && !Player.IsTool(Player.equipped))
             Game.audioSource.PlayOneShot(dequipClip, 0.3f);
     }
 

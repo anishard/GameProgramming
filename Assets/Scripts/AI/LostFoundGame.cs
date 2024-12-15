@@ -122,7 +122,7 @@ public class LostFoundGame : MonoBehaviour
             
             if (itemToRemove.name == "Fork" ) {
                 //Debug.Log("removing the fork.");
-                Tip.Activate("LostFoundStolen");
+                Tip.Activate("LostFoundStolen", 5);
                 
                 if (Tip.isActive && !stolenFrom) {
                     stolenFrom = true;
@@ -133,7 +133,7 @@ public class LostFoundGame : MonoBehaviour
                 SpawnFork(); // spawn the fork in another place if lost it
             }
             else {
-                Tip.Activate("LostFoundCheck");
+                Tip.Activate("LostFoundCheck", 5);
                 
                 if (Tip.isActive && !stolenFrom) {
                     stolenFrom = true;
