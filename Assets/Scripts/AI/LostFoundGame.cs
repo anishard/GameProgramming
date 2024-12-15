@@ -96,6 +96,7 @@ public class LostFoundGame : MonoBehaviour
 
     public void StartLostFoundGame() {
         // play the opening dialogue, and make sure the dialogue doesn't replay after it ends
+        monkey.SetActive(true);
         Dialogue.Activate("LostFoundIntro");
         hasPlayedIntroDialogue = true;
 
@@ -113,6 +114,7 @@ public class LostFoundGame : MonoBehaviour
 
     public void StopLostFoundGame() {
         //stop monkey from chasing you
+        monkey.SetActive(false);
         if (fpScript != null) { 
             fpScript.StopChasePlayer();
         }
