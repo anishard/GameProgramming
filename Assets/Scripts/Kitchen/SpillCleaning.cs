@@ -45,9 +45,11 @@ public class SpillCleaning : MonoBehaviour
         {
             Vector3 randomPosition;
             bool positionFound = false;
+            int attempts = 0;
+            int maxAttempts = 10; // Limit attempts
 
             // Try to find a valid position for the spill
-            while (!positionFound)
+            while (!positionFound && attempts < maxAttempts)
             {
                 randomPosition = new Vector3(
                     Random.Range(zoneMin.x, zoneMax.x),
@@ -74,6 +76,15 @@ public class SpillCleaning : MonoBehaviour
                     GameObject spill = Instantiate(spillPrefab, randomPosition, Quaternion.identity);
                     spills[i] = spill;
                 }
+
+                attempts++;
+            }
+
+            // If a valid position couldn't be found after maxAttempts, log a warning
+            if (!positionFound)
+            {
+                Debug.LogWarning($"Unable to place spill {i + 1} after {maxAttempts} attempts.");
+                spillCount--;
             }
         }
     }

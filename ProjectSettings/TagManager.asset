@@ -11,6 +11,7 @@ TagManager:
   - Tip
   - Interactable
   - Fireplace
+  - MeterGameUI
   layers:
   - Default
   - TransparentFX

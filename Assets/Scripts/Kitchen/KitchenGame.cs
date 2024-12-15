@@ -14,6 +14,7 @@ public class KitchenGame : MonoBehaviour
     public TextMeshProUGUI timerText; 
     public TextMeshProUGUI todoText;  
     public AudioClip washHandsSound;
+    public Canvas meterGameUI;
 
     private float time = 60.0f;   
     private List<Todo> todos;     
@@ -123,5 +124,7 @@ public class KitchenGame : MonoBehaviour
         Interact interact = firePlace.GetComponent<Interact>();
         interact.ClearText();
         interact.enabled = false;
+
+        meterGameUI.gameObject.SetActive(true);
     }
 }

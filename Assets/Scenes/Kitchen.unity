@@ -1476,6 +1476,7 @@ MonoBehaviour:
   timerText: {fileID: 1009810541}
   todoText: {fileID: 790614990}
   washHandsSound: {fileID: 8300000, guid: 60f9efe3d97bc8f47bea1af7f7093d41, type: 3}
+  meterGameUI: {fileID: 1875807751}
 --- !u!4 &655024104
 Transform:
   m_ObjectHideFlags: 0
@@ -4693,7 +4694,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!4 &1996011478 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4400946259162026, guid: c2fc011b40469e54c91f055945093ff6, type: 3}
