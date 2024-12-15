@@ -21,15 +21,14 @@ public class CookingMeter : MonoBehaviour {
         meter.fillAmount = 0.0f;
         stop = false;
 
-        // Randomize fill speed
+        // Randomize fill speed and bar heights
         fillSpeed = Random.Range(0.5f, 1.5f);
 
-        // Randomize lowBar height
         float containerHeight = container.rectTransform.rect.height;
         float minHeight = containerHeight * 0.25f;
         float maxHeight = containerHeight * 0.75f;
 
-        // Set randomized lowBar position
+        // Randomize lowBar position
         float randomizedLowBarHeight = Random.Range(minHeight, maxHeight);
         lowBar.rectTransform.localPosition = new Vector3(
             lowBar.rectTransform.localPosition.x,
@@ -37,7 +36,7 @@ public class CookingMeter : MonoBehaviour {
             lowBar.rectTransform.localPosition.z
         );
 
-        // Position highBar at a fixed distance above lowBar
+        // Position highBar at a fixed height above lowBar
         highBar.rectTransform.localPosition = new Vector3(
             highBar.rectTransform.localPosition.x,
             lowBar.rectTransform.localPosition.y + barDistance,
@@ -65,12 +64,20 @@ public class CookingMeter : MonoBehaviour {
         }
     }
 
+    IEnumerator EndGame() {
+        // Lets the meter linger for a second
+        stop = true; 
+        kitchenGame.StartNextTodo();
+        yield return new WaitForSeconds(1f);
+        kitchenGame.meterGameUI.gameObject.SetActive(false);
+    }
+
     void Update() {
         // Wait until the countdown finishes before starting 
         if (!countdownFinished) return;
 
         // Increase meter
-        if (meter.fillAmount < 1.0f) {
+        if (meter.fillAmount < 1.0f && !stop) {
             meter.fillAmount += fillSpeed * Time.deltaTime;
         }
 
@@ -79,7 +86,7 @@ public class CookingMeter : MonoBehaviour {
         float lowBarHeight = lowBar.rectTransform.localPosition.y;
         float highBarHeight = highBar.rectTransform.localPosition.y;
 
-        // Determine target color based on meter height
+        // Determine target color and cooking quality based on meter height
         Color targetColor;
         if (meterHeight < lowBarHeight) {
             kitchenGame.cookQuality = "Undercooked";
@@ -94,11 +101,9 @@ public class CookingMeter : MonoBehaviour {
             targetColor = Color.red;
         }
 
-        // Check if user stopped the meter
-        if (stop || Input.GetKeyDown(KeyCode.Return)) {
-            stop = true;
-            kitchenGame.StartNextTodo();
-            kitchenGame.meterGameUI.gameObject.SetActive(false);
+        // Stop the meter when the player inputs
+        if (!stop && Input.GetKeyDown(KeyCode.Return)) {
+            StartCoroutine(EndGame()); 
             return;
         }
 

@@ -21,7 +21,7 @@ public class KitchenGame : MonoBehaviour
     public GameObject sleepingPlayer;
     public GameObject player;
 
-    private float time = 45.0f;   
+    private float time = 30.0f;   
     private List<Todo> todos;     
     private int curTodoIndex;   
     private bool playing;    
