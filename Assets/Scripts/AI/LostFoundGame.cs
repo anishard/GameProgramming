@@ -30,6 +30,35 @@ public class LostFoundGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if player FIRST goes up to muskrat, start playing the dialogue and start game
+        //Debug.Log("clicked on muskrat");
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            //if click on muskrat
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (!hasPlayedIntroDialogue) {
+                    StartLostFoundGame();
+                    hasPlayedIntroDialogue = true;
+                }
+                // if the fork has been put in the inventory, and player goes up to muskrat again, end game
+                // also, remove the fork from the inventory (to "return to the muskrat")
+                Item fork = null;
+                foreach (Item item in inventory.items) {
+                    if (item.name == "Fork") {
+                        fork = item; // Store the item if it matches
+                        break; // Exit the loop once the item is found
+                    }
+                }
+                if (fork != null && hasPlayedIntroDialogue) {
+                    StopLostFoundGame();
+                    inventory.Remove(fork);
+                }
+            }
+        }
+
          if (Input.GetMouseButtonDown(0) && stolenFrom) {
             stolenFrom = false;
             //Debug.Log("disable the UI again");
@@ -40,29 +69,30 @@ public class LostFoundGame : MonoBehaviour
         }     
     }
 
-    void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Player")) {
-            // if player FIRST goes up to muskrat, start playing the dialogue and start game
-            if (!hasPlayedIntroDialogue) {
-                StartLostFoundGame();
-                hasPlayedIntroDialogue = true;
-            }
-            // if the fork has been put in the inventory, and player goes up to muskrat again, end game
-            // also, remove the fork from the inventory (to "return to the muskrat")
-            Item fork = null;
-            foreach (Item item in inventory.items) {
-                if (item.name == "Fork") {
-                    fork = item; // Store the item if it matches
-                    break; // Exit the loop once the item is found
-                }
-            }
-            if (fork != null && hasPlayedIntroDialogue) {
-                StopLostFoundGame();
-                inventory.Remove(fork);
-            }
-        }
+    // void OnCollisionEnter(Collision collision) {
+    //     if (collision.gameObject.CompareTag("Player")) {
+    //public void OnObjectClick() {
+        // if player FIRST goes up to muskrat, start playing the dialogue and start game
+    //     Debug.Log("clicked on muskrat");
+    //     if (!hasPlayedIntroDialogue) {
+    //         StartLostFoundGame();
+    //         hasPlayedIntroDialogue = true;
+    //     }
+    //     // if the fork has been put in the inventory, and player goes up to muskrat again, end game
+    //     // also, remove the fork from the inventory (to "return to the muskrat")
+    //     Item fork = null;
+    //     foreach (Item item in inventory.items) {
+    //         if (item.name == "Fork") {
+    //             fork = item; // Store the item if it matches
+    //             break; // Exit the loop once the item is found
+    //         }
+    //     }
+    //     if (fork != null && hasPlayedIntroDialogue) {
+    //         StopLostFoundGame();
+    //         inventory.Remove(fork);
+    //     }
+    // }
 
-    }
 
     public void StartLostFoundGame() {
         // play the opening dialogue, and make sure the dialogue doesn't replay after it ends

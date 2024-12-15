@@ -299,8 +299,6 @@ MonoBehaviour:
   spawnRadius: 18
   forkSpawner: {fileID: 1731824563}
   monkey: {fileID: 1216236058}
-  stealDialogueUI: {fileID: 1310656466}
-  stoleForkUI: {fileID: 2073728638}
   gameIsOver: 0
 --- !u!1001 &5626732
 PrefabInstance:
@@ -12832,12 +12830,6 @@ SceneRoots:
   - {fileID: 1216236057}
   - {fileID: 1731824565}
   - {fileID: 1290087551061722483}
-  - {fileID: 199632906}
-  - {fileID: 4350757}
-  - {fileID: 397453787}
-  - {fileID: 2073728636}
-  - {fileID: 275541795}
-  - {fileID: 341253391}
   - {fileID: 739115522}
   - {fileID: 1442790402}
   - {fileID: 290640989}
