@@ -23,6 +23,10 @@ public class Interact : MonoBehaviour
         interactText.text = text;
     }
 
+    internal void SetText(string newText) {
+        interactText.text = newText;
+    }
+
     internal void ClearText() {
         interactText.text = "";
     }

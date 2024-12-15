@@ -12,8 +12,6 @@ TagManager:
   - Interactable
   - NPC
   - Alert
-  - Fireplace
-  - MeterGameUI
   layers:
   - Default
   - TransparentFX

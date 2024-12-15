@@ -18,6 +18,8 @@ public class KitchenGame : MonoBehaviour
     public Canvas meterGameUI;
     public GameObject spiderPrefab;
     public GameObject spawnZone;
+    public GameObject sleepingPlayer;
+    public GameObject player;
 
     private float time = 45.0f;   
     private List<Todo> todos;     
@@ -25,6 +27,7 @@ public class KitchenGame : MonoBehaviour
     private bool playing;    
     private GameObject bucket;
     private GameObject firePlace; 
+    private bool sleeping = false;
 
     internal string cookQuality;
 
@@ -163,6 +166,17 @@ public class KitchenGame : MonoBehaviour
     }
 
     public void Sleep() {
-        Debug.Log("sleeping");
+        if (sleeping) {
+            GameObject.Find("Bed").GetComponent<Interact>().SetText("Press [F] to sleep");
+            sleepingPlayer.SetActive(false);
+            player.SetActive(true);
+            sleeping = false;
+        }
+        else {
+            GameObject.Find("Bed").GetComponent<Interact>().SetText("Press [F] to stop sleeping");
+            player.SetActive(false);
+            sleepingPlayer.SetActive(true);
+            sleeping = true;
+        }
     }
 }
