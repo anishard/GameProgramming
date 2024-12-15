@@ -55,7 +55,7 @@ public class SpiderAI : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             KitchenGame kitchenGame = FindObjectOfType<KitchenGame>();
-            kitchenGame.GetComponent<AudioSource>().PlayOneShot(kitchenGame.crushSound);
+            kitchenGame.GetComponent<AudioSource>().PlayOneShot(kitchenGame.crushSound, 0.1f);
             Destroy(gameObject);
         }
     }
