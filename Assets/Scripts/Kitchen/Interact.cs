@@ -17,19 +17,20 @@ public class Interact : MonoBehaviour
         SphereCollider sphereCollider = gameObject.AddComponent<SphereCollider>();
         sphereCollider.isTrigger = true; 
         sphereCollider.radius = radius;
+    }
 
-        // Hide interaction text initially
-        interactText.gameObject.SetActive(false);
-        interactText.text = text;
+    internal void ClearText() {
+        interactText.text = "";
     }
 
     void Update()
     {
         if (playerNear)
-        {
-            interactText.gameObject.SetActive(true);
+        {   
+            // Show interaction prompt
+            interactText.text = text;
 
-            // Trigger the assigned action when "F" is pressed
+            // Trigger the assigned action when interact key is pressed
             if (Input.GetKeyDown(KeyCode.F) && onInteract != null)
             {
                 onInteract.Invoke();
@@ -37,7 +38,8 @@ public class Interact : MonoBehaviour
         }
         else
         {
-            interactText.gameObject.SetActive(false);
+            // Clear interact prompt
+            ClearText();
         }
     }
 

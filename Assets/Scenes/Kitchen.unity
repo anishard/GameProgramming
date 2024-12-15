@@ -458,6 +458,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1023490049680874, guid: 0120696b197baa24f933e17ce5431cb8, type: 3}
+      propertyPath: m_Name
+      value: FirePlaceFull
+      objectReference: {fileID: 0}
+    - target: {fileID: 1023490049680874, guid: 0120696b197baa24f933e17ce5431cb8, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -520,7 +524,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1023490049680874, guid: 0120696b197baa24f933e17ce5431cb8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1962899741}
   m_SourcePrefab: {fileID: 100100000, guid: 0120696b197baa24f933e17ce5431cb8, type: 3}
 --- !u!4 &238666651 stripped
 Transform:
@@ -809,7 +816,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <Interact text>
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -967,7 +974,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460028459}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82949968ed723b94cb2f492250dd6982, type: 3}
   m_Name: 
@@ -1819,7 +1826,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.6617, y: -230}
+  m_AnchoredPosition: {x: 1.6617, y: -244}
   m_SizeDelta: {x: 868.4836, y: 116.5493}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &790614990
@@ -1869,8 +1876,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3418,6 +3425,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4032253575974534, guid: e29786fe3a099b74d8bc6ee48f2448b8, type: 3}
   m_PrefabInstance: {fileID: 874088997}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1317979948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1023490049680874, guid: 0120696b197baa24f933e17ce5431cb8, type: 3}
+  m_PrefabInstance: {fileID: 202398115}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1321103798
 GameObject:
   m_ObjectHideFlags: 0
@@ -4652,6 +4664,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4645122967186676, guid: 0120696b197baa24f933e17ce5431cb8, type: 3}
   m_PrefabInstance: {fileID: 202398115}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1962899741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317979948}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82949968ed723b94cb2f492250dd6982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactText: {fileID: 433515814}
+  radius: 2.5
+  text: Press [F] to cook at the fireplace!
+  onInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 655024103}
+        m_TargetAssemblyTypeName: KitchenGame, Assembly-CSharp
+        m_MethodName: CookAtFirePlace
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1996011478 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4400946259162026, guid: c2fc011b40469e54c91f055945093ff6, type: 3}

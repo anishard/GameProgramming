@@ -18,7 +18,9 @@ public class KitchenGame : MonoBehaviour
     private float time = 60.0f;   
     private List<Todo> todos;     
     private int curTodoIndex;   
-    private bool playing;     
+    private bool playing;    
+    private GameObject bucket;
+    private GameObject firePlace; 
 
     // Map todo ID to its description
     private readonly string[] todoDescs = new string[] {
@@ -38,6 +40,8 @@ public class KitchenGame : MonoBehaviour
         };
         curTodoIndex = 0;
         playing = true;
+        bucket = GameObject.Find("Bucket");
+        firePlace = GameObject.Find("FirePlaceFull");
         UpdateTodoText();
     }
 
@@ -55,7 +59,10 @@ public class KitchenGame : MonoBehaviour
             switch (todos[curTodoIndex]) 
             {
                 case Todo.WASH:
+                    // Make water bucket interactable
+                    bucket.GetComponent<Interact>().enabled = true;
                     break;
+
                 case Todo.CLEAN:
                     // Generate spills to be cleaned
                     SpillCleaning spillCleaning = GetComponent<SpillCleaning>();
@@ -67,7 +74,10 @@ public class KitchenGame : MonoBehaviour
                         StartNextTodo();
                     }
                     break;
+
                 case Todo.COOK:
+                    // Make fireplace interactable
+                    firePlace.GetComponent<Interact>().enabled = true;
                     break;
             }
 
@@ -94,10 +104,24 @@ public class KitchenGame : MonoBehaviour
     }
 
     public void WashHands() {
-        // Update if this was the current todo
-        if (todos[curTodoIndex] == Todo.WASH) {
-            StartNextTodo();
-        }
         gameObject.GetComponent<AudioSource>().PlayOneShot(washHandsSound);
+
+        // Make bucket non-interactable
+        GameObject bucket = GameObject.Find("Bucket");
+        Interact interact = bucket.GetComponent<Interact>();
+        interact.ClearText();
+        interact.enabled = false;
+
+        // Task complete, start next
+        StartNextTodo();
+    }
+
+    public void CookAtFirePlace() {
+        Debug.Log("Cooking!");
+
+        // Make fireplace non-interactable
+        Interact interact = firePlace.GetComponent<Interact>();
+        interact.ClearText();
+        interact.enabled = false;
     }
 }
