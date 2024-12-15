@@ -49,42 +49,47 @@ public class FarmSquare
         }
     }
 
-    public void Till()
+    public void Till(GameObject dirt)
     {
         state = FarmSquareState.Tilled;
+        objects.Add(dirt);
     }
 
-    public void PlantSeed(string item)
+    public void PlantSeed(string seedInteractable)
     {
-        Enum.TryParse(item[..^4], out seed);
+        Enum.TryParse(seedInteractable[..^4], out seed);
 
-        state = FarmSquareState.Seeds;
         growTime = GetGrowTime();
 
         int curTime = Clock.GetTotalHours();
         timePlanted = curTime;
         timeLastWatered = curTime;
+
+        Farming.ReplaceObject(this);
+        InventoryUI.DestroyInteractable();
     }
 
     public void Water()
     {
         timeLastWatered = Clock.GetTotalHours();
         HideAlert();
+
+        Farming.ReplaceObject(this);
     }
 
     public void Harvest()
     {
-        state = FarmSquareState.Untilled;
+        // state = FarmSquareState.Untilled;
     }
 
     public void Kill()
     {
-        state = FarmSquareState.Dead;
+        // state = FarmSquareState.Dead;
     }
 
     public void ClearDebris()
     {
-        state = FarmSquareState.Untilled;
+        // state = FarmSquareState.Untilled;
         HideAlert();
     }
 
@@ -119,7 +124,6 @@ public class FarmSquare
         return days * 24;
     }
 
-
     private bool CheckIfWatered()
     {
         var o = timePlanted > 0
@@ -143,9 +147,8 @@ public class FarmSquare
         var o = timePlanted > 0
             && curAlert != AlertType.Dead
             && Clock.GetTotalHours() - timePlanted > growTime;
-        
+
         if (o) Debug.Log("checking if mature");
         return o;
     }
-
 }
