@@ -1,15 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;  
+using TMPro;
 
 public class CookingMeter : MonoBehaviour {
     public Image meter;
     public Image lowBar;
     public Image highBar;
     public Image container;
+    public TextMeshProUGUI countdownText;  
 
     private bool stop;
-    private const float barDistance = 30.0f; 
+    private const float barDistance = 30.0f;
     private float fillSpeed;
+    private bool countdownFinished = false; 
 
     void Start() {
         meter.fillAmount = 0.0f;
@@ -20,14 +24,14 @@ public class CookingMeter : MonoBehaviour {
 
         // Randomize lowBar height
         float containerHeight = container.rectTransform.rect.height;
-        float minHeight = containerHeight * 0.3f; 
-        float maxHeight = containerHeight * 0.9f; 
+        float minHeight = containerHeight * 0.25f;
+        float maxHeight = containerHeight * 0.75f;
 
         // Set randomized lowBar position
         float randomizedLowBarHeight = Random.Range(minHeight, maxHeight);
         lowBar.rectTransform.localPosition = new Vector3(
             lowBar.rectTransform.localPosition.x,
-            randomizedLowBarHeight - (containerHeight / 2), 
+            randomizedLowBarHeight - (containerHeight / 2),
             lowBar.rectTransform.localPosition.z
         );
 
@@ -37,9 +41,32 @@ public class CookingMeter : MonoBehaviour {
             lowBar.rectTransform.localPosition.y + barDistance,
             highBar.rectTransform.localPosition.z
         );
+
+        // Start the countdown coroutine
+        StartCoroutine(CountdownCoroutine());
+    }
+
+    IEnumerator CountdownCoroutine() {
+        int countdownTime = 3;
+        while (countdownTime > 0) {
+            if (countdownText != null) {
+                countdownText.text = countdownTime.ToString();  
+            }
+            yield return new WaitForSeconds(1); 
+            countdownTime--;
+        }
+
+        // After countdown finishes, start filling the meter
+        countdownFinished = true;
+        if (countdownText != null) {
+            countdownText.text = "";  
+        }
     }
 
     void Update() {
+        // Wait until the countdown finishes before starting 
+        if (!countdownFinished) return;
+
         // Check if user stopped the meter
         if (stop || Input.GetKeyDown(KeyCode.Return)) {
             stop = true;
