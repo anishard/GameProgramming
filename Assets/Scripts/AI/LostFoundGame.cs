@@ -32,7 +32,7 @@ public class LostFoundGame : MonoBehaviour
     {
         // if player FIRST goes up to muskrat, start playing the dialogue and start game
         //Debug.Log("clicked on muskrat");
-        if (Game.ClickDetected() && Player.ObjectDetected("Muskrat"))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

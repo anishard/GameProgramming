@@ -52,4 +52,9 @@ public class Navigation : MonoBehaviour
         }
     }
 
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, roamRadius);
+    }
+
 }

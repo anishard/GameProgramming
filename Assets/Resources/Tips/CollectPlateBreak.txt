@@ -1,0 +1,2 @@
+CollectPlateBreak
+Oh no! The monkey broke a plate! Hurry, collect the rest of them before he breaks any more!

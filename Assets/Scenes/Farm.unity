@@ -6561,7 +6561,7 @@ MonoBehaviour:
   player: {fileID: 788238817}
   radiusToFollow: 7
   agentSpeed: 2.5
-  muskrat: {fileID: 4350758}
+  npcGuide: {fileID: 4350758}
 --- !u!65 &1216236068
 BoxCollider:
   m_ObjectHideFlags: 0
