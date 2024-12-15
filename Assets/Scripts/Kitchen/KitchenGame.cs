@@ -64,7 +64,9 @@ public class KitchenGame : MonoBehaviour
             timerText.text = "Timer: " + time.ToString("F1");
             if (time <= 0)
             {
-                EndGame();
+                time = 0;
+                playing = false;
+                todoText.text = "You ran out of time!";
             }
         }
     }
@@ -74,6 +76,7 @@ public class KitchenGame : MonoBehaviour
         if (curTodoIndex >= todos.Count) {
             // Finished all tasks
             Debug.Log("Finished all todos");
+            playing = false;
         }
         else {
             // Update scene based on new todo
@@ -109,13 +112,6 @@ public class KitchenGame : MonoBehaviour
         else {
             todoText.text = "Todo: " + todoDescs[(int)todos[curTodoIndex]];
         }
-    }
-
-    void EndGame()
-    {
-        time = 0;
-        playing = false;
-        todoText.text = "Game Over!";
     }
 
     public void WashHands() {
