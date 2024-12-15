@@ -11,8 +11,6 @@ public class LostFoundGame : MonoBehaviour
     public float spawnRadius = 18f;
     public GameObject forkSpawner;
     public GameObject monkey;
-    public GameObject stealDialogueUI;
-    public GameObject stoleForkUI;
     private bool stolenFrom;
     public bool gameIsOver;
 
@@ -35,8 +33,7 @@ public class LostFoundGame : MonoBehaviour
          if (Input.GetMouseButtonDown(0) && stolenFrom) {
             stolenFrom = false;
             //Debug.Log("disable the UI again");
-            stealDialogueUI.SetActive(false);
-            stoleForkUI.SetActive(false);
+            Tip.Remove();
             if (fpScript != null) {
                 fpScript.ChasePlayer();
             }
@@ -125,9 +122,9 @@ public class LostFoundGame : MonoBehaviour
             
             if (itemToRemove.name == "Fork" ) {
                 //Debug.Log("removing the fork.");
-                stoleForkUI.SetActive(true);
+                Tip.Activate("LostFoundStolen");
                 
-                if (stoleForkUI.activeSelf && !stolenFrom) {
+                if (Tip.isActive && !stolenFrom) {
                     stolenFrom = true;
                     if (fpScript != null) { 
                         fpScript.StopChasePlayer();
@@ -136,9 +133,9 @@ public class LostFoundGame : MonoBehaviour
                 SpawnFork(); // spawn the fork in another place if lost it
             }
             else {
-                stealDialogueUI.SetActive(true);
+                Tip.Activate("LostFoundCheck");
                 
-                if (stealDialogueUI.activeSelf && !stolenFrom) {
+                if (Tip.isActive && !stolenFrom) {
                     stolenFrom = true;
                     if (fpScript != null) { 
                         fpScript.StopChasePlayer();

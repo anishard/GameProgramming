@@ -36,17 +36,17 @@ public class Note : MonoBehaviour
         }
 
         if (data != null)
-            Note.ToggleNote(data.title, data.body);
+            Note.Toggle(data.title, data.body);
         else
             throw new Exception(name + " does not exist in Resources/Notes");
     }
 
     public static void Remove()
     {
-        ToggleNote();
+        Toggle();
     }
 
-    public static void ToggleNote(string title = "", string body = "")
+    public static void Toggle(string title = "", string body = "")
     {
         bool isEnabled = !string.IsNullOrEmpty(body);
         bool hasTitle = !string.IsNullOrEmpty(title);
