@@ -6,7 +6,7 @@ public class Dialogue : MonoBehaviour
     public TextAsset file;
     public GameObject character;
     public GameObject cam;
-    public Vector3 characterPosition;
+    public Vector3 characterPosition = new Vector3(-751.834f, -430.879f, 6.863f);
     public Vector3 characterRotation;
     public Vector3 cameraPosition;
     public Vector3 cameraRotation;
@@ -14,7 +14,7 @@ public class Dialogue : MonoBehaviour
 
     void Start()
     {
-        var charPos = characterPosition == null ? characterPosition : new Vector3(-751.834f, -430.879f, 6.863f);
+        var charPos = characterPosition;
         var charRot = Quaternion.Euler(characterRotation == null ? characterRotation : new Vector3(4.611f, 190.386f, -3.415f));
         character.transform.SetLocalPositionAndRotation(charPos, charRot);
         character.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);

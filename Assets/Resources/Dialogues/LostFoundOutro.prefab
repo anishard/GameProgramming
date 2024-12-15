@@ -24,6 +24,18 @@ PrefabInstance:
       propertyPath: character
       value: 
       objectReference: {fileID: 843346547535718832}
+    - target: {fileID: 4683258427166419235, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
+      propertyPath: characterPosition.x
+      value: -751.834
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683258427166419235, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
+      propertyPath: characterPosition.y
+      value: -430.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683258427166419235, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
+      propertyPath: characterPosition.z
+      value: 6.863
+      objectReference: {fileID: 0}
     - target: {fileID: 8668671341669886236, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
       propertyPath: m_Pivot.x
       value: 0

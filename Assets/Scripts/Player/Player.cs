@@ -119,7 +119,15 @@ public class Player : MonoBehaviour
         if (equipped == Equippable.Interactable)
             InventoryUI.DequipInteractable(null);
 
-        if (item == equipped || IsTool(equipped) && IsTool(item)) // dequip if same tool
+        Debug.Log($"{Time.time} EquipTool itemName={itemName} item={item}");
+
+        if (item == equipped && IsTool(equipped))
+        {
+            DequipTool(Equippable.None);
+            return;
+        }
+
+        if (item != equipped || IsTool(equipped) && IsTool(item))
             DequipTool(item);
 
         if (item != equipped)
@@ -142,6 +150,8 @@ public class Player : MonoBehaviour
 
     public static void DequipTool(Equippable toEquip)
     {
+        Debug.Log($"{Time.time} DequipTool equipped={equipped} toEquip={toEquip}");
+
         foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
             tool.GetComponent<MeshRenderer>().enabled = false;
 
