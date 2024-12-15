@@ -39,55 +39,51 @@ public class KitchenGame : MonoBehaviour
             Todo.CLEAN,
             Todo.COOK
         };
-        curTodoIndex = 0;
+        curTodoIndex = -1;
         playing = true;
         bucket = GameObject.Find("Bucket");
         firePlace = GameObject.Find("FirePlaceFull");
-        UpdateTodoText();
+        StartNextTodo();
     }
 
     void Update()
     {
         if (playing)
-        {
-            time -= Time.deltaTime;
-
+        {    
+            // Update countdown timer
+            time -= Time.deltaTime; 
+            timerText.text = "Timer: " + time.ToString("F1");
             if (time <= 0)
             {
                 EndGame();
             }
-
-            switch (todos[curTodoIndex]) 
-            {
-                case Todo.WASH:
-                    // Make water bucket interactable
-                    bucket.GetComponent<Interact>().enabled = true;
-                    break;
-
-                case Todo.CLEAN:
-                    // Generate spills to be cleaned
-                    SpillCleaning spillCleaning = GetComponent<SpillCleaning>();
-                    spillCleaning.enabled = true;
-
-                    // End task when player has cleaned all spills
-                    if (spillCleaning.cleanedSpills == spillCleaning.spillCount) {
-                        spillCleaning.enabled = false;
-                        StartNextTodo();
-                    }
-                    break;
-
-                case Todo.COOK:
-                    // Make fireplace interactable
-                    firePlace.GetComponent<Interact>().enabled = true;
-                    break;
-            }
-
-            timerText.text = "Timer: " + time.ToString("F1");
         }
     }
 
-    void StartNextTodo() {
+    public void StartNextTodo() {
         curTodoIndex++;
+        Debug.Log(curTodoIndex);
+
+        // Update scene based on new todo
+        switch (todos[curTodoIndex]) 
+        {
+            case Todo.WASH:
+                // Make water bucket interactable
+                bucket.GetComponent<Interact>().enabled = true;
+                break;
+
+            case Todo.CLEAN:
+                // Generate spills to be cleaned
+                SpillCleaning spillCleaning = GetComponent<SpillCleaning>();
+                spillCleaning.enabled = true;
+                break;
+
+            case Todo.COOK:
+                // Make fireplace interactable
+                firePlace.GetComponent<Interact>().enabled = true;
+                break;
+        }
+
         UpdateTodoText();
     }   
 

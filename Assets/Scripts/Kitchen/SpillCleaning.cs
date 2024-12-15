@@ -8,6 +8,7 @@ public class SpillCleaning : MonoBehaviour
     public AudioClip cleanSound;
     public int spillCount = 3;
 
+    private KitchenGame kitchenGame;
     private GameObject[] spills;      
     private readonly float minSpillDist = 3.5f; 
 
@@ -18,6 +19,7 @@ public class SpillCleaning : MonoBehaviour
     void Start()
     {
         CreateSpills();
+        kitchenGame = FindObjectOfType<KitchenGame>();
     }
 
     void Update()
@@ -26,6 +28,12 @@ public class SpillCleaning : MonoBehaviour
         {
             // Cleanup spill player that the player is standing in
             CleanSpill(curSpill);
+        }
+
+        if (cleanedSpills == spillCount) {
+            // End this todo 
+            kitchenGame.StartNextTodo();
+            this.enabled = false;
         }
     }
 
