@@ -14,6 +14,7 @@ public class KitchenGame : MonoBehaviour
     public TextMeshProUGUI timerText; 
     public TextMeshProUGUI todoText;  
     public AudioClip washHandsSound;
+    public AudioClip crushSound;
     public Canvas meterGameUI;
     public GameObject spiderPrefab;
     public GameObject spawnZone;
@@ -159,5 +160,9 @@ public class KitchenGame : MonoBehaviour
             // Instantiate the spider prefab at the random position
             Instantiate(spiderPrefab, randomPosition, Quaternion.identity);
         }
+    }
+
+    public void Sleep() {
+        Debug.Log("sleeping");
     }
 }

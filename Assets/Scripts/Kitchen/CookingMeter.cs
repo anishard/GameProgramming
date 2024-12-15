@@ -22,8 +22,7 @@ public class CookingMeter : MonoBehaviour {
         stop = false;
 
         // Randomize fill speed
-        // fillSpeed = Random.Range(0.5f, 1.5f);
-        fillSpeed = 0.5f;
+        fillSpeed = Random.Range(0.5f, 1.5f);
 
         // Randomize lowBar height
         float containerHeight = container.rectTransform.rect.height;
