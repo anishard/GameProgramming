@@ -15,8 +15,10 @@ public class KitchenGame : MonoBehaviour
     public TextMeshProUGUI todoText;  
     public AudioClip washHandsSound;
     public Canvas meterGameUI;
+    public GameObject spiderPrefab;
+    public GameObject spawnZone;
 
-    private float time = 40.0f;   
+    private float time = 45.0f;   
     private List<Todo> todos;     
     private int curTodoIndex;   
     private bool playing;    
@@ -43,7 +45,8 @@ public class KitchenGame : MonoBehaviour
         playing = true;
         bucket = GameObject.Find("Bucket");
         firePlace = GameObject.Find("FirePlaceFull");
-        StartNextTodo();
+        SpawnSpiderRandomly();
+        StartNextTodo(); // TODO: move this trigger to the NPC
     }
 
     void Update()
@@ -62,25 +65,30 @@ public class KitchenGame : MonoBehaviour
 
     public void StartNextTodo() {
         curTodoIndex++;
+        if (curTodoIndex >= todos.Count) {
+            // Finished all tasks
+            Debug.Log("Finished all todos");
+        }
+        else {
+            // Update scene based on new todo
+            switch (todos[curTodoIndex]) 
+            {
+                case Todo.WASH:
+                    // Make water bucket interactable
+                    bucket.GetComponent<Interact>().enabled = true;
+                    break;
 
-        // Update scene based on new todo
-        switch (todos[curTodoIndex]) 
-        {
-            case Todo.WASH:
-                // Make water bucket interactable
-                bucket.GetComponent<Interact>().enabled = true;
-                break;
+                case Todo.CLEAN:
+                    // Generate spills to be cleaned
+                    SpillCleaning spillCleaning = GetComponent<SpillCleaning>();
+                    spillCleaning.enabled = true;
+                    break;
 
-            case Todo.CLEAN:
-                // Generate spills to be cleaned
-                SpillCleaning spillCleaning = GetComponent<SpillCleaning>();
-                spillCleaning.enabled = true;
-                break;
-
-            case Todo.COOK:
-                // Make fireplace interactable
-                firePlace.GetComponent<Interact>().enabled = true;
-                break;
+                case Todo.COOK:
+                    // Make fireplace interactable
+                    firePlace.GetComponent<Interact>().enabled = true;
+                    break;
+            }
         }
 
         UpdateTodoText();
@@ -89,7 +97,12 @@ public class KitchenGame : MonoBehaviour
     void UpdateTodoText()
     {
         // Change text to todo's description
-        todoText.text = "Todo: " + todoDescs[(int)todos[curTodoIndex]];
+        if (curTodoIndex >= todos.Count) {
+            todoText.text = "";
+        }
+        else {
+            todoText.text = "Todo: " + todoDescs[(int)todos[curTodoIndex]];
+        }
     }
 
     void EndGame()
@@ -121,5 +134,28 @@ public class KitchenGame : MonoBehaviour
         interact.enabled = false;
 
         meterGameUI.gameObject.SetActive(true);
+    }
+
+    void SpawnSpiderRandomly()
+    {
+        float spawnChance = Random.Range(0f, 1f);  
+        float chanceThreshold = 0.5f;       
+        if (spawnChance < chanceThreshold)
+        {
+            // Get the bounds of the spawnZone (assuming it's a plane)
+            Renderer zoneRenderer = spawnZone.GetComponent<Renderer>();
+            Vector3 zoneMin = zoneRenderer.bounds.min;
+            Vector3 zoneMax = zoneRenderer.bounds.max;
+
+            // Generate a random position within the spawnZone bounds
+            Vector3 randomPosition = new Vector3(
+                Random.Range(zoneMin.x, zoneMax.x),
+                spawnZone.transform.position.y,  // Place the spider on the same Y as the spawnZone
+                Random.Range(zoneMin.z, zoneMax.z)
+            );
+
+            // Instantiate the spider prefab at the random position
+            Instantiate(spiderPrefab, randomPosition, Quaternion.identity);
+        }
     }
 }
