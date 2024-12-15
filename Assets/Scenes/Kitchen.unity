@@ -1515,6 +1515,7 @@ MonoBehaviour:
   timerText: {fileID: 1009810541}
   todoText: {fileID: 790614990}
   washHandsSound: {fileID: 8300000, guid: 60f9efe3d97bc8f47bea1af7f7093d41, type: 3}
+  crushSound: {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
   meterGameUI: {fileID: 1875807751}
   spiderPrefab: {fileID: 110427889724667761, guid: 740728f854d793848a530ac50ca86174, type: 3}
   spawnZone: {fileID: 1998800182}
@@ -5030,6 +5031,10 @@ PrefabInstance:
     - target: {fileID: 4985249760713528, guid: 500ae0ce6d19f554e8adfb905245f988, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65387406841017234, guid: 500ae0ce6d19f554e8adfb905245f988, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

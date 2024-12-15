@@ -19,6 +19,10 @@ public class Interact : MonoBehaviour
         sphereCollider.radius = radius;
     }
 
+    internal void SetText() {
+        interactText.text = text;
+    }
+
     internal void ClearText() {
         interactText.text = "";
     }
@@ -27,19 +31,11 @@ public class Interact : MonoBehaviour
     {
         if (playerNear)
         {   
-            // Show interaction prompt
-            interactText.text = text;
-
             // Trigger the assigned action when interact key is pressed
             if (Input.GetKeyDown(KeyCode.F) && onInteract != null)
             {
                 onInteract.Invoke();
             }
-        }
-        else
-        {
-            // Clear interact prompt
-            ClearText();
         }
     }
 
@@ -47,6 +43,7 @@ public class Interact : MonoBehaviour
     {
         if (other.CompareTag("Player")) 
         {
+            SetText();
             playerNear = true;
         }
     }
@@ -55,6 +52,7 @@ public class Interact : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            ClearText();
             playerNear = false;
         }
     }
