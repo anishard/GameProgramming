@@ -39,7 +39,7 @@ public class KitchenGame : MonoBehaviour
             Todo.CLEAN,
             Todo.COOK
         };
-        curTodoIndex = 0; // Will get updated to 0 by the StartNextTodo
+        curTodoIndex = -1; // Will get updated to 0 by the StartNextTodo
         playing = true;
         bucket = GameObject.Find("Bucket");
         firePlace = GameObject.Find("FirePlaceFull");

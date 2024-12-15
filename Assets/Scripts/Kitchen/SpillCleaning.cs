@@ -79,8 +79,6 @@ public class SpillCleaning : MonoBehaviour
                 {
                     positionFound = true;
                     spillPositions.Add(randomPosition);
-
-                    // Instantiate the spill at that position
                     GameObject spill = Instantiate(spillPrefab, randomPosition, Quaternion.identity);
                     spills[i] = spill;
                 }
