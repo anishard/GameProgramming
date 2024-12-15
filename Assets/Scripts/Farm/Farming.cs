@@ -10,7 +10,7 @@ public class Farming : MonoBehaviour
     private FarmSquare[,] farmland;
 
     private int numPours;
-    private const int MAX_POURS = 10;
+    private const int MAX_POURS = int.MaxValue;// TODO 10;
 
     void Start()
     {
@@ -193,7 +193,6 @@ public class Farming : MonoBehaviour
     {
         if (square.state == FarmSquareState.Tilled)
         {
-            Debug.Log(Time.time + "Planting seed");
             square.state = FarmSquareState.Seeds;
             var seed = CreateObject(square, "SeedOpened");
             square.objects.Add(seed);
@@ -201,7 +200,6 @@ public class Farming : MonoBehaviour
 
         else if (square.state == FarmSquareState.Seeds)
         {
-            Debug.Log(Time.time + "to seedling");
             square.state = FarmSquareState.Seedling;
             var seed = square.objects.Find((o) => o.name.Contains("Seed"));
             if (seed != null)
@@ -217,7 +215,6 @@ public class Farming : MonoBehaviour
 
         else if (square.state == FarmSquareState.Seedling)
         {
-            Debug.Log(Time.time + "to growing");
             square.state = FarmSquareState.Growing;
             var plant = square.objects.Find((o) => o.name.Contains("Plant"));
             if (plant != null) plant.transform.localScale *= 2f;

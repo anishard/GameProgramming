@@ -36,6 +36,5 @@ public class Alert : MonoBehaviour
         });
 
         if (alert != null) Destroy(alert);
-        if (alert != null) Debug.Log("Removal success");
     }
 }

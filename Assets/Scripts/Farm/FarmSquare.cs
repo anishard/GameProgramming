@@ -32,20 +32,24 @@ public class FarmSquare
     public void Update()
     {
         if (CheckIfWatered())
-        {
             ShowAlert(AlertType.Water);
-        }
 
-        if (CheckIfDead())
+        // has been planted
+        if (timePlanted > 0)
         {
-            ShowAlert(AlertType.Dead);
-            Kill();
-        }
+            CheckForGrowth();
 
-        if (CheckIfMature())
-        {
-            ShowAlert(AlertType.Harvest);
-            state = FarmSquareState.Mature;
+            if (CheckIfDead())
+            {
+                ShowAlert(AlertType.Dead);
+                Kill();
+            }
+
+            if (CheckIfMature())
+            {
+                ShowAlert(AlertType.Harvest);
+                state = FarmSquareState.Mature;
+            }
         }
     }
 
@@ -57,13 +61,11 @@ public class FarmSquare
 
     public void PlantSeed(string seedInteractable)
     {
+        ShowAlert(AlertType.Water);
+
         Enum.TryParse(seedInteractable[..^4], out seed);
-
         growTime = GetGrowTime();
-
-        int curTime = Clock.GetTotalHours();
-        timePlanted = curTime;
-        timeLastWatered = curTime;
+        timeLastWatered = Clock.TotalHours;
 
         Farming.ReplaceObject(this);
         InventoryUI.DestroyInteractable();
@@ -71,40 +73,54 @@ public class FarmSquare
 
     public void Water()
     {
-        timeLastWatered = Clock.GetTotalHours();
         HideAlert();
 
-        Farming.ReplaceObject(this);
+        int curTime = Clock.TotalHours;
+        timeLastWatered = curTime;
+
+        // first time watering        
+        if (state == FarmSquareState.Tilled && timePlanted == 0)
+            timePlanted = curTime;
+    }
+
+    private void CheckForGrowth()
+    {
+        int timeElapsed = Clock.TotalHours - timePlanted;
+
+        if (state == FarmSquareState.Seeds && timeElapsed > 48)
+            Farming.ReplaceObject(this);
+
+        else if (state == FarmSquareState.Seedling && timeElapsed > growTime * 0.75f)
+            Farming.ReplaceObject(this);
     }
 
     public void Harvest()
     {
-        // state = FarmSquareState.Untilled;
+        state = FarmSquareState.Untilled;
     }
 
     public void Kill()
     {
-        // state = FarmSquareState.Dead;
+        state = FarmSquareState.Dead;
     }
 
     public void ClearDebris()
     {
-        // state = FarmSquareState.Untilled;
         HideAlert();
+        state = FarmSquareState.Untilled;
     }
 
-    public void ShowAlert(AlertType alert)
+    private void ShowAlert(AlertType alert)
     {
         if (curAlert == alert) return;
 
         HideAlert();
-        Alert.Activate(alert, position + new Vector3(0, 3f));
+        Alert.Activate(alert, position + new Vector3(0, 2.7f));
         curAlert = alert;
     }
 
-    public void HideAlert()
+    private void HideAlert()
     {
-        Debug.Log($"Hiding {curAlert}");
         curAlert = AlertType.None;
         Alert.Remove(position);
     }
@@ -120,35 +136,26 @@ public class FarmSquare
         else if (seed == Seed.Tomato) days = 12;
         else days = 7;
 
-        days = 3;
         return days * 24;
     }
 
     private bool CheckIfWatered()
     {
-        var o = timePlanted > 0
+        // need water every day
+        return timePlanted > 0
             && curAlert == AlertType.None
-            && Clock.GetTotalHours() - timeLastWatered > 24; // need water every day
-
-        if (o) Debug.Log("checking if watered");
-        return o;
+            && Clock.TotalHours - timeLastWatered > 24;
     }
     private bool CheckIfDead()
     {
-        var o = timePlanted > 0
-            && Clock.GetTotalHours() - timeLastWatered > 72; // die if unwatered for 3 days
-
-        if (o) Debug.Log("checking if dead");
-        return o;
+        // die if unwatered for 3 days
+        return Clock.TotalHours - timeLastWatered > 72
+            && curAlert != AlertType.Harvest;
     }
 
     private bool CheckIfMature()
     {
-        var o = timePlanted > 0
-            && curAlert != AlertType.Dead
-            && Clock.GetTotalHours() - timePlanted > growTime;
-
-        if (o) Debug.Log("checking if mature");
-        return o;
+        return curAlert != AlertType.Dead
+            && Clock.TotalHours - timePlanted > growTime;
     }
 }
