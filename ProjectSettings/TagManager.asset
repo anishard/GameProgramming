@@ -10,13 +10,15 @@ TagManager:
   - Note
   - Tip
   - Interactable
+  - NPC
+  - Alert
   - Fireplace
   - MeterGameUI
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 

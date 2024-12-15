@@ -4,7 +4,10 @@ using TMPro;
 public class Clock : MonoBehaviour
 {
     public static int hour = 7, day = 1;
-    public static float gameHourInRealMinutes = 0.02f;
+    public static float gameHourInRealMinutes = 0.01f;
+    public static int TotalHours {
+        get { return day * 24 + hour; }
+    }
 
     private TMP_Text clockTime;
     private TMP_Text clockDay;

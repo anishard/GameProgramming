@@ -1,20 +1,23 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Farming : MonoBehaviour
 {
+    public static List<GameObject> prefabs;
     private Vector3 minBounds;
     private Vector3 maxBounds;
     private FarmSquare[,] farmland;
 
     private int numPours;
-    private const int MAX_POURS = 5;
-    private GameObject[] crops;
+    private const int MAX_POURS = int.MaxValue;// TODO 10;
 
     void Start()
     {
         // load resources
-        crops = Resources.LoadAll<GameObject>("Farming");
+        prefabs = new List<GameObject>();
+        prefabs.AddRange(Resources.LoadAll<GameObject>("InventorySprites"));
+        prefabs.AddRange(Resources.LoadAll<GameObject>("Farming"));
 
         // bounds of farmland
         minBounds = new Vector3(-11.25f, float.MaxValue, -6.25f);
@@ -39,12 +42,11 @@ public class Farming : MonoBehaviour
 
     void Update()
     {
-        if (Game.ClickDetected())
-        {
-            if (InteractableObjectFound()) return;
-
+        if (Game.ClickDetected() && !InteractableObjectFound())
             UseFarmTool();
-        }
+
+        foreach (var square in farmland)
+            square?.Update();
     }
 
     void EnterHouse()
@@ -76,17 +78,6 @@ public class Farming : MonoBehaviour
         return null;
     }
 
-    GameObject InstantiateByName(string name, GameObject[] array, Vector3 position)
-    {
-        GameObject obj = Array.Find(array, (e) => e.name == name);
-
-        if (obj == null)
-            throw new Exception(name + " does not exist in the given array");
-
-        return Instantiate(obj, position, Quaternion.identity);
-
-    }
-
     bool InteractableObjectFound()
     {
         bool objectFound = true;
@@ -113,7 +104,23 @@ public class Farming : MonoBehaviour
         StartCoroutine(Game.PlayAudio("ShippingBin", 0.15f));
     }
 
-    void TillSquare(FarmSquare square)
+    void UseFarmTool()
+    {
+        FarmSquare square = GetFarmSquare();
+
+        GameObject interactable = InventoryUI.equippedInteractable;
+
+        if (Player.equipped == Equippable.Hoe)
+            Till(square);
+
+        if (interactable != null && interactable.name.Contains("Seed"))
+            PlantSeed(square);
+
+        if (Player.equipped == Equippable.Can)
+            Water(square);
+    }
+
+    public void Till(FarmSquare square)
     {
         Animator anim = GameObject.Find("Hoe").GetComponent<Animator>();
         anim.SetTrigger("isActive");
@@ -128,13 +135,26 @@ public class Farming : MonoBehaviour
             StartCoroutine(Game.PlayAudio("Till", 0.6f, 0.4f));
             StartCoroutine(Player.Pause(() =>
             {
-                square.gameObject = InstantiateByName("Dirt_Pile", crops, square.position);
-                square.state = FarmSquareState.Tilled;
+                GameObject dirt = CreateObject(square, "Dirt_Pile");
+                square.Till(dirt);
             }));
         }
     }
 
-    void UseCan(FarmSquare square)
+    public void PlantSeed(FarmSquare square)
+    {
+        if (square == null || square.state != FarmSquareState.Tilled)
+        {
+            StartCoroutine(Game.PlayAudio("Miss", 0.5f, 0.35f));
+        }
+        else
+        {
+            StartCoroutine(Game.PlayAudio("Seed", 0.6f, 0.4f));
+            square.PlantSeed(InventoryUI.equippedInteractable.name);
+        }
+    }
+
+    public void Water(FarmSquare square)
     {
         Animator anim = GameObject.Find("Can").GetComponent<Animator>();
         anim.SetTrigger("isActive");
@@ -155,18 +175,64 @@ public class Farming : MonoBehaviour
         {
             --numPours;
             StartCoroutine(Game.PlayAudio("PourCan", 0.3f, 0.2f));
-            StartCoroutine(Player.Pause(() => { }));
+            StartCoroutine(Player.Pause(() => square.Water()));
         }
     }
 
-    void UseFarmTool()
+    GameObject InstantiateByName(string name, List<GameObject> array, Vector3 position)
     {
-        FarmSquare square = GetFarmSquare();
+        GameObject obj = array.Find((e) => e.name == name);
 
-        if (Player.equipped == Equippable.Hoe)
-            TillSquare(square);
+        if (obj == null)
+            throw new Exception(name + " does not exist in Resources");
 
-        if (Player.equipped == Equippable.Can)
-            UseCan(square);
+        return Instantiate(obj, position, Quaternion.identity);
+    }
+
+    public static void ReplaceObject(FarmSquare square)
+    {
+        if (square.state == FarmSquareState.Tilled)
+        {
+            square.state = FarmSquareState.Seeds;
+            var seed = CreateObject(square, "SeedOpened");
+            square.objects.Add(seed);
+        }
+
+        else if (square.state == FarmSquareState.Seeds)
+        {
+            square.state = FarmSquareState.Seedling;
+            var seed = square.objects.Find((o) => o.name.Contains("Seed"));
+            if (seed != null)
+            {
+                square.objects.Remove(seed);
+                Destroy(seed);
+
+                var plant = CreateObject(square, $"{square.seed}_Plant");
+                plant.transform.localScale *= 0.5f;
+                square.objects.Add(plant);
+            }
+        }
+
+        else if (square.state == FarmSquareState.Seedling)
+        {
+            square.state = FarmSquareState.Growing;
+            var plant = square.objects.Find((o) => o.name.Contains("Plant"));
+            if (plant != null) plant.transform.localScale *= 2f;
+        }
+    }
+
+    private static GameObject CreateObject(FarmSquare square, string prefabName)
+    {
+        GameObject prefab = prefabs.Find((e) => e.name == prefabName);
+
+        if (prefab == null)
+            throw new Exception(prefabName + " does not exist in Resources");
+
+        GameObject obj = Instantiate(prefab, square.position, Quaternion.identity);
+
+        Vector3 objBase = obj.gameObject.transform.GetChild(0).position;
+        obj.transform.position += square.position - objBase;
+
+        return obj;
     }
 }

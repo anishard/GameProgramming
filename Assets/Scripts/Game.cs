@@ -14,22 +14,30 @@ public class Game : MonoBehaviour
             return clips;
         }
     }
+    public static float alertRotation;
+
     private static AudioClip[] clips;
 
     void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
+        alertRotation = 0f;
     }
 
-    public static bool ClickDetected(bool allowUI = false)
+    void Update()
+    {
+        alertRotation += 5f * Time.deltaTime;
+    }
+
+    public static bool ClickDetected(bool isRightClick = true)
     {
         bool detected = false;
 
-        bool mouseClicked = Input.GetMouseButtonDown(0);
-        bool buttonClicked = Input.GetKeyDown(KeyCode.J);
+        bool mouseClicked = Input.GetMouseButtonDown(isRightClick ? 0 : 1);
+        bool buttonClicked = Input.GetKeyDown(isRightClick ? KeyCode.J : KeyCode.K);
         bool uiClicked = EventSystem.current.IsPointerOverGameObject();
 
-        if ((mouseClicked && (allowUI || !uiClicked)) || buttonClicked)
+        if ((mouseClicked && !uiClicked) || buttonClicked)
             detected = true;
 
         return detected;

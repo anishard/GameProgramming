@@ -2,7 +2,9 @@ public enum FarmSquareState
 {
     Untilled,
     Tilled,
-    SeedsPlanted,
+    Seeds,
+    Seedling,
     Growing,
-    Mature
+    Mature,
+    Dead
 }
