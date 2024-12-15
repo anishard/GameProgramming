@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpillCleaning : MonoBehaviour
@@ -9,8 +10,8 @@ public class SpillCleaning : MonoBehaviour
     public int spillCount = 3;
 
     private KitchenGame kitchenGame;
-    private GameObject[] spills;      
-    private readonly float minSpillDist = 3.5f; 
+    private GameObject[] spills; 
+    private readonly float minSpillDist = 3f;    
 
     // State changed by Spill.cs
     internal GameObject curSpill; 
@@ -18,20 +19,21 @@ public class SpillCleaning : MonoBehaviour
 
     void Start()
     {
-        CreateSpills();
         kitchenGame = FindObjectOfType<KitchenGame>();
+        spills = new GameObject[spillCount];
+        CreateSpills();
     }
 
     void Update()
     {
         if (curSpill != null && Input.GetKeyDown(KeyCode.F))
         {
-            // Cleanup spill player that the player is standing in
+            // Cleanup spill that the player is standing in
             CleanSpill(curSpill);
         }
 
         if (cleanedSpills == spillCount) {
-            // End this todo 
+            // Todo complete, start next
             kitchenGame.StartNextTodo();
             this.enabled = false;
         }
@@ -39,60 +41,57 @@ public class SpillCleaning : MonoBehaviour
 
     private void CreateSpills()
     {
-        spills = new GameObject[spillCount];
-
-        // Get the bounds of the spillZone
+        // Bounds of the spill zone
         Renderer zoneRenderer = spillZone.GetComponent<Renderer>();
         Vector3 zoneMin = zoneRenderer.bounds.min;
         Vector3 zoneMax = zoneRenderer.bounds.max;
 
-        // Create a list to store the positions of the spills
         List<Vector3> spillPositions = new List<Vector3>();
-
         for (int i = 0; i < spillCount; i++)
         {
-            Vector3 randomPosition;
             bool positionFound = false;
             int attempts = 0;
-            int maxAttempts = 10; // Limit attempts
+            Vector3 randomPosition;
 
-            // Try to find a valid position for the spill
-            while (!positionFound && attempts < maxAttempts)
+            while (!positionFound && attempts < 50)
             {
+                // Generate a random position within the spill zone
                 randomPosition = new Vector3(
                     Random.Range(zoneMin.x, zoneMax.x),
                     spillZone.transform.position.y, 
                     Random.Range(zoneMin.z, zoneMax.z)
                 );
 
+                // Check for overlap with existing spills
                 bool overlap = false;
                 foreach (var pos in spillPositions)
                 {
-                    // Check if the random position overlaps with any existing spill
-                    if (Vector3.Distance(pos, randomPosition) < minSpillDist)
+                    // Check if other spills are too close
+                    if (Vector3.Distance(pos, randomPosition) < minSpillDist) 
                     {
                         overlap = true;
                         break;
                     }
                 }
 
-                // If there's no overlap, add the position and instantiate the spill
+                // If there's no overlap, place the spill
                 if (!overlap)
                 {
                     positionFound = true;
                     spillPositions.Add(randomPosition);
+
+                    // Instantiate the spill at that position
                     GameObject spill = Instantiate(spillPrefab, randomPosition, Quaternion.identity);
                     spills[i] = spill;
                 }
-
                 attempts++;
             }
 
-            // If a valid position couldn't be found after maxAttempts, log a warning
+            // If a valid position couldn't be found after 50 attempts, log a warning
             if (!positionFound)
             {
-                Debug.LogWarning($"Unable to place spill {i + 1} after {maxAttempts} attempts.");
-                spillCount--;
+                Debug.LogWarning($"Unable to place spill {i + 1} after 50 attempts.");
+                cleanedSpills++;
             }
         }
     }

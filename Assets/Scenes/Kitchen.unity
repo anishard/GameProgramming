@@ -4712,6 +4712,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: spider_green
       objectReference: {fileID: 0}
+    - target: {fileID: 110427889724667761, guid: 740728f854d793848a530ac50ca86174, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 775605639411264971, guid: 740728f854d793848a530ac50ca86174, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.92
