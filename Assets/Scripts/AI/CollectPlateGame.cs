@@ -14,6 +14,8 @@ public class CollectPlateGame : MonoBehaviour
     private bool brokePlate;
     public bool gameIsOver;
     private int numPlatesToCollect = 10;
+    public Item plate;
+    private int numBrokenPlates;
 
     Inventory inventory;
     FollowPlayer fpScript; 
@@ -24,6 +26,7 @@ public class CollectPlateGame : MonoBehaviour
         hasPlayedIntroDialogue = false;
         brokePlate = false;
         gameIsOver = false;
+        numBrokenPlates = 0;
         inventory = Inventory.instance;
         fpScript = monkey.GetComponent<FollowPlayer>();
     }
@@ -31,36 +34,46 @@ public class CollectPlateGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if player FIRST goes up to muskrat, start playing the dialogue and start game
-        //Debug.Log("clicked on muskrat");
+        // if Player clicks on Pudu NPC
         if (Game.ClickDetected() && Player.ObjectDetected("Pudu"))
         {
-            //Debug.Log("clicked on pudu");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            //if click on muskrat
             if (Physics.Raycast(ray, out hit))
             {
+                // if first time talking to NPC, play intro quest dialogue 
                 if (!hasPlayedIntroDialogue) {
                     StartCollectPlateGame();
                     hasPlayedIntroDialogue = true;
                 }
-                // if the fork has been put in the inventory, and player goes up to muskrat again, end game
-                // also, remove the fork from the inventory (to "return to the muskrat")
-                Item plate = null;
-                foreach (Item item in inventory.items) {
-                    if (item.name == "Plate") {
-                        plate = item; // Store the item if it matches
-                        break; // Exit the loop once the item is found
+                
+                // if player has collected all plates in scene (including broken ones), remove the plates from inventory and stop game
+                // Debug.Log("there are: " + numBrokenPlates.ToString("n0") + " broken plates.");
+                // Debug.Log("there are: " + numPlatesInInventory().ToString("n0") + " plates in inventory.");
+                int numPlatesCollected = numPlatesInInventory() + numBrokenPlates;
+                if (numPlatesCollected == numPlatesToCollect) {
+                    Item plate = null;
+                    foreach (Item item in inventory.items) {
+                        if (item.name == "Plate") {
+                            plate = item; // Store the item if it matches
+                            break; // Exit the loop once the item is found
+                        }
+                    }
+                    //remove the plates from inventory when ALL are collected
+                    if (plate != null && hasPlayedIntroDialogue) {
+                        StopCollectPlateGame(); //which will play ending dialogue
+
+                        // remove all the plates from the inventory
+                        int numPlates = numPlatesInInventory();
+                        for (int i=0; i<numPlates; i++) {
+                            inventory.Remove(plate);
+                        }     
                     }
                 }
-                if (plate != null && hasPlayedIntroDialogue) {
-                    StopCollectPlateGame();
-                    // remove all the plates from the inventory
-                    int numPlates = numPlatesInInventory();
-                    for (int i=0; i<numPlates; i++) {
-                        inventory.Remove(plate);
-                    }     
+                if (numPlatesCollected < numPlatesToCollect && !gameIsOver) {
+                    int platesLeft = numPlatesToCollect - numPlatesCollected;
+                    //Debug.Log("There are still " + platesLeft.ToString("n0") + " plates left.");
+                    Tip.Activate("KeepCollectingPlates", 5);
                 }
             }
         }
@@ -78,6 +91,7 @@ public class CollectPlateGame : MonoBehaviour
 
     public void StartCollectPlateGame() {
         // play the opening dialogue, and make sure the dialogue doesn't replay after it ends
+        monkey.SetActive(true);
         Dialogue.Activate("CollectPlateIntro");
         hasPlayedIntroDialogue = true;
 
@@ -96,13 +110,14 @@ public class CollectPlateGame : MonoBehaviour
     }
 
     public void StopCollectPlateGame() {
+        monkey.SetActive(false);
         //stop monkey from chasing you
-        if (fpScript != null) { 
-            fpScript.StopChasePlayer();
-        }
-        else {
-            Debug.Log("the script is not found");
-        }
+        // if (fpScript != null) { 
+        //     fpScript.StopChasePlayer();
+        // }
+        // else {
+        //     Debug.Log("the script is not found");
+        // }
 
         gameIsOver = true;
         Dialogue.Activate("CollectPlateOutro");
@@ -127,9 +142,13 @@ public class CollectPlateGame : MonoBehaviour
         }
         //there is at least 1 PLATE in inventory
         else {
+            //remove a plate from inventory
+            inventory.Remove(plate);
             //plate tip that the plate has been broken
             Tip.Activate("CollectPlateBreak", 5);
-           
+            //keep count of how many broken plates there are (+ num plates left in inventory = total)
+            numBrokenPlates += 1;
+
             if (Tip.isActive && !brokePlate) {
                 brokePlate = true;
                 if (fpScript != null) { 
