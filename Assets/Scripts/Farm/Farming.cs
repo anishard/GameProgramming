@@ -108,6 +108,8 @@ public class Farming : MonoBehaviour
     {
         FarmSquare square = GetFarmSquare();
 
+        if (square.IsDoneGrowing) return;
+
         GameObject interactable = InventoryUI.equippedInteractable;
 
         if (Player.equipped == Equippable.Hoe)
@@ -179,14 +181,20 @@ public class Farming : MonoBehaviour
         }
     }
 
-    GameObject InstantiateByName(string name, List<GameObject> array, Vector3 position)
+    public static void EquipFruit(FarmSquare square)
     {
-        GameObject obj = array.Find((e) => e.name == name);
+        GameObject prefab = prefabs.Find((e) => e.name == square.seed.ToString());
 
-        if (obj == null)
-            throw new Exception(name + " does not exist in Resources");
+        if (prefab == null)
+            throw new Exception(square.seed.ToString() + " does not exist in Resources");
 
-        return Instantiate(obj, position, Quaternion.identity);
+        GameObject crop = Instantiate(
+            prefab,
+            square.position + new Vector3(0, 2f),
+            Quaternion.identity
+        );
+
+        InventoryUI.Interact(crop);
     }
 
     public static void ReplaceObject(FarmSquare square)
@@ -218,6 +226,13 @@ public class Farming : MonoBehaviour
             square.state = FarmSquareState.Growing;
             var plant = square.objects.Find((o) => o.name.Contains("Plant"));
             if (plant != null) plant.transform.localScale *= 2f;
+        }
+
+        else if (square.IsDoneGrowing)
+        {
+            square.state = FarmSquareState.Untilled;
+            foreach (var o in square.objects) Destroy(o);
+            square.objects.Clear();
         }
     }
 

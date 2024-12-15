@@ -32,23 +32,10 @@ public class InventoryUI : MonoBehaviour
         if (Game.ClickDetected(false) && !InventoryIsOpen())
         {
             var other = InteractableDetected();
-
-            if (other != null && Player.equipped == Equippable.None) // holding nothing
-            {
-                EquipInteractable(other);
-            }
-            else if (other != null && Player.IsTool(Player.equipped)) // holding tool
-            {
-                Player.DequipTool(Equippable.Interactable);
-                EquipInteractable(other);
-            }
-            else if (Player.equipped == Equippable.Interactable)
-            {
-                DequipInteractable(other);
-            }
+            Interact(other);
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             AddToInventory();
         }
@@ -64,6 +51,23 @@ public class InventoryUI : MonoBehaviour
         if (clickedOutsideInventory && InventoryIsOpen()) // Only close inventory if it's open
         {
             ToggleInventory();
+        }
+    }
+
+    public static void Interact(GameObject other)
+    {
+        if (other != null && Player.equipped == Equippable.None) // holding nothing
+        {
+            EquipInteractable(other);
+        }
+        else if (other != null && Player.IsTool(Player.equipped)) // holding tool
+        {
+            Player.DequipTool(Equippable.Interactable);
+            EquipInteractable(other);
+        }
+        else if (Player.equipped == Equippable.Interactable)
+        {
+            DequipInteractable(other);
         }
     }
 
@@ -86,9 +90,10 @@ public class InventoryUI : MonoBehaviour
         StartCoroutine(Game.PlayAudio("Inventory", 0.4f));
     }
 
-    private static void EquipInteractable(GameObject other)
+    public static void EquipInteractable(GameObject other)
     {
         if (other == null) return;
+
         other.transform.parent = GameObject.Find("InteractableContainer").transform;
         other.transform.localPosition = Vector3.zero;
         Player.equipped = Equippable.Interactable;
@@ -136,14 +141,16 @@ public class InventoryUI : MonoBehaviour
 
     private static void PlaceOnGround()
     {
+        if (equippedInteractable == null) return;
+
         Transform tr = equippedInteractable.transform;
         var collider = equippedInteractable.GetComponent<BoxCollider>();
-        
+
         if (collider == null)
             throw new Exception("Interactable must have a box collider to be placed on the ground");
 
         Vector3 toGround = collider.bounds.center - new Vector3(0, collider.bounds.extents.y, 0);
-        
+
         if (Physics.Raycast(tr.position, Vector3.down, out RaycastHit hit))
             tr.position -= new Vector3(0, toGround.y - hit.point.y, 0);
     }
@@ -162,7 +169,6 @@ public class InventoryUI : MonoBehaviour
             {
                 if (inventory.items[i].itemAmount > 0)
                 {
-                    //Debug.Log("adding item to inventory");
                     slots[i].AddItem(inventory.items[i]);
                     slots[i].itemAmount.enabled = true;
                     slots[i].itemAmount.text = inventory.items[i].itemAmount.ToString("n0");

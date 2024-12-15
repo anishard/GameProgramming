@@ -32,7 +32,7 @@ public class LostFoundGame : MonoBehaviour
     {
         // if player FIRST goes up to muskrat, start playing the dialogue and start game
         //Debug.Log("clicked on muskrat");
-        if (Game.ClickDetected() && Player.ObjectDetected("Muskrat"))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -96,6 +96,7 @@ public class LostFoundGame : MonoBehaviour
 
     public void StartLostFoundGame() {
         // play the opening dialogue, and make sure the dialogue doesn't replay after it ends
+        monkey.SetActive(true);
         Dialogue.Activate("LostFoundIntro");
         hasPlayedIntroDialogue = true;
 
@@ -113,6 +114,7 @@ public class LostFoundGame : MonoBehaviour
 
     public void StopLostFoundGame() {
         //stop monkey from chasing you
+        monkey.SetActive(false);
         if (fpScript != null) { 
             fpScript.StopChasePlayer();
         }

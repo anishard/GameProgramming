@@ -14,6 +14,10 @@ public class FarmSquare
     public float rightBound;
     public float lowerBound;
     public readonly Vector3 position;
+    public bool IsDoneGrowing
+    {
+        get { return state == FarmSquareState.Mature || state == FarmSquareState.Dead; }
+    }
 
     private int growTime;
     private AlertType curAlert;
@@ -42,7 +46,7 @@ public class FarmSquare
             if (CheckIfDead())
             {
                 ShowAlert(AlertType.Dead);
-                Kill();
+                state = FarmSquareState.Dead;
             }
 
             if (CheckIfMature())
@@ -51,6 +55,15 @@ public class FarmSquare
                 state = FarmSquareState.Mature;
             }
         }
+
+        if (CheckIfHarvesting())
+        {
+            Harvest();
+            ClearSquare();
+        }
+
+        if (CheckIfClearing())
+            ClearSquare();
     }
 
     public void Till(GameObject dirt)
@@ -79,7 +92,7 @@ public class FarmSquare
         timeLastWatered = curTime;
 
         // first time watering        
-        if (state == FarmSquareState.Tilled && timePlanted == 0)
+        if (state == FarmSquareState.Seeds && timePlanted == 0)
             timePlanted = curTime;
     }
 
@@ -94,20 +107,18 @@ public class FarmSquare
             Farming.ReplaceObject(this);
     }
 
-    public void Harvest()
+    private void Harvest()
     {
-        state = FarmSquareState.Untilled;
+        Farming.EquipFruit(this);
     }
 
-    public void Kill()
-    {
-        state = FarmSquareState.Dead;
-    }
-
-    public void ClearDebris()
+    private void ClearSquare()
     {
         HideAlert();
-        state = FarmSquareState.Untilled;
+        Farming.ReplaceObject(this);
+
+        timeLastWatered = 0;
+        timePlanted = 0;
     }
 
     private void ShowAlert(AlertType alert)
@@ -157,5 +168,19 @@ public class FarmSquare
     {
         return curAlert != AlertType.Dead
             && Clock.TotalHours - timePlanted > growTime;
+    }
+
+    private bool CheckIfHarvesting()
+    {
+        return state == FarmSquareState.Mature
+            && Game.ClickDetected()
+            && Player.ObjectDetected($"{seed}_Plant(Clone)");
+    }
+
+    private bool CheckIfClearing()
+    {
+        return state == FarmSquareState.Dead
+            && Game.ClickDetected()
+            && Player.ObjectDetected($"{seed}_Plant(Clone)");
     }
 }
