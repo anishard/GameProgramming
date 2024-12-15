@@ -107,7 +107,7 @@ public class KitchenGame : MonoBehaviour
     {
         // Change text to todo's description
         if (curTodoIndex >= todos.Count) {
-            todoText.text = "You got: " + cookQuality;
+            todoText.text = "You made a " + cookQuality.ToLower() + " dish!";
         }
         else {
             todoText.text = "Todo: " + todoDescs[(int)todos[curTodoIndex]];
