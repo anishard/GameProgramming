@@ -14,11 +14,19 @@ public class Game : MonoBehaviour
             return clips;
         }
     }
+    public static float alertRotation;
+
     private static AudioClip[] clips;
 
     void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
+        alertRotation = 0f;
+    }
+
+    void Update()
+    {
+        alertRotation += 5f * Time.deltaTime;
     }
 
     public static bool ClickDetected(bool isRightClick = true)

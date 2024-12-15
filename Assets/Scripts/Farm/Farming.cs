@@ -10,7 +10,7 @@ public class Farming : MonoBehaviour
     private FarmSquare[,] farmland;
 
     private int numPours;
-    private const int MAX_POURS = 5;
+    private const int MAX_POURS = int.MaxValue;// TODO 10;
 
     void Start()
     {
@@ -46,7 +46,7 @@ public class Farming : MonoBehaviour
             UseFarmTool();
 
         foreach (var square in farmland)
-            if (square != null) square.Update();
+            square?.Update();
     }
 
     void EnterHouse()
@@ -110,11 +110,11 @@ public class Farming : MonoBehaviour
 
         GameObject interactable = InventoryUI.equippedInteractable;
 
-        if (interactable != null && interactable.name.Contains("Seed"))
-            PlantSeed(square);
-
         if (Player.equipped == Equippable.Hoe)
             Till(square);
+
+        if (interactable != null && interactable.name.Contains("Seed"))
+            PlantSeed(square);
 
         if (Player.equipped == Equippable.Can)
             Water(square);
@@ -135,9 +135,8 @@ public class Farming : MonoBehaviour
             StartCoroutine(Game.PlayAudio("Till", 0.6f, 0.4f));
             StartCoroutine(Player.Pause(() =>
             {
-                var obj = InstantiateByName("Dirt_Pile", prefabs, square.position);
-                square.objects.Add(obj);
-                square.Till();
+                GameObject dirt = CreateObject(square, "Dirt_Pile");
+                square.Till(dirt);
             }));
         }
     }
@@ -151,13 +150,7 @@ public class Farming : MonoBehaviour
         else
         {
             StartCoroutine(Game.PlayAudio("Seed", 0.6f, 0.4f));
-
-            Vector3 pos = square.position;
-            pos.y += 0.05f;
-            square.objects.Add(InstantiateByName("SeedOpened", prefabs, pos));
             square.PlantSeed(InventoryUI.equippedInteractable.name);
-
-            InventoryUI.DestroyInteractable();
         }
     }
 
@@ -182,10 +175,7 @@ public class Farming : MonoBehaviour
         {
             --numPours;
             StartCoroutine(Game.PlayAudio("PourCan", 0.3f, 0.2f));
-            StartCoroutine(Player.Pause(() =>
-            {
-                square.Water();
-            }));
+            StartCoroutine(Player.Pause(() => square.Water()));
         }
     }
 
@@ -197,5 +187,52 @@ public class Farming : MonoBehaviour
             throw new Exception(name + " does not exist in Resources");
 
         return Instantiate(obj, position, Quaternion.identity);
+    }
+
+    public static void ReplaceObject(FarmSquare square)
+    {
+        if (square.state == FarmSquareState.Tilled)
+        {
+            square.state = FarmSquareState.Seeds;
+            var seed = CreateObject(square, "SeedOpened");
+            square.objects.Add(seed);
+        }
+
+        else if (square.state == FarmSquareState.Seeds)
+        {
+            square.state = FarmSquareState.Seedling;
+            var seed = square.objects.Find((o) => o.name.Contains("Seed"));
+            if (seed != null)
+            {
+                square.objects.Remove(seed);
+                Destroy(seed);
+
+                var plant = CreateObject(square, $"{square.seed}_Plant");
+                plant.transform.localScale *= 0.5f;
+                square.objects.Add(plant);
+            }
+        }
+
+        else if (square.state == FarmSquareState.Seedling)
+        {
+            square.state = FarmSquareState.Growing;
+            var plant = square.objects.Find((o) => o.name.Contains("Plant"));
+            if (plant != null) plant.transform.localScale *= 2f;
+        }
+    }
+
+    private static GameObject CreateObject(FarmSquare square, string prefabName)
+    {
+        GameObject prefab = prefabs.Find((e) => e.name == prefabName);
+
+        if (prefab == null)
+            throw new Exception(prefabName + " does not exist in Resources");
+
+        GameObject obj = Instantiate(prefab, square.position, Quaternion.identity);
+
+        Vector3 objBase = obj.gameObject.transform.GetChild(0).position;
+        obj.transform.position += square.position - objBase;
+
+        return obj;
     }
 }

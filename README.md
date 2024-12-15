@@ -34,4 +34,5 @@ This project was built with Unity as a final project for the course *COMPSCI 576
 ### Farming
 - [Cartoon Farm Crops](https://assetstore.unity.com/packages/3d/vegetation/plants/cartoon-farm-crops-79777)
 - [Lite Farm Pack - Low Poly 3D Art by Gridness](https://assetstore.unity.com/packages/3d/environments/industrial/lite-farm-pack-low-poly-3d-art-by-gridness-243315)
+- [Low Poly Icon Pack - Created with FastMesh Asset](https://assetstore.unity.com/packages/3d/props/tools/low-poly-icon-pack-created-with-fastmesh-asset-293113)
 - [Tools LowPoly Lite](https://assetstore.unity.com/packages/3d/props/tools/tools-lowpoly-lite-278877)
