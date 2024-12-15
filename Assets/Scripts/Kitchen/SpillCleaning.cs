@@ -98,7 +98,7 @@ public class SpillCleaning : MonoBehaviour
     private void CleanSpill(GameObject spill)
     {
         // Remove the spill
-        gameObject.GetComponent<AudioSource>().PlayOneShot(cleanSound);
+        gameObject.GetComponent<AudioSource>().PlayOneShot(cleanSound, 0.1f);
         Destroy(spill);
         curSpill = null;
         cleanedSpills++;
