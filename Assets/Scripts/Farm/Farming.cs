@@ -80,7 +80,6 @@ public class Farming : MonoBehaviour
 
     bool InteractableObjectFound()
     {
-        // TODO stop click from dropping an object
         bool objectFound = true;
 
         if (Player.ObjectDetected("Town")) EnterTown();
@@ -126,7 +125,7 @@ public class Farming : MonoBehaviour
         Animator anim = GameObject.Find("Hoe").GetComponent<Animator>();
         anim.SetTrigger("isActive");
 
-        if (square.state != FarmSquareState.Untilled)
+        if (square == null || square.state != FarmSquareState.Untilled)
         {
             StartCoroutine(Game.PlayAudio("Miss", 0.5f, 0.35f));
             StartCoroutine(Player.Pause(() => { }));
@@ -145,7 +144,7 @@ public class Farming : MonoBehaviour
 
     public void PlantSeed(FarmSquare square)
     {
-        if (square.state != FarmSquareState.Tilled)
+        if (square == null || square.state != FarmSquareState.Tilled)
         {
             StartCoroutine(Game.PlayAudio("Miss", 0.5f, 0.35f));
         }
