@@ -10,7 +10,7 @@ public class Farming : MonoBehaviour
     private FarmSquare[,] farmland;
 
     private int numPours;
-    private const int MAX_POURS = 5;
+    private const int MAX_POURS = 10;
 
     void Start()
     {

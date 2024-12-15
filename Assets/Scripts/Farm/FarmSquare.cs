@@ -2,13 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CropAlert
-{
-    Water,
-    Harvest,
-    Dead
-}
-
 public class FarmSquare
 {
     public static readonly float length = 1.25f;
@@ -23,6 +16,7 @@ public class FarmSquare
     public readonly Vector3 position;
 
     private int growTime;
+    private AlertType curAlert;
 
     public FarmSquare(float maxX, float minZ)
     {
@@ -32,29 +26,25 @@ public class FarmSquare
 
         objects = new();
         state = FarmSquareState.Untilled;
-        growTime = GetGrowTime();
+        curAlert = AlertType.None;
     }
 
     public void Update()
     {
-        int curTime = Clock.GetTotalHours();
-
         if (CheckIfWatered())
         {
-            if (curTime - timeLastWatered > 72) // die if unwatered for 3 days
-            {
-                ShowAlert(CropAlert.Dead);
-                Kill();
-            }
-
-            if (timePlanted > 0 && curTime - timeLastWatered > 3) // need water every day
-            {
-                ShowAlert(CropAlert.Water);
-            }
+            ShowAlert(AlertType.Water);
         }
+
+        if (CheckIfDead())
+        {
+            ShowAlert(AlertType.Dead);
+            Kill();
+        }
+
         if (CheckIfMature())
         {
-            ShowAlert(CropAlert.Harvest);
+            ShowAlert(AlertType.Harvest);
             state = FarmSquareState.Mature;
         }
     }
@@ -69,6 +59,7 @@ public class FarmSquare
         Enum.TryParse(item[..^4], out seed);
 
         state = FarmSquareState.Seeds;
+        growTime = GetGrowTime();
 
         int curTime = Clock.GetTotalHours();
         timePlanted = curTime;
@@ -78,6 +69,7 @@ public class FarmSquare
     public void Water()
     {
         timeLastWatered = Clock.GetTotalHours();
+        HideAlert();
     }
 
     public void Harvest()
@@ -93,32 +85,67 @@ public class FarmSquare
     public void ClearDebris()
     {
         state = FarmSquareState.Untilled;
+        HideAlert();
     }
 
-    public void ShowAlert(CropAlert alert)
+    public void ShowAlert(AlertType alert)
     {
-        Debug.Log(alert);
+        if (curAlert == alert) return;
+
+        HideAlert();
+        Alert.Activate(alert, position + new Vector3(0, 3f));
+        curAlert = alert;
+    }
+
+    public void HideAlert()
+    {
+        Debug.Log($"Hiding {curAlert}");
+        curAlert = AlertType.None;
+        Alert.Remove(position);
     }
 
     private int GetGrowTime()
     {
-        if (seed == Seed.Carrot) return 7;
-        if (seed == Seed.Corn) return 9;
-        if (seed == Seed.Eggplant) return 7;
-        if (seed == Seed.Pumpkin) return 10;
-        if (seed == Seed.Tomato) return 12;
-        else return 7;
+        int days;
+
+        if (seed == Seed.Carrot) days = 7;
+        else if (seed == Seed.Corn) days = 9;
+        else if (seed == Seed.Eggplant) days = 7;
+        else if (seed == Seed.Pumpkin) days = 10;
+        else if (seed == Seed.Tomato) days = 12;
+        else days = 7;
+
+        days = 3;
+        return days * 24;
     }
+
 
     private bool CheckIfWatered()
     {
-        return timeLastWatered > 0 && timePlanted > 0;
+        var o = timePlanted > 0
+            && curAlert == AlertType.None
+            && Clock.GetTotalHours() - timeLastWatered > 24; // need water every day
 
+        if (o) Debug.Log("checking if watered");
+        return o;
+    }
+    private bool CheckIfDead()
+    {
+        var o = timePlanted > 0
+            && Clock.GetTotalHours() - timeLastWatered > 72; // die if unwatered for 3 days
+
+        if (o) Debug.Log("checking if dead");
+        return o;
     }
 
     private bool CheckIfMature()
     {
-        return (timePlanted > 0) && (Clock.GetTotalHours() - timePlanted > growTime * 24);
+        var o = timePlanted > 0
+            && curAlert != AlertType.Dead
+            && Clock.GetTotalHours() - timePlanted > growTime;
+        
+        if (o) Debug.Log("checking if mature");
+        return o;
     }
 
 }
