@@ -14,8 +14,10 @@ public class CookingMeter : MonoBehaviour {
     private const float barDistance = 30.0f;
     private float fillSpeed;
     private bool countdownFinished = false; 
+    private KitchenGame kitchenGame;
 
     void Start() {
+        kitchenGame = FindObjectOfType<KitchenGame>();
         meter.fillAmount = 0.0f;
         stop = false;
 
@@ -70,6 +72,8 @@ public class CookingMeter : MonoBehaviour {
         // Check if user stopped the meter
         if (stop || Input.GetKeyDown(KeyCode.Return)) {
             stop = true;
+            kitchenGame.StartNextTodo();
+            kitchenGame.meterGameUI.gameObject.SetActive(false);
             return;
         }
 
@@ -86,12 +90,15 @@ public class CookingMeter : MonoBehaviour {
         // Determine target color based on meter height
         Color targetColor;
         if (meterHeight < lowBarHeight) {
+            kitchenGame.cookQuality = "Undercooked";
             targetColor = Color.yellow;
         }
         else if (meterHeight < highBarHeight) {
+            kitchenGame.cookQuality = "Perfect";
             targetColor = new Color(1.0f, 0.64f, 0.0f); // Orange
         }
         else {
+            kitchenGame.cookQuality = "Overcooked";
             targetColor = Color.red;
         }
 

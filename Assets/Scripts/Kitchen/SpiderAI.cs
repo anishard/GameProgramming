@@ -54,7 +54,6 @@ public class SpiderAI : MonoBehaviour
         // Check if the spider collided with the player
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Destroy the spider when it collides with the player
             Destroy(gameObject);
         }
     }

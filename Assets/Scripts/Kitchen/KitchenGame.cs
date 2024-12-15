@@ -25,6 +25,8 @@ public class KitchenGame : MonoBehaviour
     private GameObject bucket;
     private GameObject firePlace; 
 
+    internal string cookQuality;
+
     // Map todo ID to its description
     private readonly string[] todoDescs = new string[] {
         "Wash your hands for food safety!",
@@ -98,7 +100,7 @@ public class KitchenGame : MonoBehaviour
     {
         // Change text to todo's description
         if (curTodoIndex >= todos.Count) {
-            todoText.text = "";
+            todoText.text = "You got: " + cookQuality;
         }
         else {
             todoText.text = "Todo: " + todoDescs[(int)todos[curTodoIndex]];

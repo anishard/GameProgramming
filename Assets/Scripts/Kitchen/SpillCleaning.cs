@@ -26,16 +26,17 @@ public class SpillCleaning : MonoBehaviour
 
     void Update()
     {
-        if (curSpill != null && Input.GetKeyDown(KeyCode.F))
-        {
-            // Cleanup spill that the player is standing in
-            CleanSpill(curSpill);
-        }
-
         if (cleanedSpills == spillCount) {
             // Todo complete, start next
             kitchenGame.StartNextTodo();
             this.enabled = false;
+            return;
+        }
+
+        if (curSpill != null && Input.GetKeyDown(KeyCode.F))
+        {
+            // Cleanup spill that the player is standing in
+            CleanSpill(curSpill);
         }
     }
 
