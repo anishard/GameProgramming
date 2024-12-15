@@ -148,7 +148,6 @@ public class Player : MonoBehaviour
 
     public static void DequipTool(Equippable toEquip)
     {
-        Debug.Log($"Dequip from {equipped} to {toEquip}");
         foreach (var tool in GameObject.FindGameObjectsWithTag("Tool"))
             tool.GetComponent<MeshRenderer>().enabled = false;
 
