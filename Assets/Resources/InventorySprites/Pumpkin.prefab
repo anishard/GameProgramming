@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2588492251216477332}
   - component: {fileID: 2578487579485480870}
   - component: {fileID: 6497346529846629850}
-  - component: {fileID: 6838354639157555267}
+  - component: {fileID: 8965646090002245494}
   m_Layer: 0
   m_Name: Pumpkin
   m_TagString: Interactable
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: e08594f7fc7801140aa180d14734a27f, type: 2}
---- !u!136 &6838354639157555267
-CapsuleCollider:
+--- !u!65 &8965646090002245494
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -116,8 +116,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.22349599
-  m_Height: 0.47416383
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 0.43937653, y: 0.47416383, z: 0.44699198}
   m_Center: {x: 0.003807716, y: 0.05332119, z: 0}

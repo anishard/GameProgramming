@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6385712702713641393}
   - component: {fileID: 6393441213490379097}
   - component: {fileID: 4113565656650753662}
-  - component: {fileID: 1338953880812595000}
+  - component: {fileID: 6433692721809518253}
   m_Layer: 0
   m_Name: Turnip
   m_TagString: Interactable
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 532c1307d106a444b983b7f8bd73a890, type: 2}
---- !u!136 &1338953880812595000
-CapsuleCollider:
+--- !u!65 &6433692721809518253
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -116,8 +116,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.19392908
-  m_Height: 0.7545472
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3292113, y: 0.7545472, z: 0.38785815}
   m_Center: {x: 0, y: 0, z: 0}

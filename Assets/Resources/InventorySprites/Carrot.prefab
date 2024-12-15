@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 322481300098316691}
   - component: {fileID: 314447394944751119}
   - component: {fileID: 8279303495064802856}
-  - component: {fileID: 8079204470417858086}
+  - component: {fileID: 4558531989212838467}
   m_Layer: 0
   m_Name: Carrot
   m_TagString: Interactable
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: f3368827df8d0994bb6cd137edbb35dc, type: 2}
---- !u!136 &8079204470417858086
-CapsuleCollider:
+--- !u!65 &4558531989212838467
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -116,8 +116,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.44219315
-  m_Height: 0.9297238
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 0.22848444, y: 0.9297238, z: 0.8843863}
   m_Center: {x: 0, y: 0, z: 0}

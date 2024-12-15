@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 public class InventoryUI : MonoBehaviour
 {
+    public LayerMask ground;
 
     public GameObject inventoryUI;
     public Transform itemsParent;
@@ -101,6 +102,8 @@ public class InventoryUI : MonoBehaviour
         equippedInteractable.transform.parent = null;
         Player.equipped = Equippable.None;
 
+        PlaceOnGround();
+
         equippedInteractable = null;
 
         if (other != null)
@@ -129,6 +132,20 @@ public class InventoryUI : MonoBehaviour
             c.CompareTag("Interactable")
             && !GameObject.ReferenceEquals(c.gameObject, equippedInteractable)
         )?.gameObject;
+    }
+
+    private static void PlaceOnGround()
+    {
+        Transform tr = equippedInteractable.transform;
+        var collider = equippedInteractable.GetComponent<BoxCollider>();
+        
+        if (collider == null)
+            throw new Exception("Interactable must have a box collider to be placed on the ground");
+
+        Vector3 toGround = collider.bounds.center - new Vector3(0, collider.bounds.extents.y, 0);
+        
+        if (Physics.Raycast(tr.position, Vector3.down, out RaycastHit hit))
+            tr.position -= new Vector3(0, toGround.y - hit.point.y, 0);
     }
 
     // check if the inventory is already open
