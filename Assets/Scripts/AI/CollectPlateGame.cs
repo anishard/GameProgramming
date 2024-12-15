@@ -120,7 +120,12 @@ public class CollectPlateGame : MonoBehaviour
         // }
 
         gameIsOver = true;
-        Dialogue.Activate("CollectPlateOutro");
+        if (numBrokenPlates == 0) {
+            Dialogue.Activate("CollectPlateOutroNoBrokenPlates");
+        }
+        else {
+            Dialogue.Activate("CollectPlateOutroBrokePlate");
+        }
         // TODO: Collect the coins reward
 
 
