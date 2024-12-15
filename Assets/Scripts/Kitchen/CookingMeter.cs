@@ -22,7 +22,8 @@ public class CookingMeter : MonoBehaviour {
         stop = false;
 
         // Randomize fill speed
-        fillSpeed = Random.Range(0.5f, 1.5f);
+        // fillSpeed = Random.Range(0.5f, 1.5f);
+        fillSpeed = 0.5f;
 
         // Randomize lowBar height
         float containerHeight = container.rectTransform.rect.height;
@@ -69,14 +70,6 @@ public class CookingMeter : MonoBehaviour {
         // Wait until the countdown finishes before starting 
         if (!countdownFinished) return;
 
-        // Check if user stopped the meter
-        if (stop || Input.GetKeyDown(KeyCode.Return)) {
-            stop = true;
-            kitchenGame.StartNextTodo();
-            kitchenGame.meterGameUI.gameObject.SetActive(false);
-            return;
-        }
-
         // Increase meter
         if (meter.fillAmount < 1.0f) {
             meter.fillAmount += fillSpeed * Time.deltaTime;
@@ -93,13 +86,21 @@ public class CookingMeter : MonoBehaviour {
             kitchenGame.cookQuality = "Undercooked";
             targetColor = Color.yellow;
         }
-        else if (meterHeight < highBarHeight) {
+        else if (meterHeight <= highBarHeight) {
             kitchenGame.cookQuality = "Perfect";
             targetColor = new Color(1.0f, 0.64f, 0.0f); // Orange
         }
         else {
             kitchenGame.cookQuality = "Overcooked";
             targetColor = Color.red;
+        }
+
+        // Check if user stopped the meter
+        if (stop || Input.GetKeyDown(KeyCode.Return)) {
+            stop = true;
+            kitchenGame.StartNextTodo();
+            kitchenGame.meterGameUI.gameObject.SetActive(false);
+            return;
         }
 
         // Lerp the color transition
