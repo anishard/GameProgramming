@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2878415631397151346}
   - component: {fileID: 2995717196198468598}
   - component: {fileID: -3732130825567395971}
-  - component: {fileID: 4443436080765620050}
+  - component: {fileID: -5925700044241109552}
   m_Layer: 0
   m_Name: EggplantSeed
   m_TagString: Interactable
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: ac77e7b35298c9d4f9dfce3cd69adf8c, type: 2}
---- !u!136 &4443436080765620050
-CapsuleCollider:
+--- !u!65 &-5925700044241109552
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -116,8 +116,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.82474285
-  m_Height: 0.5138748
-  m_Direction: 1
-  m_Center: {x: 0.061606452, y: 0.030801341, z: 0.82474285}
+  serializedVersion: 3
+  m_Size: {x: 0.8149578, y: 0.5138748, z: 1.6494857}
+  m_Center: {x: 0.06160645, y: 0.030801341, z: 0.82474285}

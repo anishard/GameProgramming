@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3373431179915173250}
   - component: {fileID: 663192983029606728}
   - component: {fileID: 6175040019796396278}
-  - component: {fileID: -2607085003792157131}
+  - component: {fileID: -6071756150863463844}
   m_Layer: 0
   m_Name: Prefab_Fork
   m_TagString: Interactable
@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 4efcfbbe49e9a1d43ae8e5da97ccf54a, type: 2}
---- !u!136 &-2607085003792157131
-CapsuleCollider:
+--- !u!65 &-6071756150863463844
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,8 +117,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.099999994
-  m_Height: 0.99999994
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19999999, y: 0.99999994, z: 0.07000001}
   m_Center: {x: 0.0031264387, y: 0.5110235, z: -0.014849948}

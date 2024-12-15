@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6119372783556562483}
   - component: {fileID: 6109390377032170759}
   - component: {fileID: 4032921681227844651}
-  - component: {fileID: -7747134185767189474}
+  - component: {fileID: 6319382301768704749}
   m_Layer: 0
   m_Name: Tomato
   m_TagString: Interactable
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: e0ac95a000d1755478942569fca16cf0, type: 2}
---- !u!136 &-7747134185767189474
-CapsuleCollider:
+--- !u!65 &6319382301768704749
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -116,8 +116,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.09087588
-  m_Height: 0.18044856
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 0.18175176, y: 0.18044856, z: 0.16569199}
   m_Center: {x: -0.0026634, y: 0.0012631343, z: -0.08237574}
