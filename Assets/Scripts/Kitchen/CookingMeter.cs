@@ -76,6 +76,12 @@ public class CookingMeter : MonoBehaviour {
         // Wait until the countdown finishes before starting 
         if (!countdownFinished) return;
 
+        // Stop the meter when the player inputs
+        if (!stop && Input.GetKeyDown(KeyCode.Return)) {
+            StartCoroutine(EndGame()); 
+            return;
+        }
+
         // Increase meter
         if (meter.fillAmount < 1.0f && !stop) {
             meter.fillAmount += fillSpeed * Time.deltaTime;
@@ -99,12 +105,6 @@ public class CookingMeter : MonoBehaviour {
         else {
             kitchenGame.cookQuality = "Overcooked";
             targetColor = Color.red;
-        }
-
-        // Stop the meter when the player inputs
-        if (!stop && Input.GetKeyDown(KeyCode.Return)) {
-            StartCoroutine(EndGame()); 
-            return;
         }
 
         // Lerp the color transition
