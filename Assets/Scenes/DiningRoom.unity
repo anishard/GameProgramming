@@ -3981,7 +3981,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7986300935608516214, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1624648609195926478, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 403033440955602903, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
       insertIndex: -1
@@ -7859,9 +7860,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f0f0727465e244388c9594b331fe12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
-    serializedVersion: 2
-    m_Bits: 0
   inventoryUI: {fileID: 304034652}
   itemsParent: {fileID: 1032260644}
   focus: {fileID: 0}
