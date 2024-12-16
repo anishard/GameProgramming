@@ -37,9 +37,9 @@ public class MeatMarket : MonoBehaviour
         }
 
         int itemCost = GetItemCost(selectedItem);
-        if (VegetableMarket.walletBalance >= itemCost) // Shared wallet balance
+        if (Wallet.walletBalance >= itemCost) // Shared wallet balance
         {
-            VegetableMarket.walletBalance -= itemCost;
+            Wallet.walletBalance -= itemCost;
             inventory.Add(selectedItem);
             UpdateWalletUI();
         }
@@ -76,7 +76,7 @@ public class MeatMarket : MonoBehaviour
         }
 
         // Remove dish from inventory and add coins
-        VegetableMarket.walletBalance += currentSellPrice;
+        Wallet.walletBalance += currentSellPrice;
         inventory.Remove(selectedDish);
         Debug.Log($"Sold {selectedDish.name} for {currentSellPrice} coins!");
 
@@ -100,7 +100,7 @@ public class MeatMarket : MonoBehaviour
     // Update the wallet UI
     private void UpdateWalletUI()
     {
-        walletText.text = $"Coins: {VegetableMarket.walletBalance}";
+        walletText.text = $"Coins: {Wallet.walletBalance}";
     }
 
     // Clear selected items

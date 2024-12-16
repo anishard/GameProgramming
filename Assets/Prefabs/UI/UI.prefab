@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 7733018842746387640}
   - component: {fileID: 1750626582851610997}
   - component: {fileID: 6594086337035597035}
+  - component: {fileID: 4930398486518007693}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -197,6 +198,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fadea1e474e1c24d941fc211925609b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4930398486518007693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625073960521326611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f20b702a5cb7a2489977746b999ea3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walletText: {fileID: 8785668596505431668}
 --- !u!1 &3419610092442531685
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,7 +618,7 @@ GameObject:
   - component: {fileID: 4651933742371760044}
   - component: {fileID: 8785668596505431668}
   m_Layer: 5
-  m_Name: Text
+  m_Name: WalletText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
