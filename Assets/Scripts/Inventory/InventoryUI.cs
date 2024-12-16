@@ -155,7 +155,7 @@ public class InventoryUI : MonoBehaviour
         var collider = equippedInteractable.GetComponent<BoxCollider>();
 
         if (collider == null)
-            throw new Exception("Interactable must have a box collider to be placed on the ground");
+            Debug.LogError("Interactable must have a box collider to be placed on the ground");
 
         Vector3 toGround = collider.bounds.center - new Vector3(0, collider.bounds.extents.y, 0);
 
