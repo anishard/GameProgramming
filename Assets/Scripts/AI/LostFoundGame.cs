@@ -18,7 +18,8 @@ public class LostFoundGame : MonoBehaviour
     Inventory inventory;
     FollowPlayer fpScript;
 
-    private NPC billy;
+    private NPC npc;
+    private bool enableStart;
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +27,9 @@ public class LostFoundGame : MonoBehaviour
         hasPlayedIntroDialogue = false;
         stolenFrom = false;
         gameIsOver = false;
+        enableStart = false;
         inventory = Inventory.instance;
-        billy = GetComponent<NPC>();
+        npc = GetComponent<NPC>();
         fpScript = monkey.GetComponent<FollowPlayer>();
         // objSceneTransitionColl = objectToSceneTransition.GetComponent<Collider>();
         // objSceneTransitionColl.isTrigger = true;
@@ -36,12 +38,17 @@ public class LostFoundGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        billy.isIdle = false;
-
-        // if player FIRST goes up to muskrat, start playing the dialogue and start game
-        //Debug.Log("clicked on muskrat");
-        if (billy.ClickDetected())
+        if (Clock.day > 1 && npc.CanOfferQuest && !gameIsOver)
         {
+            enableStart = true;
+            npc.ActivateAlert();
+        }
+
+        if (enableStart && !gameIsOver && npc.ClickDetected())
+        {
+            npc.RemoveAlert();
+            npc.isMidQuest = true;
+
             PreventSceneChange pscScript = objectToSceneTransition.GetComponent<PreventSceneChange>();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -53,7 +60,6 @@ public class LostFoundGame : MonoBehaviour
                     pscScript.preventTriggerSceneChange();
                     //objSceneTransitionColl.isTrigger = false; // disable the trigger to switch scenes
                     //Debug.Log(objSceneTransitionColl.isTrigger);
-                    billy.RemoveAlert();
                     StartLostFoundGame();
                     hasPlayedIntroDialogue = true;
                 }
@@ -83,37 +89,8 @@ public class LostFoundGame : MonoBehaviour
             stolenFrom = false;
             //Debug.Log("disable the UI again");
             Tip.Remove();
-            if (fpScript != null)
-            {
-                fpScript.ChasePlayer();
-            }
         }
     }
-
-    // void OnCollisionEnter(Collision collision) {
-    //     if (collision.gameObject.CompareTag("Player")) {
-    //public void OnObjectClick() {
-    // if player FIRST goes up to muskrat, start playing the dialogue and start game
-    //     Debug.Log("clicked on muskrat");
-    //     if (!hasPlayedIntroDialogue) {
-    //         StartLostFoundGame();
-    //         hasPlayedIntroDialogue = true;
-    //     }
-    //     // if the fork has been put in the inventory, and player goes up to muskrat again, end game
-    //     // also, remove the fork from the inventory (to "return to the muskrat")
-    //     Item fork = null;
-    //     foreach (Item item in inventory.items) {
-    //         if (item.name == "Fork") {
-    //             fork = item; // Store the item if it matches
-    //             break; // Exit the loop once the item is found
-    //         }
-    //     }
-    //     if (fork != null && hasPlayedIntroDialogue) {
-    //         StopLostFoundGame();
-    //         inventory.Remove(fork);
-    //     }
-    // }
-
 
     public void StartLostFoundGame()
     {
@@ -126,11 +103,7 @@ public class LostFoundGame : MonoBehaviour
         SpawnFork();
 
         // have the monkey start chasing the player (if player goes within certain radius of monkey)
-        if (fpScript != null)
-        { // && fork hasn't been found
-            fpScript.ChasePlayer();
-        }
-        else
+        if (fpScript == null)
         {
             Debug.Log("the script is not found");
         }
@@ -140,18 +113,14 @@ public class LostFoundGame : MonoBehaviour
     {
         //stop monkey from chasing you
         monkey.SetActive(false);
-        if (fpScript != null)
-        {
-            fpScript.StopChasePlayer();
-        }
-        else
+        if (fpScript == null)
         {
             Debug.Log("the script is not found");
         }
 
         gameIsOver = true;
+        npc.isMidQuest = false;
         Dialogue.Activate("LostFoundOutro");
-        billy.isIdle = true;
         // TODO: Collect the coins reward
 
 
@@ -193,10 +162,6 @@ public class LostFoundGame : MonoBehaviour
                 if (Tip.isActive && !stolenFrom)
                 {
                     stolenFrom = true;
-                    if (fpScript != null)
-                    {
-                        fpScript.StopChasePlayer();
-                    }
                 }
                 SpawnFork(); // spawn the fork in another place if lost it
             }
@@ -207,10 +172,6 @@ public class LostFoundGame : MonoBehaviour
                 if (Tip.isActive && !stolenFrom)
                 {
                     stolenFrom = true;
-                    if (fpScript != null)
-                    {
-                        fpScript.StopChasePlayer();
-                    }
                 }
             }
         }

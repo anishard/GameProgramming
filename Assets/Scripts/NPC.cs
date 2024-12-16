@@ -2,22 +2,28 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    public bool isIdle;
-    private bool isIntroduced;
+    public bool isIntroduced;
+    public bool isMidQuest;
+    public bool CanOfferQuest {
+        get { return isIntroduced && !isMidQuest; }
+    }
+
+    private bool showAlert;
 
     void Start()
     {
-        isIdle = true;
-        isIntroduced = false;
+        showAlert = false;
+        isMidQuest = false;
+        isIntroduced = true;// false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isIdle) ActivateAlert();
+        if (showAlert) ActivateAlert();
         else RemoveAlert();
-        
-        if (ClickDetected() && isIdle && !Dialogue.isActive)
+
+        if (ClickDetected() && !showAlert && !isMidQuest && !Dialogue.isActive)
             Dialogue.ActivateNPC(gameObject.name, true);
     }
 
@@ -28,11 +34,17 @@ public class NPC : MonoBehaviour
 
     public void ActivateAlert()
     {
-        Alert.Activate(AlertType.Help, transform.position + new Vector3(0f, 2f));
+        if (!showAlert)
+            Alert.Activate(AlertType.Help, transform.position + new Vector3(0f, 2f));
+
+        showAlert = true;
     }
 
     public void RemoveAlert()
     {
-        Alert.Remove(transform.position);
+        if (showAlert)
+            Alert.Remove(transform.position);
+
+        showAlert = false;
     }
 }

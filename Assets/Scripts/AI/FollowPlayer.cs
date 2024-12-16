@@ -9,7 +9,6 @@ public class FollowPlayer : MonoBehaviour
     public Transform player;
     public float radiusToFollow;
     private NavMeshAgent agent;
-    private bool isChasing = false;
     public float agentSpeed = 3.5f;
     public GameObject npcGuide;
     //public bool hasBeenCaught;
@@ -23,7 +22,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isChasing && player != null) {
+        if (player != null) {
             // increase speed so that "chase" speed is faster than roam speed
             agent.speed = agentSpeed;
             float distNPCToPlayer = Vector3.Distance(transform.position, player.position);
@@ -36,13 +35,6 @@ public class FollowPlayer : MonoBehaviour
     }
     /////////////////////////////////////////////////////
 
-    public void ChasePlayer() {
-        isChasing = true;
-    }
-
-    public void StopChasePlayer() {
-        isChasing = false;
-    }
     // if monkey collides with player
     void OnCollisionEnter(Collision collision) {
         LostFoundGame lfScript = npcGuide.GetComponent<LostFoundGame>();
