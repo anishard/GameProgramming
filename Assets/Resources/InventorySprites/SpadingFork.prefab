@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6175040019796396278}
   - component: {fileID: -6071756150863463844}
   m_Layer: 0
-  m_Name: Prefab_Fork
+  m_Name: SpadingFork
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

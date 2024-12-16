@@ -94,6 +94,9 @@ public class InventoryUI : MonoBehaviour
     {
         if (other == null) return;
 
+        Note.Remove();
+        Note.Activate(other.name);
+
         other.transform.parent = GameObject.Find("InteractableContainer").transform;
         other.transform.localPosition = Vector3.zero;
         Player.equipped = Equippable.Interactable;
