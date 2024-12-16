@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 6795331777207300919}
   - component: {fileID: 6147876873679586677}
   m_Layer: 0
-  m_Name: Pudu
+  m_Name: Nuru
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

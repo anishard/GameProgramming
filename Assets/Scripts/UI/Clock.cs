@@ -16,7 +16,7 @@ public class Clock : MonoBehaviour
     private static bool isPaused;
     private static bool stopPause;
 
-    void Start()
+    void Awake()
     {
         lastTimestamp = Time.time;
         pauseDuration = 0;

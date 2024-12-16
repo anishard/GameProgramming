@@ -4,7 +4,7 @@ public class UI : MonoBehaviour
 {
     public static Canvas canvas;
 
-    void Start()
+    void Awake()
     {
         canvas = gameObject.GetComponent<Canvas>();
     }

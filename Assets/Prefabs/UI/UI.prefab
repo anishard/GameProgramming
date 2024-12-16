@@ -1404,6 +1404,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tip
       objectReference: {fileID: 0}
+    - target: {fileID: 6403005492136252405, guid: afb129817b404a44caaaa261cb71c155, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7572583190791410398, guid: afb129817b404a44caaaa261cb71c155, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1484,11 +1488,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8472544896358787243, guid: afb129817b404a44caaaa261cb71c155, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4443571739766552324, guid: afb129817b404a44caaaa261cb71c155, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6314894843428804233, guid: afb129817b404a44caaaa261cb71c155, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9209897859031089996}
   m_SourcePrefab: {fileID: 100100000, guid: afb129817b404a44caaaa261cb71c155, type: 3}
+--- !u!1 &350354913599578107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6314894843428804233, guid: afb129817b404a44caaaa261cb71c155, type: 3}
+  m_PrefabInstance: {fileID: 6016728387030042994}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9209897859031089996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350354913599578107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a429c752c23dd364aae0877601fa343d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4208770933325306796 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7572583190791410398, guid: afb129817b404a44caaaa261cb71c155, type: 3}

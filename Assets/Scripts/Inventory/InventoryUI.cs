@@ -107,6 +107,8 @@ public class InventoryUI : MonoBehaviour
 
     public static void DequipInteractable(GameObject other)
     {
+        Note.Remove();
+        
         equippedInteractable.transform.parent = null;
         Player.equipped = Equippable.None;
 
