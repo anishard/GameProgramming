@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Recipes : MonoBehaviour
@@ -17,6 +18,10 @@ public class Recipes : MonoBehaviour
         meat.name = "Meat";
         inventory.Add(meat);
         inventory.Add(meat);
+    }
+
+    public void ShowRecipes() {
+        recipeUI.gameObject.SetActive(true);
     }
 
     void ShowHint() 
