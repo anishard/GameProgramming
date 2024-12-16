@@ -3231,30 +3231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseGameButton
       objectReference: {fileID: 0}
-    - target: {fileID: 2356157261366248577, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 2356157261366248577, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 2370018998880387891, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2370018998880387891, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1372955488}
-    - target: {fileID: 2370018998880387891, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Pause
-      objectReference: {fileID: 0}
-    - target: {fileID: 2370018998880387891, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PauseGame, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 5129521864653620844, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3317,11 +3297,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5129521864653620844, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -682
+      value: -693
       objectReference: {fileID: 0}
     - target: {fileID: 5129521864653620844, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -377
+      value: 361
       objectReference: {fileID: 0}
     - target: {fileID: 5129521864653620844, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3334,18 +3314,6 @@ PrefabInstance:
     - target: {fileID: 5129521864653620844, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5492219240869103622, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 1b4d7371cdef95c4c9c40ca4985a12b0, type: 3}
-    - target: {fileID: 7337034648590888147, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 0c9a153f187b64e4caff0d38107778ca, type: 3}
-    - target: {fileID: 7337034648590888147, guid: e6af1668c378f254887562cc24d45d9b, type: 3}
-      propertyPath: m_Color.a
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
