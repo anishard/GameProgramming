@@ -9,6 +9,7 @@ public class Recipes : MonoBehaviour
     public Canvas recipeUI;
 
     private Inventory inventory;
+    private int hintsQueued = 0;
 
     void Start() 
     {
@@ -29,12 +30,16 @@ public class Recipes : MonoBehaviour
     {
         hint.text = "You don't have the required ingredients to cook that!";
         hint.gameObject.SetActive(true); 
+        hintsQueued++;
         Invoke(nameof(HideHint), 1f); // Hint lingers for a second
     }
 
     void HideHint()
     {
-        hint.gameObject.SetActive(false); 
+        hintsQueued--;
+        if (hintsQueued == 0) {
+            hint.gameObject.SetActive(false); 
+        }
     }
 
     void TakeItems(List<Item> items) {
@@ -97,8 +102,8 @@ public class Recipes : MonoBehaviour
         StartRecipe("Salad", new string[] {"Cucumber", "Tomato", "Lettuce", "Onions"});
     }
 
-    public void FishWrapRecipe() {
-        StartRecipe("Fish Wrap", new string[] {"Fish", "Lettuce", "Flour"});
+    public void WrapRecipe() {
+        StartRecipe("Wrap", new string[] {"Fish", "Lettuce", "Flour"});
     }
 
     public void PizzaRecipe() {
