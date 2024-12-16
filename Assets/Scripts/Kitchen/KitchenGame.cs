@@ -98,6 +98,10 @@ public class KitchenGame : MonoBehaviour
         if (curTodoIndex >= todos.Count) {
             // Finished all tasks
             Debug.Log("Finished all todos");
+
+            // Add cooked item to player's inventory
+            Item item = Resources.Load<Item>("InventorySprites/Items/Steak_Item");
+            GameObject.Find("GameManager").GetComponent<Inventory>().Add(item);
             Reset();
         }
         else {

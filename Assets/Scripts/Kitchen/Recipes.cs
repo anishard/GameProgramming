@@ -13,11 +13,6 @@ public class Recipes : MonoBehaviour
     void Start() 
     {
         inventory = GameObject.Find("GameManager").GetComponent<Inventory>();
-
-        Item meat = (Item)ScriptableObject.CreateInstance("Item");
-        meat.name = "Meat";
-        inventory.Add(meat);
-        inventory.Add(meat);
     }
 
     public void ShowRecipes() {
@@ -95,26 +90,26 @@ public class Recipes : MonoBehaviour
     // Functions below are attached as callbacks in the UI
 
     public void SteakRecipe() {
-        StartRecipe("Steak", new string[] {"Meat"});
+        StartRecipe("Steak", new string[] {"Meat", "Spices"});
     }
 
     public void SaladRecipe() {
-        StartRecipe("Salad", new string[] {"Meat"});
+        StartRecipe("Salad", new string[] {"Cucumber", "Tomato", "Lettuce", "Onions"});
     }
 
     public void FishWrapRecipe() {
-        StartRecipe("Fish Wrap", new string[] {"Meat"});
+        StartRecipe("Fish Wrap", new string[] {"Fish", "Lettuce", "Flour"});
     }
 
     public void PizzaRecipe() {
-        StartRecipe("Pizza", new string[] {"Meat"});
+        StartRecipe("Pizza", new string[] {"Cheese", "Tomato", "Flour"});
     }
 
     public void OmleteRecipe() {
-        StartRecipe("Omlete", new string[] {"Meat"});
+        StartRecipe("Omelete", new string[] {"Eggs", "Butter"});
     }
 
     public void CakeRecipe() {
-        StartRecipe("Cake", new string[] {"Meat"});
+        StartRecipe("Cake", new string[] {"Milk", "Eggs", "Sugar"});
     }
 }
