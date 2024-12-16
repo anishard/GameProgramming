@@ -25,11 +25,14 @@ This project was built with Unity as a final project for the course *COMPSCI 576
 ### Characters
 - [Mini Chibi | Free Demo](https://assetstore.unity.com/packages/3d/characters/humanoids/mini-chibi-free-demo-256316)
 - [Quirky Series - FREE Animals Pack](https://assetstore.unity.com/packages/3d/characters/animals/quirky-series-free-animals-pack-178235)
+- [Spider polygon](https://assetstore.unity.com/packages/3d/characters/animals/insects/spider-polygon-221108)
 
 ### Environment
 - [Customizable skybox](https://assetstore.unity.com/packages/2d/textures-materials/sky/customizable-skybox-174576)
 - [RPG Poly Pack - Lite](https://assetstore.unity.com/packages/3d/environments/landscapes/rpg-poly-pack-lite-148410)
 - [Stylized Farm Asset Pack - Small](https://assetstore.unity.com/packages/3d/props/stylized-farm-asset-pack-small-276993)
+- [Pirate Tavern](https://assetstore.unity.com/packages/3d/environments/fantasy/pirate-tavern-113463)
+- [Dark Fantasy Kit [Lite]](https://assetstore.unity.com/packages/3d/environments/fantasy/dark-fantasy-kit-lite-127925)
 
 ### Farming
 - [Cartoon Farm Crops](https://assetstore.unity.com/packages/3d/vegetation/plants/cartoon-farm-crops-79777)

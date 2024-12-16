@@ -11,7 +11,7 @@ public class FollowPlayer : MonoBehaviour
     private NavMeshAgent agent;
     private bool isChasing = false;
     public float agentSpeed = 3.5f;
-    public GameObject muskrat;
+    public GameObject npcGuide;
     //public bool hasBeenCaught;
 
     // Start is called before the first frame update
@@ -45,12 +45,21 @@ public class FollowPlayer : MonoBehaviour
     }
     // if monkey collides with player
     void OnCollisionEnter(Collision collision) {
-        LostFoundGame lfScript = muskrat.GetComponent<LostFoundGame>();
+        LostFoundGame lfScript = npcGuide.GetComponent<LostFoundGame>();
+        CollectPlateGame cpScript = npcGuide.GetComponent<CollectPlateGame>();
 
-        // if game has started and player collides with monkey, end game
-        if (collision.gameObject.CompareTag("Player") && lfScript.hasPlayedIntroDialogue && !lfScript.gameIsOver) {
-            // lfScript.StopLostFoundGame();
-            lfScript.StealFromInventory();
+        // if collide and have played intro dialogue but game hasn't been played yet
+        if (collision.gameObject.CompareTag("Player")) {
+            if (lfScript != null) {
+                if (lfScript.hasPlayedIntroDialogue && !lfScript.gameIsOver) {
+                    lfScript.StealFromInventory();
+                }
+            }
+            if (cpScript != null) {
+                if (cpScript.hasPlayedIntroDialogue && !cpScript.gameIsOver) {
+                    cpScript.BreakPlate();
+                }
+            }
         }
     }
     //to see the radius around the player that the NPC has to be in to start following it

@@ -15,4 +15,4 @@ MonoBehaviour:
   name: Pumpkin
   icon: {fileID: 21300000, guid: 8c5574a5abce51748bc95c0f8ff16052, type: 3}
   isDefaultItem: 0
-  itemAmount: 1
+  itemAmount: 10
