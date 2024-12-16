@@ -29,29 +29,12 @@ public class Tip : MonoBehaviour
             Remove();
     }
 
-    public static void Activate(string name, float tipDuration = 0)
+    public static void Activate(string body, float tipDuration = 0)
     {
+        if (tipDuration > 0) duration = tipDuration;
+
         Remove();
-
-        tips ??= Resources.LoadAll<TextAsset>("Tips");
-
-        var lines = new List<string>();
-
-        foreach (var file in tips)
-        {
-            lines.Clear();
-            lines.AddRange(file.text.Split(Environment.NewLine));
-            if (lines[0] == name)
-                break;
-        }
-
-        if (lines[0] == name)
-        {
-            if (tipDuration > 0) duration = tipDuration;
-            Toggle(lines[1]);
-        }
-        else
-            throw new Exception(name + " does not exist in Resources/Tips");
+        Toggle(body);
     }
 
     public static void Remove()
