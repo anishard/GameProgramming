@@ -22,6 +22,9 @@ public class Recipes : MonoBehaviour
 
     public void ShowRecipes() {
         recipeUI.gameObject.SetActive(true);
+
+        Interact interact = GameObject.Find("Sparrow").GetComponent<Interact>();
+        interact.Toggle();
     }
 
     void ShowHint() 

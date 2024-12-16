@@ -129,9 +129,7 @@ public class KitchenGame : MonoBehaviour
 
         // Make bucket non-interactable
         GameObject bucket = GameObject.Find("Bucket");
-        Interact interact = bucket.GetComponent<Interact>();
-        interact.ClearText();
-        interact.enabled = false;
+        bucket.GetComponent<Interact>().Toggle();
 
         // Task complete, start next
         StartNextTodo();
@@ -141,9 +139,7 @@ public class KitchenGame : MonoBehaviour
         Debug.Log("Cooking!");
 
         // Make fireplace non-interactable
-        Interact interact = firePlace.GetComponent<Interact>();
-        interact.ClearText();
-        interact.enabled = false;
+        firePlace.GetComponent<Interact>().Toggle();
 
         meterGameUI.gameObject.SetActive(true);
     }

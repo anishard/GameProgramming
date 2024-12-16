@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.Events; 
+using UnityEngine.Events;
+using UnityEngine.AI;
 
 public class Interact : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Interact : MonoBehaviour
     public UnityEvent onInteract; // Can be configured to any callback desired   
 
     private bool playerNear = false;
+    private bool trigger = true;
 
     void Start()
     {   
@@ -43,9 +45,22 @@ public class Interact : MonoBehaviour
         }
     }
 
+    public void Toggle() {
+        if (this.enabled) {
+            ClearText();
+            trigger = false;
+            this.enabled = false;
+        }
+        else {
+            SetText();
+            trigger = true;
+            this.enabled = true;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) 
+        if (trigger && other.CompareTag("Player")) 
         {
             SetText();
             playerNear = true;
@@ -54,7 +69,7 @@ public class Interact : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (trigger && other.CompareTag("Player"))
         {
             ClearText();
             playerNear = false;
