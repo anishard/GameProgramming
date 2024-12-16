@@ -106,7 +106,6 @@ public class Player : MonoBehaviour
             DequipTool(toEquip);
         }
 
-        if (Input.GetKeyDown("space")) SceneManager.LoadScene("DiningRoom");
     }
 
     public static void EquipTool(string itemName)

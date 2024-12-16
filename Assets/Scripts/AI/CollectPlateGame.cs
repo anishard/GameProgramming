@@ -16,6 +16,7 @@ public class CollectPlateGame : MonoBehaviour
     private int numPlatesToCollect = 10;
     public Item plate;
     private int numBrokenPlates;
+    public GameObject objectToSceneTransition;
 
     Inventory inventory;
     FollowPlayer fpScript; 
@@ -37,12 +38,14 @@ public class CollectPlateGame : MonoBehaviour
         // if Player clicks on Pudu NPC
         if (Game.ClickDetected() && Player.ObjectDetected("Pudu"))
         {
+            PreventSceneChange pscScript = objectToSceneTransition.GetComponent<PreventSceneChange>();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
                 // if first time talking to NPC, play intro quest dialogue 
                 if (!hasPlayedIntroDialogue) {
+                    pscScript.preventTriggerSceneChange();
                     StartCollectPlateGame();
                     hasPlayedIntroDialogue = true;
                 }
@@ -61,6 +64,7 @@ public class CollectPlateGame : MonoBehaviour
                     }
                     //remove the plates from inventory when ALL are collected
                     if (plate != null && hasPlayedIntroDialogue) {
+                        pscScript.enableTriggerSceneChange();
                         StopCollectPlateGame(); //which will play ending dialogue
 
                         // remove all the plates from the inventory
