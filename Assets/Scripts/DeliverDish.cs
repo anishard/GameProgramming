@@ -28,7 +28,7 @@ public class DeliverDish : MonoBehaviour
     {
         currHour = Clock.hour;
         //if (currHour == 22) { // 10pm -> meal time 
-        if (currHour == 10 && !hasPlayedDeliverIntro) {   // for debugging purposes, 10am
+        if (currHour == 22 && !hasPlayedDeliverIntro) {   // for debugging purposes, 10am
             PlayDialogue();
         }
         // once the dialogue telling player to go to dining hall has played, AUTOMATICALLY direct player to exit to dining hall (use navmesh)
