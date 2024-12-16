@@ -25,6 +25,11 @@ public class Recipes : MonoBehaviour
         GameObject.Find("Sparrow").GetComponent<Interact>().ToggleOff();
     }
 
+    public void HideRecipes() {
+        recipeUI.gameObject.SetActive(false);
+        GameObject.Find("Sparrow").GetComponent<Interact>().ToggleOn();
+    }
+
     void ShowHint() 
     {
         hint.text = "You don't have the required ingredients to cook that!";
@@ -91,5 +96,25 @@ public class Recipes : MonoBehaviour
 
     public void SteakRecipe() {
         StartRecipe("Steak", new string[] {"Meat"});
+    }
+
+    public void SaladRecipe() {
+        StartRecipe("Salad", new string[] {"Meat"});
+    }
+
+    public void FishWrapRecipe() {
+        StartRecipe("Fish Wrap", new string[] {"Meat"});
+    }
+
+    public void PizzaRecipe() {
+        StartRecipe("Pizza", new string[] {"Meat"});
+    }
+
+    public void OmleteRecipe() {
+        StartRecipe("Omlete", new string[] {"Meat"});
+    }
+
+    public void CakeRecipe() {
+        StartRecipe("Cake", new string[] {"Meat"});
     }
 }
