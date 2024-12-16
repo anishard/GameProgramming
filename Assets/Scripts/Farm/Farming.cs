@@ -10,7 +10,8 @@ public class Farming : MonoBehaviour
     private FarmSquare[,] farmland;
 
     private int numPours;
-    private const int MAX_POURS = int.MaxValue;// TODO 10;
+    private const int MAX_POURS = 10;
+    private bool tutorialPlayed = true; // TODO false
 
     void Start()
     {
@@ -37,12 +38,16 @@ public class Farming : MonoBehaviour
 
         numPours = MAX_POURS;
 
-        // Dialogue.Activate("GameIntro");
+        if (!tutorialPlayed)
+        {
+            GetComponent<Tutorial>().enabled = true;
+            tutorialPlayed = true;
+        }
     }
 
     void Update()
     {
-        if (Game.ClickDetected() && !InteractableObjectFound())
+        if (Game.ClickDetected() && !InteractableObjectFound() && !Dialogue.isActive)
             UseFarmTool();
 
         foreach (var square in farmland)
@@ -108,7 +113,7 @@ public class Farming : MonoBehaviour
     {
         FarmSquare square = GetFarmSquare();
 
-        if (square.IsDoneGrowing) return;
+        if (square != null && square.IsDoneGrowing) return;
 
         GameObject interactable = InventoryUI.equippedInteractable;
 
@@ -134,7 +139,7 @@ public class Farming : MonoBehaviour
         }
         else
         {
-            StartCoroutine(Game.PlayAudio("Till", 0.6f, 0.4f));
+            StartCoroutine(Game.PlayAudio("Till", 1f, 0.4f));
             StartCoroutine(Player.Pause(() =>
             {
                 GameObject dirt = CreateObject(square, "Dirt_Pile");
@@ -177,7 +182,7 @@ public class Farming : MonoBehaviour
         {
             --numPours;
             StartCoroutine(Game.PlayAudio("PourCan", 0.3f, 0.2f));
-            StartCoroutine(Player.Pause(() => square.Water()));
+            StartCoroutine(Player.Pause(() => square?.Water()));
         }
     }
 
@@ -186,7 +191,7 @@ public class Farming : MonoBehaviour
         GameObject prefab = prefabs.Find((e) => e.name == square.seed.ToString());
 
         if (prefab == null)
-            throw new Exception(square.seed.ToString() + " does not exist in Resources");
+            Debug.LogError(square.seed.ToString() + " does not exist in Resources");
 
         GameObject crop = Instantiate(
             prefab,
@@ -241,7 +246,7 @@ public class Farming : MonoBehaviour
         GameObject prefab = prefabs.Find((e) => e.name == prefabName);
 
         if (prefab == null)
-            throw new Exception(prefabName + " does not exist in Resources");
+            Debug.LogError(prefabName + " does not exist in Resources");
 
         GameObject obj = Instantiate(prefab, square.position, Quaternion.identity);
 

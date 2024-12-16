@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Note : MonoBehaviour
 {
@@ -9,7 +11,8 @@ public class Note : MonoBehaviour
     private static TMP_Text titleText;
     private static TMP_Text bodyText;
     private static TMP_Text bodyOnlyText;
-    private static TextAsset[] notes;
+    private static IEnumerable<string> notes;
+    private static System.Random rand;
 
     void Start()
     {
@@ -21,24 +24,27 @@ public class Note : MonoBehaviour
 
     public static void Activate(string name)
     {
-        notes ??= Resources.LoadAll<TextAsset>("Notes");
+        notes ??= Resources.LoadAll<TextAsset>("Notes").Select((n) => n.text);
+        rand ??= new System.Random();
 
-        NoteData data = null;
+        List<NoteData> matches = new();
 
-        foreach (var file in notes)
+        foreach (var note in notes)
         {
-            var json = JsonUtility.FromJson<NoteData>(file.text);
-            if (json.objectName == name)
-            {
-                data = json;
-                break;
-            }
+            var json = JsonUtility.FromJson<NoteData>(note);
+            
+            if (
+                name == json.objectName ||
+                name.Contains("(Clone)") && name[..^7] == json.objectName
+            )
+                matches.Add(json);
         }
 
-        if (data != null)
-            Note.Toggle(data.title, data.body);
-        else
-            throw new Exception(name + " does not exist in Resources/Notes");
+        if (matches.Count > 0)
+        {
+            var note = matches[rand.Next() % matches.Count];
+            Toggle(note.title, note.body);
+        }
     }
 
     public static void Remove()

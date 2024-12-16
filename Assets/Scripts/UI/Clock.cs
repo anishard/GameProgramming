@@ -4,7 +4,7 @@ using TMPro;
 public class Clock : MonoBehaviour
 {
     public static int hour = 7, day = 1;
-    public static float gameHourInRealMinutes = 0.01f;
+    public static float gameHourInRealMinutes = 1f;
     public static int TotalHours {
         get { return day * 24 + hour; }
     }
@@ -16,7 +16,7 @@ public class Clock : MonoBehaviour
     private static bool isPaused;
     private static bool stopPause;
 
-    void Start()
+    void Awake()
     {
         lastTimestamp = Time.time;
         pauseDuration = 0;

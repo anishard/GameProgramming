@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private Animator controller;
     private Rigidbody rb;
 
-    void Start()
+    void Awake()
     {
         activeArea = GameObject.Find("ActiveArea");
 
@@ -106,7 +106,6 @@ public class Player : MonoBehaviour
             DequipTool(toEquip);
         }
 
-        if (Input.GetKeyDown("space")) SceneManager.LoadScene("DiningRoom");
     }
 
     public static void EquipTool(string itemName)
@@ -114,7 +113,7 @@ public class Player : MonoBehaviour
         Equippable item;
 
         if (!Enum.TryParse(itemName, out item))
-            throw new Exception(itemName + " does not exist in Equippable");
+            Debug.LogError(itemName + " does not exist in Equippable");
 
         if (equipped == Equippable.Interactable)
             InventoryUI.DequipInteractable(null);
@@ -140,7 +139,7 @@ public class Player : MonoBehaviour
                 }
             }
 
-            Game.audioSource.PlayOneShot(InventoryUI.equipClip);
+            Game.audioSource.PlayOneShot(InventoryUI.equipClip, 0.3f);
 
             Note.Activate(itemName);
         }
@@ -160,7 +159,7 @@ public class Player : MonoBehaviour
         if (toEquip != equipped) equipped = Equippable.None;
 
         if (toEquip == equipped || !noAudio)
-            Game.audioSource.PlayOneShot(InventoryUI.dequipClip);
+            Game.audioSource.PlayOneShot(InventoryUI.dequipClip, 0.3f);
 
         Note.Remove();
     }

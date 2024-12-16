@@ -4,14 +4,17 @@ using UnityEngine.EventSystems;
 
 public class InventoryUI : MonoBehaviour
 {
-    public LayerMask ground;
-
     public GameObject inventoryUI;
     public Transform itemsParent;
     Inventory inventory;
     InventorySlot[] slots;
     public static GameObject equippedInteractable;
     public Interactable focus;
+    public bool IsEmpty
+    {
+        get { return !Array.Exists(slots, (slot) => slot.icon.enabled); }
+    }
+
     public static AudioClip equipClip;
     public static AudioClip dequipClip;
 
@@ -87,12 +90,15 @@ public class InventoryUI : MonoBehaviour
         Player.equipped = Equippable.None;
         equippedInteractable = null;
 
-        StartCoroutine(Game.PlayAudio("Inventory", 0.4f));
+        StartCoroutine(Game.PlayAudio("Inventory", 0.2f));
     }
 
     public static void EquipInteractable(GameObject other)
     {
         if (other == null) return;
+
+        Note.Remove();
+        Note.Activate(other.name);
 
         other.transform.parent = GameObject.Find("InteractableContainer").transform;
         other.transform.localPosition = Vector3.zero;
@@ -104,6 +110,8 @@ public class InventoryUI : MonoBehaviour
 
     public static void DequipInteractable(GameObject other)
     {
+        Note.Remove();
+
         equippedInteractable.transform.parent = null;
         Player.equipped = Equippable.None;
 
@@ -147,7 +155,7 @@ public class InventoryUI : MonoBehaviour
         var collider = equippedInteractable.GetComponent<BoxCollider>();
 
         if (collider == null)
-            throw new Exception("Interactable must have a box collider to be placed on the ground");
+            Debug.LogError("Interactable must have a box collider to be placed on the ground");
 
         Vector3 toGround = collider.bounds.center - new Vector3(0, collider.bounds.extents.y, 0);
 

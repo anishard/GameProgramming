@@ -9,30 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Farm.unity
     guid: c7c024841485de747852a3df8a1a2760
   - enabled: 1
+    path: Assets/Scenes/TownCenter.unity
+    guid: 9281df55f3f96d3469f1b6ed4b26e93d
+  - enabled: 1
     path: Assets/Scenes/DiningRoom.unity
     guid: 36e57d2c9c58caf4b8ab42bd72d5794c
   - enabled: 1
-    path: Assets/Scenes/Games/QuizMinigame.unity
-    guid: 3a281e06019b44243a1d7d87b6cf401a
-  - enabled: 1
-    path: Assets/Scenes/Games/MemoryGame/FinishGame1.unity
-    guid: 1a419f2e1f4fa564590537c25f7d5b5c
-  - enabled: 1
-    path: Assets/Scenes/Games/MemoryGame/FinishGame2.unity
-    guid: 3910e23fdab07d74bb4c4c5c1a13d69c
-  - enabled: 1
-    path: Assets/Scenes/Games/MemoryGame/MemoryGame.unity
-    guid: 2c918bfd6dbd333438cc67f8f772c801
-  - enabled: 1
-    path: Assets/Scenes/Games/MemoryGame/MemoryGame2.unity
-    guid: e4bf14ac57f593349bd5d1b4f346ab3c
-  - enabled: 1
-    path: Assets/Scenes/Games/MemoryGame/MemoryGameMenu.unity
-    guid: b8305fb600cef264a856c235773cb5a9
-  - enabled: 1
-    path: Assets/Scenes/Games/MemoryGame/MemoryGameMenu2.unity
-    guid: da7a2d39b8d4ba749a2f62bca1cb37ad
-  - enabled: 1
-    path: Assets/Scenes/TownCenter.unity
-    guid: 9281df55f3f96d3469f1b6ed4b26e93d
+    path: Assets/Scenes/Market.unity
+    guid: 7bdaebb7a67f24601b117f9680d04d4b
   m_configObjects: {}
