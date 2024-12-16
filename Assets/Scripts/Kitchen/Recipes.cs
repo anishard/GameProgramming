@@ -99,7 +99,7 @@ public class Recipes : MonoBehaviour
     }
 
     public void SaladRecipe() {
-        StartRecipe("Salad", new string[] {"Cucumber", "Tomato", "Lettuce", "Onions"});
+        StartRecipe("Salad", new string[] {"Eggplant", "Carrot", "Tomato", "Turnip"});
     }
 
     public void WrapRecipe() {
@@ -110,11 +110,15 @@ public class Recipes : MonoBehaviour
         StartRecipe("Pizza", new string[] {"Cheese", "Tomato", "Flour"});
     }
 
-    public void OmleteRecipe() {
+    public void OmeleteRecipe() {
         StartRecipe("Omelete", new string[] {"Eggs", "Butter"});
     }
 
     public void CakeRecipe() {
-        StartRecipe("Cake", new string[] {"Milk", "Eggs", "Sugar"});
+        StartRecipe("Cake", new string[] {"Milk", "Eggs", "Sugar", "Carrot"});
+    }
+
+    public void PieRecipe() {
+        StartRecipe("Pie", new string[] {"Sugar", "Pumpkin"});
     }
 }

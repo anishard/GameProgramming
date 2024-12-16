@@ -100,7 +100,8 @@ public class KitchenGame : MonoBehaviour
             Debug.Log("Finished all todos");
 
             // Add cooked item to player's inventory
-            Item item = Resources.Load<Item>("InventorySprites/Items/Steak_Item");
+            string path = "InventorySprites/Items/" + curRecipe + "_Item";
+            Item item = Resources.Load<Item>(path);
             Inventory inventory = GameObject.Find("GameManager").GetComponent<Inventory>();
             inventory.Add(item);
             if (cookQuality == "perfect") {
