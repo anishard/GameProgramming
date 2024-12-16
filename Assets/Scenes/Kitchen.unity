@@ -3650,6 +3650,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 25.232
       objectReference: {fileID: 0}
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: footstepAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: da80608fd0bee004588842dfdb4b3494, type: 3}
     - target: {fileID: 7378879919806818287, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
       propertyPath: m_Name
       value: Player
