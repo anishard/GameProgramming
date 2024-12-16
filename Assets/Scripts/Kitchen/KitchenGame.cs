@@ -101,7 +101,12 @@ public class KitchenGame : MonoBehaviour
 
             // Add cooked item to player's inventory
             Item item = Resources.Load<Item>("InventorySprites/Items/Steak_Item");
-            GameObject.Find("GameManager").GetComponent<Inventory>().Add(item);
+            Inventory inventory = GameObject.Find("GameManager").GetComponent<Inventory>();
+            inventory.Add(item);
+            if (cookQuality == "perfect") {
+                // Bonus item for perfect cook!
+                inventory.Add(item);
+            }
             Reset();
         }
         else {
@@ -134,6 +139,9 @@ public class KitchenGame : MonoBehaviour
         // Change text to todo's description
         if (curTodoIndex >= todos.Count) {
             todoText.text = "You made a " + cookQuality + " " + curRecipe + "!";
+            if (cookQuality == "perfect") {
+                todoText.text += " You get a 2x bonus!";
+            }
         }
         else {
             todoText.text = "Todo: " + todoDescs[(int)todos[curTodoIndex]];

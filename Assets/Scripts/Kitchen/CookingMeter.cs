@@ -102,15 +102,15 @@ public class CookingMeter : MonoBehaviour {
         // Determine target color and cooking quality based on meter height
         Color targetColor;
         if (meterHeight < lowBarHeight) {
-            kitchenGame.cookQuality = "Undercooked";
+            kitchenGame.cookQuality = "undercooked";
             targetColor = Color.yellow;
         }
         else if (meterHeight <= highBarHeight) {
-            kitchenGame.cookQuality = "Perfect";
+            kitchenGame.cookQuality = "perfect";
             targetColor = new Color(1.0f, 0.64f, 0.0f); // Orange
         }
         else {
-            kitchenGame.cookQuality = "Overcooked";
+            kitchenGame.cookQuality = "overcooked";
             targetColor = Color.red;
         }
 
