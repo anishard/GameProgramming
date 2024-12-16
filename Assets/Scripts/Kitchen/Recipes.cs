@@ -31,7 +31,7 @@ public class Recipes : MonoBehaviour
         hint.text = "You don't have the required ingredients to cook that!";
         hint.gameObject.SetActive(true); 
         hintsQueued++;
-        Invoke(nameof(HideHint), 1f); // Hint lingers for a second
+        Invoke(nameof(HideHint), 3f); // Hint lingers 
     }
 
     void HideHint()

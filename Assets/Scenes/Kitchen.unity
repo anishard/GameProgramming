@@ -3246,7 +3246,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 655024107}
           m_TargetAssemblyTypeName: Recipes, Assembly-CSharp
-          m_MethodName: OmleteRecipe
+          m_MethodName: OmeleteRecipe
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
