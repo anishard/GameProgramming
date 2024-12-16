@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 7771361280876621947}
   - component: {fileID: 4257988692488480183}
   - component: {fileID: 5855064693738364906}
-  - component: {fileID: 5148392250811014269}
+  - component: {fileID: 3410773975198788322}
   m_Layer: 0
   m_Name: Colobus
   m_TagString: NPC
@@ -732,8 +732,8 @@ MonoBehaviour:
   radiusToFollow: 7
   agentSpeed: 2.5
   npcGuide: {fileID: 0}
---- !u!65 &5148392250811014269
-BoxCollider:
+--- !u!136 &3410773975198788322
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -750,8 +750,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7853299950699460719
 GameObject:

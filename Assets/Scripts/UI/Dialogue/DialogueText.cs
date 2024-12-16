@@ -20,10 +20,10 @@ public class DialogueText : MonoBehaviour
         lines = new List<string>();
         lines.AddRange(file.text.Split(Environment.NewLine));
 
+        index = 0;
         nameBox.text = lines[0];
 
         textSpeed = 2;
-        index = 0;
 
         NextLine();
     }
