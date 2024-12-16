@@ -40,7 +40,7 @@ public class CollectPlateGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Clock.day > 0 && npc.CanOfferQuest && !gameIsOver)
+        if ((Clock.day == 2 || Clock.day == 6 || Clock.day == 13) && npc.CanOfferQuest && !gameIsOver)
         {
             enableStart = true;
             npc.ActivateAlert();
@@ -91,7 +91,7 @@ public class CollectPlateGame : MonoBehaviour
                 if (numPlatesCollected < numPlatesToCollect && !gameIsOver) {
                     int platesLeft = numPlatesToCollect - numPlatesCollected;
                     //Debug.Log("There are still " + platesLeft.ToString("n0") + " plates left.");
-                    Tip.Activate("There are still some plates left. Hurry up.", 5);
+                    Tip.Activate("There are still some plates left. Hurry up.", 3f);
                 }
             }
         }
@@ -125,6 +125,8 @@ public class CollectPlateGame : MonoBehaviour
 
         gameIsOver = true;
         npc.isMidQuest = false;
+        Tip.Remove();
+        
         if (numBrokenPlates == 0) {
             Dialogue.Activate("CollectPlateOutroNoBrokenPlates");
         }
@@ -155,7 +157,7 @@ public class CollectPlateGame : MonoBehaviour
             //remove a plate from inventory
             inventory.Remove(plate);
             //plate tip that the plate has been broken
-            Tip.Activate("The monkey broke a plate. Great work. Collect the rest, quick.", 5);
+            Tip.Activate("The monkey broke a plate. Great work. Collect the rest, quick.", 3f);
             //keep count of how many broken plates there are (+ num plates left in inventory = total)
             numBrokenPlates += 1;
 

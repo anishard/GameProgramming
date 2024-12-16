@@ -38,7 +38,7 @@ public class LostFoundGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Clock.day > 1 && npc.CanOfferQuest && !gameIsOver)
+        if ((Clock.day == 1 || Clock.day == 7 || Clock.day == 11) && npc.CanOfferQuest && !gameIsOver)
         {
             enableStart = true;
             npc.ActivateAlert();
@@ -157,7 +157,7 @@ public class LostFoundGame : MonoBehaviour
             if (itemToRemove.name == "Fork")
             {
                 //Debug.Log("removing the fork.");
-                Tip.Activate("Oh no! He took the fork! It's somewhere on this farm though, please find it!", 5);
+                Tip.Activate("Oh no! He took the fork! It's somewhere on this farm though, please find it!", 3);
 
                 if (Tip.isActive && !stolenFrom)
                 {
@@ -167,7 +167,7 @@ public class LostFoundGame : MonoBehaviour
             }
             else
             {
-                Tip.Activate("Oh no! That monkey might've stolen from you too! Better check your inventory…", 5);
+                Tip.Activate("Oh no! That monkey might've stolen from you too! Better check your inventory…", 3);
 
                 if (Tip.isActive && !stolenFrom)
                 {

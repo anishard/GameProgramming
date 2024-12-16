@@ -35,7 +35,7 @@ public class NPC : MonoBehaviour
     public void ActivateAlert()
     {
         if (!showAlert)
-            Alert.Activate(AlertType.Help, transform.position + new Vector3(0f, 2f));
+            Alert.Activate(AlertType.Help, transform.position + new Vector3(0f, 2.5f));
 
         showAlert = true;
     }

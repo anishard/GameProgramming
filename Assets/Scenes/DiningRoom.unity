@@ -2127,7 +2127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 383.44
+      value: 383.49988
       objectReference: {fileID: 0}
     - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2135,11 +2135,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 250.79
+      value: 251.92603
       objectReference: {fileID: 0}
     - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.71057826
+      value: -0.91805196
       objectReference: {fileID: 0}
     - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2147,7 +2147,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7036182
+      value: 0.39646024
       objectReference: {fileID: 0}
     - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2159,7 +2159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 270.564
+      value: 313.286
       objectReference: {fileID: 0}
     - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -9091,7 +9091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasPlayedIntroDialogue: 0
   spawnedItem: {fileID: 6829195404489899529, guid: 617877375f168444ba4d7ee9d18c8cc0, type: 3}
-  spawnRadius: 30
+  spawnRadius: 20
   plateSpawner: {fileID: 444679980}
   monkey: {fileID: 735699383}
   gameIsOver: 0
@@ -13873,7 +13873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4917944003988555033, guid: 29a227ad83af708448ee777f11fcc5cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 392.83
+      value: 397.6
       objectReference: {fileID: 0}
     - target: {fileID: 4917944003988555033, guid: 29a227ad83af708448ee777f11fcc5cc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13881,7 +13881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4917944003988555033, guid: 29a227ad83af708448ee777f11fcc5cc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 234.2
+      value: 264.2
       objectReference: {fileID: 0}
     - target: {fileID: 4917944003988555033, guid: 29a227ad83af708448ee777f11fcc5cc, type: 3}
       propertyPath: m_LocalRotation.w
