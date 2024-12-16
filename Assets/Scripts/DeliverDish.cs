@@ -5,19 +5,20 @@ using UnityEngine.AI;
 
 public class DeliverDish : MonoBehaviour
 {
-
+    // attach to Player game object
     public Clock clockObject;
-    //public GameObject player;
     public GameObject diningHallExit; // the object that triggers entering dining hall scene
+    public GameObject player;
     private NavMeshAgent agent;
     private bool hasPlayedDeliverIntro;
     private int currHour;
     private bool startMovingToExit;
+    public string sceneName;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
+        agent = player.GetComponent<NavMeshAgent>();
         hasPlayedDeliverIntro = false;
         startMovingToExit = false;
     }
@@ -26,25 +27,27 @@ public class DeliverDish : MonoBehaviour
     void Update()
     {
         currHour = Clock.hour;
-        //Debug.Log("current hour: " + currHour);
         //if (currHour == 22) { // 10pm -> meal time 
-        if (currHour == 7 && !hasPlayedDeliverIntro) {   // for debugging purposes
+        if (currHour == 10 && !hasPlayedDeliverIntro) {   // for debugging purposes, 10am
             PlayDialogue();
-            // Dialogue.Activate("DeliverDishInt ro");
-            // hasPlayedDeliverIntro = true;
         }
         // once the dialogue telling player to go to dining hall has played, AUTOMATICALLY direct player to exit to dining hall (use navmesh)
         if (hasPlayedDeliverIntro && !startMovingToExit) {
+            Debug.Log("has played deliver intro");
             MoveToExit();
         }
     }
     
     void PlayDialogue() {
-        Dialogue.Activate("DeliverDishIntro");
+        SceneTransition stScript = diningHallExit.GetComponent<SceneTransition>();
+        stScript.enabled = false;
+        Dialogue.Activate("DeliverDishIntro" + sceneName);
         hasPlayedDeliverIntro = true;
     }
 
     void MoveToExit() {
+        SceneTransition stScript = diningHallExit.GetComponent<SceneTransition>();
+        stScript.enabled = true;
         agent.SetDestination(diningHallExit.transform.position);
         startMovingToExit = true;
     }
