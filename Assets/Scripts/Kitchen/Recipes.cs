@@ -23,7 +23,7 @@ public class Recipes : MonoBehaviour
     {
         hint.text = "You don't have the required ingredients to cook that!";
         hint.gameObject.SetActive(true); 
-        Invoke(nameof(HideHint), 1f); 
+        Invoke(nameof(HideHint), 1f); // Hint lingers for a second
     }
 
     void HideHint()
@@ -32,6 +32,7 @@ public class Recipes : MonoBehaviour
     }
 
     void TakeItems(List<Item> items) {
+        // Removes the specified items from the player inventory
         foreach (Item item in items) {
             for (int i = 0; i < inventory.items.Count; i++)
             {
@@ -68,7 +69,7 @@ public class Recipes : MonoBehaviour
         return foundItems;
     }
 
-    void DoRecipe(string recipe, string[] ingredients) {
+    void StartRecipe(string recipe, string[] ingredients) {
         List<Item> items = FindItems(ingredients);
         if (items != null) {
             recipeUI.gameObject.SetActive(false);
@@ -80,7 +81,9 @@ public class Recipes : MonoBehaviour
         }
     }
 
+    // Functions below are attached as callbacks in the UI
+
     public void SteakRecipe() {
-        DoRecipe("Steak", new string[] {"Meat"});
+        StartRecipe("Steak", new string[] {"Meat"});
     }
 }
