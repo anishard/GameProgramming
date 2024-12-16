@@ -2024,6 +2024,7 @@ MonoBehaviour:
   spawnZone: {fileID: 1998800182}
   sleepingPlayer: {fileID: 2067660776}
   player: {fileID: 1372494949}
+  kitchenGameUI: {fileID: 1467908229}
 --- !u!4 &655024104
 Transform:
   m_ObjectHideFlags: 0
@@ -2164,6 +2165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hint: {fileID: 677794563}
+  recipeUI: {fileID: 1713842449}
 --- !u!4 &655119959 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4307550773101526, guid: eb560bbeecfb49c45aaf858e99451db1, type: 3}
@@ -4524,7 +4526,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Veggie Wrap
+  m_text: 'Veggie Wrap: Lettuce, Flour'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6049,7 +6051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1467908227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6876,7 +6878,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Steak: 1 Meat'
+  m_text: 'Steak: Meat, Spices'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7414,7 +7416,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Salad
+  m_text: 'Salad: Cucumber, Tomato, Lettuce'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

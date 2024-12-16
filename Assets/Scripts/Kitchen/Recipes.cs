@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,6 +5,7 @@ using UnityEngine;
 public class Recipes : MonoBehaviour
 {
     public TextMeshProUGUI hint; 
+    public Canvas recipeUI;
 
     private Inventory inventory;
 
@@ -13,21 +13,10 @@ public class Recipes : MonoBehaviour
     {
         inventory = GameObject.Find("GameManager").GetComponent<Inventory>();
 
-
         Item meat = (Item)ScriptableObject.CreateInstance("Item");
         meat.name = "Meat";
         inventory.Add(meat);
-    }
-
-    Item FindItem(string name) 
-    {
-        // Check if player has item of given name and amount
-        foreach (Item item in inventory.items) {
-            if (item.name == name) {
-                return item;
-            }
-        }   
-        return null;
+        inventory.Add(meat);
     }
 
     void ShowHint() 
@@ -42,19 +31,56 @@ public class Recipes : MonoBehaviour
         hint.gameObject.SetActive(false); 
     }
 
-    public void Test() 
-    {
-        Debug.Log("Click caputed!");
+    void TakeItems(List<Item> items) {
+        foreach (Item item in items) {
+            for (int i = 0; i < inventory.items.Count; i++)
+            {
+                if (inventory.items[i].name == item.name)
+                {
+                    inventory.items[i].itemAmount--;
+                    if (inventory.items[i].itemAmount == 0) {
+                        inventory.items.Remove(item);
+                    }
+                    break;
+                }
+            }
+        }
     }
 
-    public void SteakRecipe() 
+    List<Item> FindItems(string[] names) 
     {
-        Item meat = FindItem("Meat");
-        if (meat != null) {
-            inventory.Remove(meat);
+        // Find the require items in the player's inventory
+        List<Item> foundItems = new List<Item>();
+        foreach (string name in names) {
+            bool found = false;
+            foreach (Item item in inventory.items) {
+                if (item.name == name) {
+                    foundItems.Add(item);
+                    found = true;
+                    break;
+                }
+            }   
+            if (!found) {
+                // Player is missing a required item
+                return null;
+            }
+        }
+        return foundItems;
+    }
+
+    void DoRecipe(string recipe, string[] ingredients) {
+        List<Item> items = FindItems(ingredients);
+        if (items != null) {
+            recipeUI.gameObject.SetActive(false);
+            TakeItems(items);
+            FindObjectOfType<KitchenGame>().Play(recipe);
         }
         else {
             ShowHint();
         }
+    }
+
+    public void SteakRecipe() {
+        DoRecipe("Steak", new string[] {"Meat"});
     }
 }

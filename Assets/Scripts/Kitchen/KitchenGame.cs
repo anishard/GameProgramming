@@ -20,6 +20,7 @@ public class KitchenGame : MonoBehaviour
     public GameObject spawnZone;
     public GameObject sleepingPlayer;
     public GameObject player;
+    public Canvas kitchenGameUI;
 
     private float time = 30.0f;   
     private List<Todo> todos;     
@@ -30,6 +31,7 @@ public class KitchenGame : MonoBehaviour
     private bool sleeping = false;
 
     internal string cookQuality;
+    internal string curRecipe;
 
     // Map todo ID to its description
     private readonly string[] todoDescs = new string[] {
@@ -47,12 +49,9 @@ public class KitchenGame : MonoBehaviour
             Todo.CLEAN,
             Todo.COOK
         };
-        curTodoIndex = -1; // Will get updated to 0 by the StartNextTodo
-        playing = true;
         bucket = GameObject.Find("Bucket");
         firePlace = GameObject.Find("FirePlaceFull");
         SpawnSpiderRandomly();
-        StartNextTodo(); // TODO: move this trigger to the NPC
     }
 
     void Update()
@@ -69,6 +68,17 @@ public class KitchenGame : MonoBehaviour
                 todoText.text = "You ran out of time!";
             }
         }
+    }
+
+    public void Play(string recipe) {
+        Debug.Log("hit play!");
+        kitchenGameUI.gameObject.SetActive(true);
+        playing = true;
+        curRecipe = recipe;
+
+        // Begin todos
+        curTodoIndex = -1;
+        StartNextTodo();     
     }
 
     public void StartNextTodo() {
