@@ -57,6 +57,8 @@ public class DialogueText : MonoBehaviour
             Clock.Resume();
             UI.Toggle(true);
             Player.Toggle(true);
+
+            Dialogue.isActive = false;
             Destroy(GameObject.FindWithTag("Dialogue"));
         }
     }

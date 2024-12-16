@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
                 }
             }
 
-            Game.audioSource.PlayOneShot(InventoryUI.equipClip);
+            Game.audioSource.PlayOneShot(InventoryUI.equipClip, 0.3f);
 
             Note.Activate(itemName);
         }
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
         if (toEquip != equipped) equipped = Equippable.None;
 
         if (toEquip == equipped || !noAudio)
-            Game.audioSource.PlayOneShot(InventoryUI.dequipClip);
+            Game.audioSource.PlayOneShot(InventoryUI.dequipClip, 0.3f);
 
         Note.Remove();
     }

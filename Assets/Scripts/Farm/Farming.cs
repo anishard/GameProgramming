@@ -11,6 +11,7 @@ public class Farming : MonoBehaviour
 
     private int numPours;
     private const int MAX_POURS = 10;
+    private bool tutorialPlayed = true; // TODO false
 
     void Start()
     {
@@ -37,12 +38,16 @@ public class Farming : MonoBehaviour
 
         numPours = MAX_POURS;
 
-        // Dialogue.Activate("GameIntro");
+        if (!tutorialPlayed)
+        {
+            GetComponent<Tutorial>().enabled = true;
+            tutorialPlayed = true;
+        }
     }
 
     void Update()
     {
-        if (Game.ClickDetected() && !InteractableObjectFound())
+        if (Game.ClickDetected() && !InteractableObjectFound() && !Dialogue.isActive)
             UseFarmTool();
 
         foreach (var square in farmland)
@@ -134,7 +139,7 @@ public class Farming : MonoBehaviour
         }
         else
         {
-            StartCoroutine(Game.PlayAudio("Till", 0.6f, 0.4f));
+            StartCoroutine(Game.PlayAudio("Till", 1f, 0.4f));
             StartCoroutine(Player.Pause(() =>
             {
                 GameObject dirt = CreateObject(square, "Dirt_Pile");
@@ -177,7 +182,7 @@ public class Farming : MonoBehaviour
         {
             --numPours;
             StartCoroutine(Game.PlayAudio("PourCan", 0.3f, 0.2f));
-            StartCoroutine(Player.Pause(() => square.Water()));
+            StartCoroutine(Player.Pause(() => square?.Water()));
         }
     }
 

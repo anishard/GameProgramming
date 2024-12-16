@@ -81,7 +81,7 @@ public class InventorySlot : MonoBehaviour
                     itemAmount.enabled = false;
                 }
 
-                StartCoroutine(Game.PlayAudio("Inventory", 0.4f));
+                StartCoroutine(Game.PlayAudio("Inventory", 0.2f));
             }
         }
     }
