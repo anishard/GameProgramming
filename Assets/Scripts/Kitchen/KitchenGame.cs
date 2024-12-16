@@ -74,7 +74,6 @@ public class KitchenGame : MonoBehaviour
     }
 
     public void Play(string recipe) {
-        Debug.Log("hit play!");
         kitchenGameUI.gameObject.SetActive(true);
         playing = true;
         curRecipe = recipe;
@@ -85,7 +84,8 @@ public class KitchenGame : MonoBehaviour
     }
 
     public void Reset() {
-        GetComponent<SpillCleaning>().Stop();
+        gameObject.GetComponent<SpillCleaning>().Stop();
+        gameObject.GetComponent<CookingMeter>().Stop();
         GameObject.Find("Sparrow").GetComponent<Interact>().ToggleOn();
         GameObject.Find("Bucket").GetComponent<Interact>().ToggleOff();
         firePlace.GetComponent<Interact>().ToggleOff();
@@ -110,7 +110,7 @@ public class KitchenGame : MonoBehaviour
                     break;
 
                 case Todo.CLEAN:
-                    // Generate spills to be cleaned
+                    // Generate spills to be cleaned 
                     SpillCleaning spillCleaning = GetComponent<SpillCleaning>();
                     spillCleaning.Play();
                     break;
@@ -147,7 +147,7 @@ public class KitchenGame : MonoBehaviour
         // Make fireplace non-interactable and show meter game
         firePlace.GetComponent<Interact>().ToggleOff();
         meterGameUI.gameObject.SetActive(true);
-        meterGameUI.GetComponent<CookingMeter>().Play();
+        gameObject.GetComponent<CookingMeter>().Play();
     }
 
     public void Sleep() {

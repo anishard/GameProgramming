@@ -8,10 +8,8 @@ public class CookingMeter : MonoBehaviour {
     public Image meter;
     public Image lowBar;
     public Image highBar;
-    public Image container;
     public TextMeshProUGUI countdownText;  
 
-    private bool stop;
     private const float barDistance = 30.0f;
     private float fillSpeed;
     private bool countdownFinished = false; 
@@ -22,22 +20,22 @@ public class CookingMeter : MonoBehaviour {
     }
 
     public void Play() {
+        this.enabled = true;
         meter.fillAmount = 0.0f;
-        stop = false;
         countdownFinished = false;
 
         // Randomize fill speed and bar heights
         fillSpeed = Random.Range(0.5f, 1.5f);
 
-        float containerHeight = container.rectTransform.rect.height;
-        float minHeight = containerHeight * 0.4f;
-        float maxHeight = containerHeight * 0.9f;
+        float meterHeight = meter.rectTransform.rect.height;
+        float minHeight = meterHeight * 0.4f;
+        float maxHeight = meterHeight * 0.9f;
 
         // Randomize lowBar position
         float randomizedLowBarHeight = Random.Range(minHeight, maxHeight);
         lowBar.rectTransform.localPosition = new Vector3(
             lowBar.rectTransform.localPosition.x,
-            randomizedLowBarHeight - (containerHeight / 2),
+            randomizedLowBarHeight - (meterHeight / 2),
             lowBar.rectTransform.localPosition.z
         );
 
@@ -50,6 +48,10 @@ public class CookingMeter : MonoBehaviour {
 
         // Start the countdown coroutine
         StartCoroutine(CountdownCoroutine());
+    }
+
+    public void Stop() {
+        this.enabled = false;
     }
 
     IEnumerator CountdownCoroutine() {
@@ -67,9 +69,9 @@ public class CookingMeter : MonoBehaviour {
         countdownText.text = "Go!";  
     }
 
-    IEnumerator EndGame() {
+    IEnumerator DelayedClose() {
         // Lets the meter linger for a second
-        stop = true; 
+        Stop();
         kitchenGame.StartNextTodo();
         yield return new WaitForSeconds(1f);
         kitchenGame.meterGameUI.gameObject.SetActive(false);
@@ -77,11 +79,13 @@ public class CookingMeter : MonoBehaviour {
 
     void Update() {
         // Wait until the countdown finishes before starting 
-        if (!countdownFinished || stop) return;
+        if (!countdownFinished) {
+            return;
+        }
 
         // Stop the meter when the player inputs
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            StartCoroutine(EndGame()); 
+        if (Input.GetKeyDown(KeyCode.Return) || meter.fillAmount >= 1.0f) {
+            StartCoroutine(DelayedClose()); 
             return;
         }
 
@@ -90,8 +94,8 @@ public class CookingMeter : MonoBehaviour {
             meter.fillAmount += fillSpeed * Time.deltaTime;
         }
 
-        // Convert fill amount to parent container y-position
-        float meterHeight = meter.fillAmount * container.rectTransform.rect.height - (container.rectTransform.rect.height / 2);
+        // Convert fill amount to meter y-position
+        float meterHeight = meter.fillAmount * meter.rectTransform.rect.height - (meter.rectTransform.rect.height / 2);
         float lowBarHeight = lowBar.rectTransform.localPosition.y;
         float highBarHeight = highBar.rectTransform.localPosition.y;
 

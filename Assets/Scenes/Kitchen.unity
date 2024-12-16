@@ -2029,6 +2029,7 @@ GameObject:
   - component: {fileID: 655024104}
   - component: {fileID: 655024103}
   - component: {fileID: 655024105}
+  - component: {fileID: 655024108}
   - component: {fileID: 655024107}
   - component: {fileID: 655024106}
   m_Layer: 0
@@ -2201,6 +2202,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hint: {fileID: 677794563}
   recipeUI: {fileID: 1713842449}
+--- !u!114 &655024108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655024102}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce37aad32138b7499d95b4029995f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meter: {fileID: 2085580464}
+  lowBar: {fileID: 1069008331}
+  highBar: {fileID: 633411337}
+  countdownText: {fileID: 1482615224}
 --- !u!4 &655119959 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4307550773101526, guid: eb560bbeecfb49c45aaf858e99451db1, type: 3}
@@ -7543,7 +7560,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1875807752}
-  - component: {fileID: 1875807753}
   - component: {fileID: 1875807751}
   - component: {fileID: 1875807750}
   - component: {fileID: 1875807749}
@@ -7639,23 +7655,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1875807753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875807748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ce37aad32138b7499d95b4029995f54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meter: {fileID: 2085580464}
-  lowBar: {fileID: 1069008331}
-  highBar: {fileID: 633411337}
-  container: {fileID: 2085580464}
-  countdownText: {fileID: 1482615224}
 --- !u!1001 &1890164609
 PrefabInstance:
   m_ObjectHideFlags: 0
