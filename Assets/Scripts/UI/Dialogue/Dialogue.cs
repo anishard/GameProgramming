@@ -31,14 +31,8 @@ public class Dialogue : MonoBehaviour
         Instantiate(dialogue, Vector3.zero, Quaternion.identity);
     }
 
-    public static void ActivateNPC(string name, bool isIdle)
+    public static void ActivateNPC(string name)
     {
-        if (!isIdle)
-        {
-            Activate(name);
-            return;
-        }
-
         Clock.Pause();
         UI.Toggle(false);
         Player.Toggle(false);

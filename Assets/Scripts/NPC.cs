@@ -4,7 +4,8 @@ public class NPC : MonoBehaviour
 {
     public bool isIntroduced;
     public bool isMidQuest;
-    public bool CanOfferQuest {
+    public bool CanOfferQuest
+    {
         get { return isIntroduced && !isMidQuest; }
     }
 
@@ -14,7 +15,7 @@ public class NPC : MonoBehaviour
     {
         showAlert = false;
         isMidQuest = false;
-        isIntroduced = true;// false;
+        isIntroduced = false;
     }
 
     // Update is called once per frame
@@ -24,7 +25,15 @@ public class NPC : MonoBehaviour
         else RemoveAlert();
 
         if (ClickDetected() && !showAlert && !isMidQuest && !Dialogue.isActive)
-            Dialogue.ActivateNPC(gameObject.name, true);
+        {
+            if (!isIntroduced)
+            {
+                Dialogue.Activate(gameObject.name + "Intro");
+                isIntroduced = true;
+            }
+            else
+                Dialogue.ActivateNPC(gameObject.name);
+        }
     }
 
     public bool ClickDetected()
