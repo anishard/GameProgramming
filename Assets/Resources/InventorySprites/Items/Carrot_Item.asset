@@ -15,4 +15,4 @@ MonoBehaviour:
   name: Carrot
   icon: {fileID: 21300000, guid: 087ed264f6b4b8549b7d4f363dc52ff1, type: 3}
   isDefaultItem: 0
-  itemAmount: 1
+  itemAmount: 5

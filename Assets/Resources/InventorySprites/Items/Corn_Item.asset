@@ -15,4 +15,4 @@ MonoBehaviour:
   name: Corn
   icon: {fileID: 21300000, guid: eb7e3a2b280b7f54aaa25760bc8fdfb9, type: 3}
   isDefaultItem: 0
-  itemAmount: 1
+  itemAmount: 8
