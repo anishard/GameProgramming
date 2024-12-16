@@ -2101,78 +2101,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2503414589929203808, guid: 4b36c4943c45bf945af252a083ac4518, type: 3}
   m_PrefabInstance: {fileID: 304433926}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &316055945
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8504214860287449302, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_Name
-      value: Wooden Sign - Town
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 383.49988
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0000042915344
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 251.92603
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.91805196
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.39646024
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 313.286
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029395058049696364, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8504214860287449302, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1960381518}
-  m_SourcePrefab: {fileID: 100100000, guid: a4feea186bd7c914087f9082d6213771, type: 3}
 --- !u!1001 &321344093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2546,7 +2474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa380c3896a14574b4b400495a30c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetScene: TownCenter
+  targetScene: Farm
 --- !u!65 &402604940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12631,24 +12559,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f34a4e9b86005de4da2625205407868e, type: 3}
   m_PrefabInstance: {fileID: 1755470706}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1960381512 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8504214860287449302, guid: a4feea186bd7c914087f9082d6213771, type: 3}
-  m_PrefabInstance: {fileID: 316055945}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1960381518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960381512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaa380c3896a14574b4b400495a30c25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetScene: TownCenter
 --- !u!1001 &2015545371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13858,4 +13768,3 @@ SceneRoots:
   - {fileID: 444679981}
   - {fileID: 1372955487}
   - {fileID: 1352542225}
-  - {fileID: 316055945}
