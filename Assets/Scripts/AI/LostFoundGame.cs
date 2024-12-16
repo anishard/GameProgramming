@@ -13,7 +13,10 @@ public class LostFoundGame : MonoBehaviour
     public GameObject monkey;
     private bool stolenFrom;
     public bool gameIsOver;
+    public GameObject objectToSceneTransition; //set to whatever is the trigger for switching scenes
 
+    //Collider objSceneTransitionColl;
+    //PreventSceneChange pscScript;
     Inventory inventory;
     FollowPlayer fpScript; 
 
@@ -25,6 +28,8 @@ public class LostFoundGame : MonoBehaviour
         gameIsOver = false;
         inventory = Inventory.instance;
         fpScript = monkey.GetComponent<FollowPlayer>();
+        // objSceneTransitionColl = objectToSceneTransition.GetComponent<Collider>();
+        // objSceneTransitionColl.isTrigger = true;
     }
 
     // Update is called once per frame
@@ -34,12 +39,16 @@ public class LostFoundGame : MonoBehaviour
         //Debug.Log("clicked on muskrat");
         if (Game.ClickDetected() && Player.ObjectDetected("Muskrat")) 
         {
+            PreventSceneChange pscScript = objectToSceneTransition.GetComponent<PreventSceneChange>();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             //if click on muskrat
             if (Physics.Raycast(ray, out hit))
             {
                 if (!hasPlayedIntroDialogue) {
+                    pscScript.preventTriggerSceneChange();
+                    //objSceneTransitionColl.isTrigger = false; // disable the trigger to switch scenes
+                    //Debug.Log(objSceneTransitionColl.isTrigger);
                     StartLostFoundGame();
                     hasPlayedIntroDialogue = true;
                 }
@@ -53,6 +62,8 @@ public class LostFoundGame : MonoBehaviour
                     }
                 }
                 if (fork != null && hasPlayedIntroDialogue) {
+                    pscScript.enableTriggerSceneChange();
+                    //objSceneTransitionColl.isTrigger = true; // re-enable the trigger to switch scenes
                     StopLostFoundGame();
                     inventory.Remove(fork);
                 }
