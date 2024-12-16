@@ -24,6 +24,7 @@ public class CookingMeter : MonoBehaviour {
     public void Play() {
         meter.fillAmount = 0.0f;
         stop = false;
+        countdownFinished = false;
 
         // Randomize fill speed and bar heights
         fillSpeed = Random.Range(0.5f, 1.5f);

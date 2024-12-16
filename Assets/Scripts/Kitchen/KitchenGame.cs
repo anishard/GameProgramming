@@ -85,7 +85,7 @@ public class KitchenGame : MonoBehaviour
     }
 
     public void Reset() {
-        GetComponent<SpillCleaning>().enabled = false;
+        GetComponent<SpillCleaning>().Stop();
         GameObject.Find("Sparrow").GetComponent<Interact>().ToggleOn();
         GameObject.Find("Bucket").GetComponent<Interact>().ToggleOff();
         firePlace.GetComponent<Interact>().ToggleOff();

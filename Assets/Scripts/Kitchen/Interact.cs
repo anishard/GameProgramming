@@ -21,15 +21,18 @@ public class Interact : MonoBehaviour
         sphereCollider.radius = radius;
     }
 
-    internal void SetText() {
+    internal void SetText() 
+    {
         interactText.text = text;
     }
 
-    internal void SetText(string newText) {
+    internal void SetText(string newText) 
+    {
         interactText.text = newText;
     }
 
-    internal void ClearText() {
+    internal void ClearText() 
+    {
         interactText.text = "";
     }
 
@@ -45,32 +48,43 @@ public class Interact : MonoBehaviour
         }
     }
 
-    public void ToggleOff() {
+    public void ToggleOff() 
+    {
         ClearText();
         trigger = false;
-        this.enabled = false;
+        enabled = false;
     }
 
-    public void ToggleOn() {
+    public void ToggleOn() 
+    {
         trigger = true;
-        this.enabled = true;
+        enabled = true;
+        if (playerNear) {
+            SetText();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (trigger && other.CompareTag("Player")) 
+        if (other.CompareTag("Player")) 
         {
-            SetText();
             playerNear = true;
+            if (trigger) 
+            {
+                SetText();
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (trigger && other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            ClearText();
             playerNear = false;
+            if (trigger) 
+            {
+                ClearText();
+            }
         }
     }
 }

@@ -27,12 +27,16 @@ public class SpillCleaning : MonoBehaviour
         CreateSpills();
     }
 
+    public void Stop() {
+        this.enabled = false;
+    }
+
     void Update()
     {
         if (cleanedSpills == spillCount) {
             // Todo complete, start next
             kitchenGame.StartNextTodo();
-            this.enabled = false;
+            Stop();
             return;
         }
 
