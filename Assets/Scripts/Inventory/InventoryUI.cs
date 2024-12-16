@@ -4,14 +4,17 @@ using UnityEngine.EventSystems;
 
 public class InventoryUI : MonoBehaviour
 {
-    public LayerMask ground;
-
     public GameObject inventoryUI;
     public Transform itemsParent;
     Inventory inventory;
     InventorySlot[] slots;
     public static GameObject equippedInteractable;
     public Interactable focus;
+    public bool IsEmpty
+    {
+        get { return !Array.Exists(slots, (slot) => slot.icon.enabled); }
+    }
+
     public static AudioClip equipClip;
     public static AudioClip dequipClip;
 
@@ -87,7 +90,7 @@ public class InventoryUI : MonoBehaviour
         Player.equipped = Equippable.None;
         equippedInteractable = null;
 
-        StartCoroutine(Game.PlayAudio("Inventory", 0.4f));
+        StartCoroutine(Game.PlayAudio("Inventory", 0.2f));
     }
 
     public static void EquipInteractable(GameObject other)
@@ -108,7 +111,7 @@ public class InventoryUI : MonoBehaviour
     public static void DequipInteractable(GameObject other)
     {
         Note.Remove();
-        
+
         equippedInteractable.transform.parent = null;
         Player.equipped = Equippable.None;
 

@@ -4,6 +4,7 @@ using UnityEngine;
 public class Dialogue : MonoBehaviour
 {
     public TextAsset file;
+    public static bool isActive = false;
     private static GameObject[] dialogues;
 
     public static void Activate(string name)
@@ -11,6 +12,8 @@ public class Dialogue : MonoBehaviour
         Clock.Pause();
         UI.Toggle(false);
         Player.Toggle(false);
+
+        isActive = true;
 
         dialogues ??= Resources.LoadAll<GameObject>("Dialogues");
 

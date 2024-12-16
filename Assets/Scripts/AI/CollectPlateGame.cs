@@ -77,7 +77,7 @@ public class CollectPlateGame : MonoBehaviour
                 if (numPlatesCollected < numPlatesToCollect && !gameIsOver) {
                     int platesLeft = numPlatesToCollect - numPlatesCollected;
                     //Debug.Log("There are still " + platesLeft.ToString("n0") + " plates left.");
-                    Tip.Activate("KeepCollectingPlates", 5);
+                    Tip.Activate("There are still some plates left. Please go get them for me, thanks!", 5);
                 }
             }
         }
@@ -154,7 +154,7 @@ public class CollectPlateGame : MonoBehaviour
             //remove a plate from inventory
             inventory.Remove(plate);
             //plate tip that the plate has been broken
-            Tip.Activate("CollectPlateBreak", 5);
+            Tip.Activate("Oh no! The monkey broke a plate! Hurry, collect the rest of them before he breaks any more!", 5);
             //keep count of how many broken plates there are (+ num plates left in inventory = total)
             numBrokenPlates += 1;
 
