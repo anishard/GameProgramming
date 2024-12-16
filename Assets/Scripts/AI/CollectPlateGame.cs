@@ -40,14 +40,13 @@ public class CollectPlateGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Clock.day == 2 || Clock.day == 6 || Clock.day == 13) && npc.CanOfferQuest && !gameIsOver)
+        if (npc.CanOfferQuest && !gameIsOver)
         {
             enableStart = true;
             npc.ActivateAlert();
         }
 
-        // if Player clicks on Pudu NPC
-        if (enableStart && !gameIsOver && npc.ClickDetected())
+        if (enableStart && !gameIsOver && !Dialogue.isActive && npc.ClickDetected())
         {
             npc.RemoveAlert();
             npc.isMidQuest = true;

@@ -38,13 +38,14 @@ public class LostFoundGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Clock.day == 1 || Clock.day == 7 || Clock.day == 11) && npc.CanOfferQuest && !gameIsOver)
+        Debug.Log(npc.CanOfferQuest);
+        if (npc.CanOfferQuest && !gameIsOver)
         {
             enableStart = true;
             npc.ActivateAlert();
         }
 
-        if (enableStart && !gameIsOver && npc.ClickDetected())
+        if (enableStart && !gameIsOver && !Dialogue.isActive && npc.ClickDetected())
         {
             npc.RemoveAlert();
             npc.isMidQuest = true;
