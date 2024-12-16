@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;  
 using TMPro;
+using System.Threading;
 
 public class CookingMeter : MonoBehaviour {
     public Image meter;
@@ -18,6 +19,9 @@ public class CookingMeter : MonoBehaviour {
 
     void Start() {
         kitchenGame = FindObjectOfType<KitchenGame>();
+    }
+
+    public void Play() {
         meter.fillAmount = 0.0f;
         stop = false;
 
@@ -59,9 +63,7 @@ public class CookingMeter : MonoBehaviour {
 
         // After countdown finishes, start filling the meter
         countdownFinished = true;
-        if (countdownText != null) {
-            countdownText.text = "Go!";  
-        }
+        countdownText.text = "Go!";  
     }
 
     IEnumerator EndGame() {
@@ -74,16 +76,16 @@ public class CookingMeter : MonoBehaviour {
 
     void Update() {
         // Wait until the countdown finishes before starting 
-        if (!countdownFinished) return;
+        if (!countdownFinished || stop) return;
 
         // Stop the meter when the player inputs
-        if (!stop && Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Return)) {
             StartCoroutine(EndGame()); 
             return;
         }
 
         // Increase meter
-        if (meter.fillAmount < 1.0f && !stop) {
+        if (meter.fillAmount < 1.0f) {
             meter.fillAmount += fillSpeed * Time.deltaTime;
         }
 

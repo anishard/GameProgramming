@@ -15,12 +15,15 @@ public class SpillCleaning : MonoBehaviour
 
     // State changed by Spill.cs
     internal GameObject curSpill; 
-    internal int cleanedSpills = 0;
+    internal int cleanedSpills;
 
-    void Start()
+    public void Play() 
     {
+        this.enabled = true;
         kitchenGame = FindObjectOfType<KitchenGame>();
         spills = new GameObject[spillCount];
+        cleanedSpills = 0;
+        curSpill = null;
         CreateSpills();
     }
 

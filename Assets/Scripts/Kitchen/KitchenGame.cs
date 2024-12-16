@@ -63,9 +63,12 @@ public class KitchenGame : MonoBehaviour
             timerText.text = "Timer: " + time.ToString("F1");
             if (time <= 0)
             {
+                // Freeze timer at 0 if started meter game, otherwise end
                 time = 0;
-                playing = false;
-                todoText.text = "You ran out of time!";
+                if (!meterGameUI.gameObject.activeSelf) {
+                    todoText.text = "You ran out of time!";
+                    Reset();
+                } 
             }
         }
     }
@@ -81,12 +84,21 @@ public class KitchenGame : MonoBehaviour
         StartNextTodo();     
     }
 
+    public void Reset() {
+        GetComponent<SpillCleaning>().enabled = false;
+        GameObject.Find("Sparrow").GetComponent<Interact>().ToggleOn();
+        GameObject.Find("Bucket").GetComponent<Interact>().ToggleOff();
+        firePlace.GetComponent<Interact>().ToggleOff();
+        time = 30.0f;
+        playing = false;
+    }
+
     public void StartNextTodo() {
         curTodoIndex++;
         if (curTodoIndex >= todos.Count) {
             // Finished all tasks
             Debug.Log("Finished all todos");
-            playing = false;
+            Reset();
         }
         else {
             // Update scene based on new todo
@@ -94,18 +106,18 @@ public class KitchenGame : MonoBehaviour
             {
                 case Todo.WASH:
                     // Make water bucket interactable
-                    bucket.GetComponent<Interact>().enabled = true;
+                    bucket.GetComponent<Interact>().ToggleOn();
                     break;
 
                 case Todo.CLEAN:
                     // Generate spills to be cleaned
                     SpillCleaning spillCleaning = GetComponent<SpillCleaning>();
-                    spillCleaning.enabled = true;
+                    spillCleaning.Play();
                     break;
 
                 case Todo.COOK:
                     // Make fireplace interactable
-                    firePlace.GetComponent<Interact>().enabled = true;
+                    firePlace.GetComponent<Interact>().ToggleOn();
                     break;
             }
         }
@@ -125,23 +137,34 @@ public class KitchenGame : MonoBehaviour
     }
 
     public void WashHands() {
+        // Make bucket non-interactable and start next todo
         gameObject.GetComponent<AudioSource>().PlayOneShot(washHandsSound);
-
-        // Make bucket non-interactable
-        GameObject bucket = GameObject.Find("Bucket");
-        bucket.GetComponent<Interact>().Toggle();
-
-        // Task complete, start next
+        GameObject.Find("Bucket").GetComponent<Interact>().ToggleOff();
         StartNextTodo();
     }
 
     public void CookAtFirePlace() {
-        Debug.Log("Cooking!");
-
-        // Make fireplace non-interactable
-        firePlace.GetComponent<Interact>().Toggle();
-
+        // Make fireplace non-interactable and show meter game
+        firePlace.GetComponent<Interact>().ToggleOff();
         meterGameUI.gameObject.SetActive(true);
+        meterGameUI.GetComponent<CookingMeter>().Play();
+    }
+
+    public void Sleep() {
+        if (sleeping) {
+            // Hide sleeping model
+            GameObject.Find("Bed").GetComponent<Interact>().SetText("Press [F] to sleep");
+            sleepingPlayer.SetActive(false);
+            player.SetActive(true);
+            sleeping = false;
+        }
+        else {
+            // Show sleeping player model
+            GameObject.Find("Bed").GetComponent<Interact>().SetText("Press [F] to stop sleeping");
+            player.SetActive(false);
+            sleepingPlayer.SetActive(true);
+            sleeping = true;
+        }
     }
 
     void SpawnSpiderRandomly()
@@ -164,21 +187,6 @@ public class KitchenGame : MonoBehaviour
 
             // Instantiate the spider prefab at the random position
             Instantiate(spiderPrefab, randomPosition, Quaternion.identity);
-        }
-    }
-
-    public void Sleep() {
-        if (sleeping) {
-            GameObject.Find("Bed").GetComponent<Interact>().SetText("Press [F] to sleep");
-            sleepingPlayer.SetActive(false);
-            player.SetActive(true);
-            sleeping = false;
-        }
-        else {
-            GameObject.Find("Bed").GetComponent<Interact>().SetText("Press [F] to stop sleeping");
-            player.SetActive(false);
-            sleepingPlayer.SetActive(true);
-            sleeping = true;
         }
     }
 }

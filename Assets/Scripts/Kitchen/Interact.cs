@@ -45,17 +45,15 @@ public class Interact : MonoBehaviour
         }
     }
 
-    public void Toggle() {
-        if (this.enabled) {
-            ClearText();
-            trigger = false;
-            this.enabled = false;
-        }
-        else {
-            SetText();
-            trigger = true;
-            this.enabled = true;
-        }
+    public void ToggleOff() {
+        ClearText();
+        trigger = false;
+        this.enabled = false;
+    }
+
+    public void ToggleOn() {
+        trigger = true;
+        this.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
