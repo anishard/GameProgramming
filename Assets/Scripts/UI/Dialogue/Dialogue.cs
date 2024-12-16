@@ -15,7 +15,7 @@ public class Dialogue : MonoBehaviour
         dialogues ??= Resources.LoadAll<GameObject>("Dialogues");
 
         GameObject dialogue = Array.Find(dialogues, (d) => d.name == name);
-
+        
         if (dialogue == null)
             throw new Exception(name + " does not exist in Assets/Resources/Dialogues");
 

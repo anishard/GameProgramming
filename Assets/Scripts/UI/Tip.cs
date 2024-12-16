@@ -13,7 +13,7 @@ public class Tip : MonoBehaviour
     private static float activateTime;
     private static float duration;
 
-    void Start()
+    void Awake()
     {
         isActive = false;
         backgroundImg = gameObject.GetComponent<Image>();

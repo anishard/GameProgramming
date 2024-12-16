@@ -45,8 +45,6 @@ public class Note : MonoBehaviour
             var note = matches[rand.Next() % matches.Count];
             Toggle(note.title, note.body);
         }
-        else
-            throw new Exception(name + " does not exist in Resources/Notes");
     }
 
     public static void Remove()
