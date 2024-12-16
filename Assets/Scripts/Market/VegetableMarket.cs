@@ -7,7 +7,6 @@ public class VegetableMarket : MonoBehaviour
     public TextMeshProUGUI walletText; // Wallet display
     public TextMeshProUGUI selectedVegetableText; // Display for selected vegetable
     public GameObject marketUI; // The Market Panel
-    public static int walletBalance = 100; // Initial wallet balance
     private Item selectedItem; // Currently selected vegetable
 
     private void Start()
@@ -33,14 +32,14 @@ public class VegetableMarket : MonoBehaviour
         }
 
         int itemCost = GetItemCost(selectedItem);
-        if (walletBalance >= itemCost)
+        if (Wallet.walletBalance >= itemCost)
         {
-            walletBalance -= itemCost;
+            Wallet.walletBalance -= itemCost;
             bool added = inventory.Add(selectedItem); // Try adding to inventory
             if (!added)
             {
                 Debug.Log("Inventory full!");
-                walletBalance += itemCost; // Refund coins if inventory full
+                Wallet.walletBalance += itemCost; // Refund coins if inventory full
             }
             UpdateWalletUI();
         }
@@ -64,7 +63,7 @@ public class VegetableMarket : MonoBehaviour
             if (inventoryItem.name == selectedItem.name)
             {
                 int itemSellPrice = GetItemSellPrice(selectedItem);
-                walletBalance += itemSellPrice;
+                Wallet.walletBalance += itemSellPrice;
                 inventory.Remove(inventoryItem);
                 UpdateWalletUI();
                 return;
@@ -97,7 +96,7 @@ public class VegetableMarket : MonoBehaviour
     // Update the wallet display
     private void UpdateWalletUI()
     {
-        walletText.text = $"Coins: {walletBalance}";
+        walletText.text = $"Coins: {Wallet.walletBalance}";
     }
 
     // Clear the selection

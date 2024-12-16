@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 6795331777207300919}
   - component: {fileID: 6147876873679586677}
   - component: {fileID: 835124412823596136}
+  - component: {fileID: 3931296008540188155}
   m_Layer: 0
   m_Name: Nuru
   m_TagString: NPC
@@ -572,6 +573,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327675f6ec0e1bd4fba2e17cb38a8c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &3931296008540188155
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5279811246306103102}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5512041106863543837
 GameObject:
   m_ObjectHideFlags: 0

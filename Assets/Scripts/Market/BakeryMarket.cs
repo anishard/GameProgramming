@@ -35,14 +35,14 @@ public class BakeryMarket : MonoBehaviour
         }
 
         int itemCost = GetItemCost(selectedItem);
-        if (VegetableMarket.walletBalance >= itemCost) // Shared wallet balance
+        if (Wallet.walletBalance >= itemCost) // Shared wallet balance
         {
-            VegetableMarket.walletBalance -= itemCost;
+            Wallet.walletBalance -= itemCost;
             bool added = inventory.Add(selectedItem);
             if (!added)
             {
                 Debug.Log("Inventory full!");
-                VegetableMarket.walletBalance += itemCost; // Refund coins
+                Wallet.walletBalance += itemCost; // Refund coins
             }
             UpdateWalletUI();
         }
@@ -65,7 +65,7 @@ public class BakeryMarket : MonoBehaviour
         {
             if (inventoryItem.name == selectedItem.name)
             {
-                VegetableMarket.walletBalance += randomSellPrice;
+                Wallet.walletBalance += randomSellPrice;
                 inventory.Remove(inventoryItem);
                 Debug.Log($"Sold {inventoryItem.name} for {randomSellPrice} coins!");
                 ClearSelection();
@@ -97,7 +97,7 @@ public class BakeryMarket : MonoBehaviour
     // Update wallet UI
     private void UpdateWalletUI()
     {
-        walletText.text = $"Coins: {VegetableMarket.walletBalance}";
+        walletText.text = $"Coins: {Wallet.walletBalance}";
     }
 
     // Clear selection

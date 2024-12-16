@@ -21,6 +21,9 @@ public class CollectPlateGame : MonoBehaviour
     Inventory inventory;
     FollowPlayer fpScript; 
 
+    private NPC npc;
+    private bool enableStart;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,16 +31,27 @@ public class CollectPlateGame : MonoBehaviour
         brokePlate = false;
         gameIsOver = false;
         numBrokenPlates = 0;
+        enableStart = false;
         inventory = Inventory.instance;
+        npc = GetComponent<NPC>();
         fpScript = monkey.GetComponent<FollowPlayer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if Player clicks on Pudu NPC
-        if (Game.ClickDetected() && Player.ObjectDetected("Pudu"))
+        if ((Clock.day == 2 || Clock.day == 6 || Clock.day == 13) && npc.CanOfferQuest && !gameIsOver)
         {
+            enableStart = true;
+            npc.ActivateAlert();
+        }
+
+        // if Player clicks on Pudu NPC
+        if (enableStart && !gameIsOver && npc.ClickDetected())
+        {
+            npc.RemoveAlert();
+            npc.isMidQuest = true;
+
             PreventSceneChange pscScript = objectToSceneTransition.GetComponent<PreventSceneChange>();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -77,18 +91,14 @@ public class CollectPlateGame : MonoBehaviour
                 if (numPlatesCollected < numPlatesToCollect && !gameIsOver) {
                     int platesLeft = numPlatesToCollect - numPlatesCollected;
                     //Debug.Log("There are still " + platesLeft.ToString("n0") + " plates left.");
-                    Tip.Activate("There are still some plates left. Please go get them for me, thanks!", 5);
+                    Tip.Activate("There are still some plates left. Hurry up.", 3f);
                 }
             }
         }
 
          if (Input.GetMouseButtonDown(0) && brokePlate) {
             brokePlate = false;
-            
             Tip.Remove();
-            if (fpScript != null) {
-                fpScript.ChasePlayer();
-            }
         }     
     }
 
@@ -105,25 +115,18 @@ public class CollectPlateGame : MonoBehaviour
         }
 
         // have the monkey start chasing the player (if player goes within certain radius of monkey)
-        if (fpScript != null) { 
-            fpScript.ChasePlayer();
-        }
-        else {
+        if (fpScript == null) { 
             Debug.Log("the script is not found");
         }
     }
 
     public void StopCollectPlateGame() {
         monkey.SetActive(false);
-        //stop monkey from chasing you
-        // if (fpScript != null) { 
-        //     fpScript.StopChasePlayer();
-        // }
-        // else {
-        //     Debug.Log("the script is not found");
-        // }
 
         gameIsOver = true;
+        npc.isMidQuest = false;
+        Tip.Remove();
+        
         if (numBrokenPlates == 0) {
             Dialogue.Activate("CollectPlateOutroNoBrokenPlates");
         }
@@ -154,15 +157,12 @@ public class CollectPlateGame : MonoBehaviour
             //remove a plate from inventory
             inventory.Remove(plate);
             //plate tip that the plate has been broken
-            Tip.Activate("Oh no! The monkey broke a plate! Hurry, collect the rest of them before he breaks any more!", 5);
+            Tip.Activate("The monkey broke a plate. Great work. Collect the rest, quick.", 3f);
             //keep count of how many broken plates there are (+ num plates left in inventory = total)
             numBrokenPlates += 1;
 
             if (Tip.isActive && !brokePlate) {
                 brokePlate = true;
-                if (fpScript != null) { 
-                    fpScript.StopChasePlayer();
-                }
             }
         }    
     }
