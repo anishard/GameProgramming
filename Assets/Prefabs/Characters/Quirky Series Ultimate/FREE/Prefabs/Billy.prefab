@@ -586,7 +586,7 @@ GameObject:
   - component: {fileID: 7416841827033409389}
   - component: {fileID: 9165535137218041895}
   m_Layer: 0
-  m_Name: Muskrat
+  m_Name: Billy
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

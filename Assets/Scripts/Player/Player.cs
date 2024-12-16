@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private Animator controller;
     private Rigidbody rb;
 
-    void Start()
+    void Awake()
     {
         activeArea = GameObject.Find("ActiveArea");
 

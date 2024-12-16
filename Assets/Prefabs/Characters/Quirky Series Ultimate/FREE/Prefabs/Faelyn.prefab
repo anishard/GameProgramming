@@ -452,7 +452,7 @@ GameObject:
   - component: {fileID: 6788538757290762327}
   - component: {fileID: 6788538757290762320}
   m_Layer: 0
-  m_Name: Sparrow
+  m_Name: Faelyn
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

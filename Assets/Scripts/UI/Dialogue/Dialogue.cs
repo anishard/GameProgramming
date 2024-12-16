@@ -4,8 +4,6 @@ using UnityEngine;
 public class Dialogue : MonoBehaviour
 {
     public TextAsset file;
-    public GameObject character;
-    public GameObject cam;
     private static GameObject[] dialogues;
 
     public static void Activate(string name)

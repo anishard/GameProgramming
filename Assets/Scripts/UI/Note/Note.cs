@@ -32,7 +32,12 @@ public class Note : MonoBehaviour
         foreach (var note in notes)
         {
             var json = JsonUtility.FromJson<NoteData>(note);
-            if (name == json.objectName) matches.Add(json);
+            
+            if (
+                name == json.objectName ||
+                name.Contains("(Clone)") && name[..^7] == json.objectName
+            )
+                matches.Add(json);
         }
 
         if (matches.Count > 0)
