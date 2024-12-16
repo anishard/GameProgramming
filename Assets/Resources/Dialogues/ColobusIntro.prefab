@@ -120,7 +120,7 @@ PrefabInstance:
     - target: {fileID: 1162907957516540087, guid: 0cca153ba02033d4fb98e60aecdb46f2, type: 3}
       propertyPath: file
       value: 
-      objectReference: {fileID: 4900000, guid: 44a4e4c53486f0945bfe32941b690342, type: 3}
+      objectReference: {fileID: 4900000, guid: 144000693c89ee14caa78847623971d8, type: 3}
     - target: {fileID: 2922962265490839688, guid: 0cca153ba02033d4fb98e60aecdb46f2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -203,7 +203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5611678465313053877, guid: 0cca153ba02033d4fb98e60aecdb46f2, type: 3}
       propertyPath: m_Name
-      value: ColobusIdle3
+      value: ColobusIntro
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
