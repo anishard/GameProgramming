@@ -108,7 +108,7 @@ public class Farming : MonoBehaviour
     {
         FarmSquare square = GetFarmSquare();
 
-        if (square.IsDoneGrowing) return;
+        if (square != null && square.IsDoneGrowing) return;
 
         GameObject interactable = InventoryUI.equippedInteractable;
 
