@@ -15,8 +15,6 @@ public class LostFoundGame : MonoBehaviour
     public bool gameIsOver;
     public GameObject objectToSceneTransition; //set to whatever is the trigger for switching scenes
 
-    //Collider objSceneTransitionColl;
-    //PreventSceneChange pscScript;
     Inventory inventory;
     FollowPlayer fpScript; 
 
