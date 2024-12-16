@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
         Equippable item;
 
         if (!Enum.TryParse(itemName, out item))
-            throw new Exception(itemName + " does not exist in Equippable");
+            Debug.LogError(itemName + " does not exist in Equippable");
 
         if (equipped == Equippable.Interactable)
             InventoryUI.DequipInteractable(null);

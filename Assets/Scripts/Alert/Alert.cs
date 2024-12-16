@@ -19,7 +19,7 @@ public class Alert : MonoBehaviour
         GameObject alert = Array.Find(alerts, (d) => d.name == alertType.ToString());
 
         if (alert == null)
-            throw new Exception(alertType + " does not exist in Assets/Resources/Alerts");
+            Debug.LogError(alertType + " does not exist in Assets/Resources/Alerts");
 
         Instantiate(alert, position, Quaternion.identity);
     }

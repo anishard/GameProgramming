@@ -48,7 +48,7 @@ public class Game : MonoBehaviour
         AudioClip clip = Array.Find(audioClips, (e) => e.name == clipName);
 
         if (clip == null)
-            throw new Exception(clipName + " does not exist in Resources/AudioClips");
+            Debug.LogError(clipName + " does not exist in Resources/AudioClips");
 
         yield return new WaitForSeconds((float)delay);
 

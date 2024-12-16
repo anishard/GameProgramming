@@ -191,7 +191,7 @@ public class Farming : MonoBehaviour
         GameObject prefab = prefabs.Find((e) => e.name == square.seed.ToString());
 
         if (prefab == null)
-            throw new Exception(square.seed.ToString() + " does not exist in Resources");
+            Debug.LogError(square.seed.ToString() + " does not exist in Resources");
 
         GameObject crop = Instantiate(
             prefab,
@@ -246,7 +246,7 @@ public class Farming : MonoBehaviour
         GameObject prefab = prefabs.Find((e) => e.name == prefabName);
 
         if (prefab == null)
-            throw new Exception(prefabName + " does not exist in Resources");
+            Debug.LogError(prefabName + " does not exist in Resources");
 
         GameObject obj = Instantiate(prefab, square.position, Quaternion.identity);
 

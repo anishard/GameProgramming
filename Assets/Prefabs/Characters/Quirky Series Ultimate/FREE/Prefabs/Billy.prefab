@@ -585,6 +585,7 @@ GameObject:
   - component: {fileID: 644027910916855787}
   - component: {fileID: 7416841827033409389}
   - component: {fileID: 9165535137218041895}
+  - component: {fileID: 107813082230093530}
   m_Layer: 0
   m_Name: Billy
   m_TagString: NPC
@@ -600,7 +601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4950779065795438720}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.033290196, y: 0.99453896, z: -0.03735003, w: -0.09159127}
+  m_LocalRotation: {x: 0.03329028, y: -0.99453896, z: 0.03734998, w: 0.09159138}
   m_LocalPosition: {x: -751.834, y: -430.879, z: 6.863}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
@@ -611,7 +612,7 @@ Transform:
   - {fileID: 3953593909876385322}
   - {fileID: 8295687051796589491}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 4.611, y: -169.614, z: -3.415}
 --- !u!205 &7416841827033409389
 LODGroup:
   m_ObjectHideFlags: 0
@@ -664,6 +665,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &107813082230093530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4950779065795438720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327675f6ec0e1bd4fba2e17cb38a8c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7460354150513945985
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 Echo
 Ah! You must be the new farmer.
-Welcome to Moondrop Dale. It's such a relief that you're here. We've been in such a pinch since Billy stepped back.
+I'm Echo, welcome to Moondrop Dale. It's such a relief that you're here. We've been in such a pinch since Billy stepped back.
 Huh?
 The farmer. Billy. He catered for us. Weren't you gonna replace him?
 Are you sure?
