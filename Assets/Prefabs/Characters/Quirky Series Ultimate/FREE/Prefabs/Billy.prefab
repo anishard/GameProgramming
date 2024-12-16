@@ -587,6 +587,7 @@ GameObject:
   - component: {fileID: 9165535137218041895}
   - component: {fileID: 107813082230093530}
   - component: {fileID: 256855753489176252}
+  - component: {fileID: -8783868454622335226}
   m_Layer: 0
   m_Name: Billy
   m_TagString: NPC
@@ -678,6 +679,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327675f6ec0e1bd4fba2e17cb38a8c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isIntroduced: 0
+  isMidQuest: 0
 --- !u!136 &256855753489176252
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -701,6 +704,28 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &-8783868454622335226
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4950779065795438720}
+  m_Enabled: 1
+  m_AgentTypeID: 1479372276
+  m_Radius: 1
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7460354150513945985
 GameObject:
   m_ObjectHideFlags: 0
