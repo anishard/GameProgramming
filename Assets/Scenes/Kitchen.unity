@@ -3651,6 +3651,18 @@ PrefabInstance:
       value: 25.232
       objectReference: {fileID: 0}
     - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: sceneName
+      value: Kitchen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: clockObject
+      value: 
+      objectReference: {fileID: 1891829120}
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: deliverObject
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
       propertyPath: footstepAudio
       value: 
       objectReference: {fileID: 8300000, guid: da80608fd0bee004588842dfdb4b3494, type: 3}
@@ -8636,6 +8648,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
+--- !u!114 &1891829120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4515330690477680227, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
+  m_PrefabInstance: {fileID: 1891829119}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4cf3f072568834ea1c9ea271082c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1891932937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4307550773101526, guid: eb560bbeecfb49c45aaf858e99451db1, type: 3}

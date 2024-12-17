@@ -6,6 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public Clock clockObject;
+    private int currHour;
+    private int currDay;
+    public string sceneName;
+    //public GameObject deliverObject;
+    // DepositDishes ddScript;
+    private bool hasPlayedDeliverIntro;
+    Inventory inventory;
+
     public float velocity;
     public float maxVelocity;
     public Vector3 minBounds;
@@ -23,6 +32,11 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        inventory = Inventory.instance;
+        hasPlayedDeliverIntro = false;
+        //deliverObject.SetActive(true);
+        //fvScript = deliverObject.GetComponent<FeedVillagers>();
+
         activeArea = GameObject.Find("ActiveArea");
 
         equipped = Equippable.None;
@@ -40,6 +54,26 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        currHour = Clock.hour;
+        currDay = Clock.day;
+        //if (currHour == 22) { // 10pm -> meal time
+        if (isDayToDeliver() && inventory != null) {
+            // if not dining room, there is not fvScript
+            if (!hasPlayedDeliverIntro) {
+                Debug.Log("trying to play deliver intro");
+                Dialogue.Activate("DeliverDishIntro" + sceneName);
+                hasPlayedDeliverIntro = true;
+            }
+            // if not dining room scene, wait until player goes there
+        }
+        // else {
+        //     // if dining room scene but not the correct day, don't enable feed villagers script
+        //     // if (sceneName == "DiningRoom") {
+        //     //     fvScript = deliverObject.GetComponent<FeedVillagers>();
+        //     //     fvScript.enabled = false;
+        //     // }
+        // }
+
         // check if hovering over UI (inventory), if so then don't move player 
         if (EventSystem.current.IsPointerOverGameObject())
         {
@@ -106,6 +140,14 @@ public class Player : MonoBehaviour
             DequipTool(toEquip);
         }
 
+    }
+
+    public bool isDayToDeliver() {
+        //if ((currDay == 7 || currDay == 14) && (currHour == 22)) {// && !hasPlayedDeliverIntro) {   // for debugging purposes, 10am
+        if ((currDay == 1) && (currHour == 7)) {    //CHANGE THISSS
+            return true;
+        }
+        return false;
     }
 
     public static void EquipTool(string itemName)

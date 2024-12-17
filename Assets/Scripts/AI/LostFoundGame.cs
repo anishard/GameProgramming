@@ -38,7 +38,7 @@ public class LostFoundGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(npc.CanOfferQuest);
+        //Debug.Log(npc.CanOfferQuest);
         if (npc.CanOfferQuest && !gameIsOver)
         {
             enableStart = true;

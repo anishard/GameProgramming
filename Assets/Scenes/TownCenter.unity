@@ -3421,6 +3421,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: sceneName
+      value: TownCenter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: clockObject
+      value: 
+      objectReference: {fileID: 1160246681}
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: deliverObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7378879919806818287, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
       propertyPath: m_Name
       value: Player
@@ -16115,54 +16127,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192147639}
   m_CullTransparentMesh: 1
---- !u!1 &1195051604
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1195051606}
-  - component: {fileID: 1195051605}
-  m_Layer: 0
-  m_Name: DeliverDish
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1195051605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1195051604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 888f4bb9e9f0fa346bd95c37a0a56e5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clockObject: {fileID: 1160246681}
-  diningHallExit: {fileID: 755745315}
-  player: {fileID: 1921509200}
-  sceneName: TownCenter
---- !u!4 &1195051606
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1195051604}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.349411, y: 0.09, z: 2.5213976}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1198348188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27866,11 +27830,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4476881461000374, guid: c4bc74b0a7f30164493f6b2b1cd5969e, type: 3}
   m_PrefabInstance: {fileID: 1918352019}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1921509200 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7378879919806818287, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
-  m_PrefabInstance: {fileID: 228191972}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1923968108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31784,4 +31743,3 @@ SceneRoots:
   - {fileID: 445677585}
   - {fileID: 1729295497}
   - {fileID: 1630197632}
-  - {fileID: 1195051606}

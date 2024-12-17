@@ -748,6 +748,18 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: sceneName
+      value: Market
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: clockObject
+      value: 
+      objectReference: {fileID: 1932301098}
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: deliverObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6086650472035324600, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
       propertyPath: m_audioClip
       value: 
@@ -15855,6 +15867,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 403033440955602903, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
   m_PrefabInstance: {fileID: 1932301094}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1932301098 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4515330690477680227, guid: 85a81c60275910a45b9ce0bd4a9b59c6, type: 3}
+  m_PrefabInstance: {fileID: 1932301094}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4cf3f072568834ea1c9ea271082c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1940860154
 GameObject:
   m_ObjectHideFlags: 0

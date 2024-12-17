@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2107002708049653025, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
       propertyPath: m_Name
-      value: CollectPlateIntro Variant
+      value: CollectPlateIntro
       objectReference: {fileID: 0}
     - target: {fileID: 2107002708049653025, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
       propertyPath: m_IsActive
@@ -19,7 +19,7 @@ PrefabInstance:
     - target: {fileID: 4683258427166419235, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
       propertyPath: file
       value: 
-      objectReference: {fileID: 4900000, guid: c81d96dd1a537694484eda86bdfe3c1b, type: 3}
+      objectReference: {fileID: 4900000, guid: 776fa1a24103bca4c91c07a33899aa0f, type: 3}
     - target: {fileID: 4683258427166419235, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
       propertyPath: character
       value: 

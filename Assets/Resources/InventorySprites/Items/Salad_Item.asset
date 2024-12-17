@@ -15,4 +15,5 @@ MonoBehaviour:
   name: Salad
   icon: {fileID: 21300000, guid: 3062c6fc299cd7741ae1951dc413a1dc, type: 3}
   isDefaultItem: 0
+  isDish: 1
   itemAmount: 1
