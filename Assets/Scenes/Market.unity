@@ -751,7 +751,7 @@ PrefabInstance:
     - target: {fileID: 6086650472035324600, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: ce875fde86cd3cc499440e426929c8f2, type: 3}
+      objectReference: {fileID: 8300000, guid: 5b1ed8fbe89154eaf96723b6e5f0aad3, type: 3}
     - target: {fileID: 7378879919806818287, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
       propertyPath: m_Name
       value: Player
@@ -18258,9 +18258,7 @@ SceneRoots:
   - {fileID: 654505117}
   - {fileID: 1387132186}
   - {fileID: 407586955}
-  - {fileID: 1789377175}
   - {fileID: 1091170429}
-  - {fileID: 1021741117}
   - {fileID: 1809004985}
   - {fileID: 1111308060}
   - {fileID: 1943134574}
