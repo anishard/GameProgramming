@@ -4,6 +4,13 @@ Moondrop Dale is a game in which the player is responsible for growing crops, co
 
 This project was built with Unity as a final project for the course *COMPSCI 576 Game Programming* at UMass Amherst.
 
+# Mechanics and Features
+- The game is centered around planting and harvesting crops, earning coins, and cooking meals. Along the way, the player interacts with NPCs, which guide their journey and supply valuable educational information. 
+- The game uses AI in several scenes. For instance, in the first scene, we use kinematic pursuit with a monkey that chases the player attempting to steal their items. NavMesh was used to implement this mechanic. 
+- Animations are used throughout the game. For example, there's animations for player movement, NPC actions, and farming (e.g. the water bucket is animated).
+- The game features a tutorial at the start, and can be paused anytime by pressing the pause button in the upper left corner. 
+
+  
 # Contributions
 
 The commit history can be found at: https://github.com/anishard/GameProgramming/commits/main/
