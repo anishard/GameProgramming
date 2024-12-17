@@ -12,7 +12,7 @@ public class SceneTransition : MonoBehaviour
             LoadScene();
     }
 
-    private void LoadScene()
+    public void LoadScene()
     {
         if (!string.IsNullOrEmpty(targetScene))
         {
