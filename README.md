@@ -4,6 +4,10 @@ Moondrop Dale is a game in which the player is responsible for growing crops, co
 
 This project was built with Unity as a final project for the course *COMPSCI 576 Game Programming* at UMass Amherst.
 
+# Contributions
+
+The commit history can be found at: https://github.com/anishard/GameProgramming/commits/main/
+
 ## Authors
 - [Ashley Bhandari](https://github.com/ashleybhandari)
 - [Eric Fournier](https://github.com/edfournier)
