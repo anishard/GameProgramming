@@ -6,6 +6,7 @@ using System.Linq;
 
 public class Note : MonoBehaviour
 {
+    public static bool isActive;
     private static Image backgroundImg;
     private static TMP_Text titleText;
     private static TMP_Text bodyText;
@@ -31,7 +32,7 @@ public class Note : MonoBehaviour
         foreach (var note in notes)
         {
             var json = JsonUtility.FromJson<NoteData>(note);
-            
+
             if (
                 name == json.objectName ||
                 name.Contains("(Clone)") && name[..^7] == json.objectName
@@ -43,12 +44,14 @@ public class Note : MonoBehaviour
         {
             var note = matches[rand.Next() % matches.Count];
             Toggle(note.title, note.body);
+            isActive = true;
         }
     }
 
     public static void Remove()
     {
         Toggle();
+        isActive = false;
     }
 
     public static void Toggle(string title = "", string body = "")

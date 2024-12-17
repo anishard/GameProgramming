@@ -106,7 +106,6 @@ public class Farming : MonoBehaviour
 
         if (Player.ObjectDetected("Town")) EnterTown();
         else if (Player.ObjectDetected("Door")) EnterHouse();
-        else if (Player.ObjectDetected("ShippingBin")) OpenBin();
         else objectFound = false;
 
         return objectFound;
@@ -119,11 +118,6 @@ public class Farming : MonoBehaviour
             && pos.x <= maxBounds.x
             && pos.z >= minBounds.z
             && pos.z <= maxBounds.z;
-    }
-
-    void OpenBin()
-    {
-        StartCoroutine(Game.PlayAudio("ShippingBin", 0.15f));
     }
 
     void UseFarmTool()
@@ -215,6 +209,7 @@ public class Farming : MonoBehaviour
             square.position + new Vector3(0, 2f),
             Quaternion.identity
         );
+        DontDestroyOnLoad(crop);
 
         InventoryUI.Interact(crop);
     }
@@ -266,6 +261,7 @@ public class Farming : MonoBehaviour
             Debug.LogError(prefabName + " does not exist in Resources");
 
         GameObject obj = Instantiate(prefab, square.position, Quaternion.identity);
+        DontDestroyOnLoad(obj);
 
         Vector3 objBase = obj.gameObject.transform.GetChild(0).position;
         obj.transform.position += square.position - objBase;

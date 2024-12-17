@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2107002708049653025, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
       propertyPath: m_Name
-      value: Dialogue Variant
+      value: TutorialIntro
       objectReference: {fileID: 0}
     - target: {fileID: 2107002708049653025, guid: 21c8f60b931683e44a608340594dcb38, type: 3}
       propertyPath: m_IsActive
@@ -166,6 +166,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9122593183421910216}
     m_Modifications:
+    - target: {fileID: 5593275270924861291, guid: cefda5744f2acb54d8f08973a10bee1e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6842458599697738422, guid: cefda5744f2acb54d8f08973a10bee1e, type: 3}
       propertyPath: m_Name
       value: Echo

@@ -19,6 +19,7 @@ This project was built with Unity as a final project for the course *COMPSCI 576
 - [Pixel art Menu package (5 sets)](https://assetstore.unity.com/packages/2d/gui/pixel-art-menu-package-5-sets-275304)
 
 ### Sound
+- [Free - Casual & Relaxing Game Music Pack](https://assetstore.unity.com/packages/audio/music/free-casual-relaxing-game-music-pack-262740)
 - [FREE Casual Game SFX Pack](https://assetstore.unity.com/packages/audio/sound-fx/free-casual-game-sfx-pack-54116)
 - [Small Sound Kit](https://assetstore.unity.com/packages/audio/sound-fx/small-sound-kit-300582)
 
@@ -29,10 +30,12 @@ This project was built with Unity as a final project for the course *COMPSCI 576
 
 ### Environment
 - [Customizable skybox](https://assetstore.unity.com/packages/2d/textures-materials/sky/customizable-skybox-174576)
+- [Dark Fantasy Kit [Lite]](https://assetstore.unity.com/packages/3d/environments/fantasy/dark-fantasy-kit-lite-127925)
+- [Low-Poly Medieval Market](https://assetstore.unity.com/packages/3d/environments/low-poly-medieval-market-262473)
+- [Low Poly Mini Village Free](https://assetstore.unity.com/packages/3d/environments/low-poly-mini-village-free-131677)
+- [Pirate Tavern](https://assetstore.unity.com/packages/3d/environments/fantasy/pirate-tavern-113463)
 - [RPG Poly Pack - Lite](https://assetstore.unity.com/packages/3d/environments/landscapes/rpg-poly-pack-lite-148410)
 - [Stylized Farm Asset Pack - Small](https://assetstore.unity.com/packages/3d/props/stylized-farm-asset-pack-small-276993)
-- [Pirate Tavern](https://assetstore.unity.com/packages/3d/environments/fantasy/pirate-tavern-113463)
-- [Dark Fantasy Kit [Lite]](https://assetstore.unity.com/packages/3d/environments/fantasy/dark-fantasy-kit-lite-127925)
 
 ### Farming
 - [Cartoon Farm Crops](https://assetstore.unity.com/packages/3d/vegetation/plants/cartoon-farm-crops-79777)
