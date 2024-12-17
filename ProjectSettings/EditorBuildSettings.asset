@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: ac0310edae0ff294b9d3cbd2cd859215
+  - enabled: 1
     path: Assets/Scenes/Farm.unity
     guid: c7c024841485de747852a3df8a1a2760
   - enabled: 1
@@ -20,7 +23,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Kitchen.unity
     guid: e900bd38228bf1e49b242304518a8b53
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: ac0310edae0ff294b9d3cbd2cd859215
   m_configObjects: {}

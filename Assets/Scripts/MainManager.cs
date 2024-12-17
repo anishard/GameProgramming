@@ -24,7 +24,7 @@ public class MainManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        tutorialPlayed = true;//false;
+        tutorialPlayed = false;
 
         farmland = new FarmSquare[18, 10];
         var minBounds = new Vector3(-11.25f, float.MaxValue, -6.25f);
