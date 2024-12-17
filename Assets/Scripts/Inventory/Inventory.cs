@@ -83,4 +83,22 @@ public class Inventory : MonoBehaviour
             onItemChangedCallback.Invoke();
         }
     }
+
+    public void RemoveOne(Item item)
+    {
+        //items.Remove(item);
+        // stacking
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].name == item.name)
+            {
+                items[i].itemAmount--;
+            }
+        }
+
+        if (onItemChangedCallback != null)
+        {
+            onItemChangedCallback.Invoke();
+        }
+    }
 }

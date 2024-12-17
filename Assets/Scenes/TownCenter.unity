@@ -16374,6 +16374,7 @@ MonoBehaviour:
   diningHallExit: {fileID: 755745315}
   player: {fileID: 1921509200}
   sceneName: TownCenter
+  villager: {fileID: 4807929556901506227, guid: 5b5c678f31981e34f9122b87217da1ac, type: 3}
 --- !u!4 &1195051606
 Transform:
   m_ObjectHideFlags: 0

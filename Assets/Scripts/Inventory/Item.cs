@@ -7,6 +7,7 @@ public class Item : ScriptableObject
     new public string name = "New item";
     public Sprite icon = null;
     public bool isDefaultItem = false;
+    public bool isDish = true; //change to false
 
     //for stacking items
     public int itemAmount = 1;

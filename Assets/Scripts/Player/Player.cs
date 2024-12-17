@@ -3,9 +3,21 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public Clock clockObject;
+    private int currHour;
+    private int currDay;
+    public string sceneName;
+    public GameObject deliverObject;
+    FeedVillagers fvScript;
+    private bool hasPlayedDeliverIntro;
+
+    ///////////////////////////
+
     public float velocity;
     public float maxVelocity;
     public Vector3 minBounds;
@@ -23,6 +35,19 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        hasPlayedDeliverIntro = false;
+        deliverObject.SetActive(true);
+        fvScript = deliverObject.GetComponent<FeedVillagers>();
+
+        // if (fvScript != null) {
+        //     fvScript.enabled = false;
+        // }
+        // if (sceneName == "DiningRoom") {
+        //     deliverObject.SetActive(true);
+        //     fvScript = deliverObject.GetComponent<FeedVillagers>();
+        //     fvScript.enabled = false;
+        // }
+        /////////////////////////
         activeArea = GameObject.Find("ActiveArea");
 
         equipped = Equippable.None;
@@ -40,6 +65,39 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        currHour = Clock.hour;
+        currDay = Clock.day;
+        //if (currHour == 22) { // 10pm -> meal time 
+        if (isDayToDeliver()) {
+            // if not dining room, there is not fvScript
+            if (!hasPlayedDeliverIntro && sceneName != "DiningRoom") {
+                Dialogue.Activate("DeliverDishIntro" + sceneName);
+                hasPlayedDeliverIntro = true;
+            }
+            // if dining room, enable the children UI buttons and fvScript
+            if (!hasPlayedDeliverIntro && sceneName == "DiningRoom") {
+              
+                Dialogue.Activate("DeliverDishIntro" + sceneName);
+                hasPlayedDeliverIntro = true;
+                fvScript = deliverObject.GetComponent<FeedVillagers>();
+                fvScript.enabled = true;
+            }
+            // if not dining room scene, wait until player goes there
+        }
+        else {
+            // if dining room scene but not the correct day, don't enable feed villagers script
+            if (sceneName == "DiningRoom") {
+                // deliverObject.SetActive(false);
+                // foreach (Transform child in deliverObject.transform)
+                // {
+                //     child.gameObject.SetActive(false);
+                // }
+                fvScript = deliverObject.GetComponent<FeedVillagers>();
+                fvScript.enabled = false;
+            }
+        }
+        //////////////////////////////////////////////////
+
         // check if hovering over UI (inventory), if so then don't move player 
         if (EventSystem.current.IsPointerOverGameObject())
         {
@@ -106,6 +164,14 @@ public class Player : MonoBehaviour
             DequipTool(toEquip);
         }
 
+    }
+
+    public bool isDayToDeliver() {
+        //if ((currDay == 7 || currDay == 14) && (currHour == 22)) {// && !hasPlayedDeliverIntro) {   // for debugging purposes, 10am
+        if ((currDay == 1) && (currHour == 7)) {    
+            return true;
+        }
+        return false;
     }
 
     public static void EquipTool(string itemName)

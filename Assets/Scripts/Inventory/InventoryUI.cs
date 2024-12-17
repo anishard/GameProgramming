@@ -187,11 +187,11 @@ public class InventoryUI : MonoBehaviour
                     slots[i].itemAmount.enabled = false;
                 }
             }
-            else
-            {
-                slots[i].ClearSlot();
-                slots[i].itemAmount.enabled = false;
-            }
+            // else
+            // {
+            //     slots[i].ClearSlot();
+            //     slots[i].itemAmount.enabled = false;
+            // }
         }
     }
 
