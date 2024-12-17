@@ -22,7 +22,7 @@ public class SceneTransition : MonoBehaviour
         }
     }
 
-    private void LoadScene()
+    public void LoadScene()
     {
         // Check if the target scene is set
         if (!string.IsNullOrEmpty(targetScene))
