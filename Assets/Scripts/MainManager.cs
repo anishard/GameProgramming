@@ -23,10 +23,7 @@ public class MainManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
 
-    void Start()
-    {
         tutorialPlayed = true;//false;
 
         farmland = new FarmSquare[18, 10];

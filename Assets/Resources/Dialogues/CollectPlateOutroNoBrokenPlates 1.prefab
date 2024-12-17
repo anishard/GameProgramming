@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 1162907957516540087, guid: 0cca153ba02033d4fb98e60aecdb46f2, type: 3}
       propertyPath: file
       value: 
-      objectReference: {fileID: 4900000, guid: c81d96dd1a537694484eda86bdfe3c1b, type: 3}
+      objectReference: {fileID: 4900000, guid: 057c8e1f63d083243914a7ff171aa6fb, type: 3}
     - target: {fileID: 2922962265490839688, guid: 0cca153ba02033d4fb98e60aecdb46f2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -94,7 +94,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5611678465313053877, guid: 0cca153ba02033d4fb98e60aecdb46f2, type: 3}
       propertyPath: m_Name
-      value: CollectPlateIntro
+      value: CollectPlateOutroNoBrokenPlates
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -15,7 +15,10 @@ public class SceneTransition : MonoBehaviour
     private void LoadScene()
     {
         if (!string.IsNullOrEmpty(targetScene))
+        {
+            if (Note.isActive) Note.Remove();
             SceneManager.LoadScene(targetScene);
+        }
         else
             Debug.LogWarning("Target scene is not set in the SceneTransition script! Please set it in the Inspector.");
     }
