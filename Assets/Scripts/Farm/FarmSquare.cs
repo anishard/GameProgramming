@@ -76,7 +76,10 @@ public class FarmSquare
     {
         ShowAlert(AlertType.Water);
 
-        Enum.TryParse(seedInteractable[..^4], out seed);
+
+        var seedName = seedInteractable[..seedInteractable.IndexOf("Seed")];
+        Enum.TryParse(seedName, out seed);
+        Debug.Log(seed);
         growTime = GetGrowTime();
         timeLastWatered = Clock.TotalHours;
 
