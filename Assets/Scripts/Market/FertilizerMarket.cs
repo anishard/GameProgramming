@@ -32,14 +32,14 @@ public class FertilizerMarket : MonoBehaviour
         }
 
         int itemCost = GetItemCost(selectedItem);
-        if (VegetableMarket.walletBalance >= itemCost) // Access balance from VegetableMarket
+        if (Wallet.walletBalance >= itemCost) // Access balance from VegetableMarket
         {
-            VegetableMarket.walletBalance -= itemCost;
+            Wallet.walletBalance -= itemCost;
             bool added = inventory.Add(selectedItem); // Add to inventory
             if (!added)
             {
                 Debug.Log("Inventory full!");
-                VegetableMarket.walletBalance += itemCost; // Refund coins if inventory full
+                Wallet.walletBalance += itemCost; // Refund coins if inventory full
             }
             UpdateWalletUI();
         }
@@ -63,7 +63,7 @@ public class FertilizerMarket : MonoBehaviour
             if (inventoryItem.name == selectedItem.name)
             {
                 int itemSellPrice = GetItemSellPrice(selectedItem);
-                VegetableMarket.walletBalance += itemSellPrice; // Add coins to balance
+                Wallet.walletBalance += itemSellPrice; // Add coins to balance
                 inventory.Remove(inventoryItem);
                 UpdateWalletUI();
                 return;
@@ -97,7 +97,7 @@ public class FertilizerMarket : MonoBehaviour
     // Update the wallet UI
     private void UpdateWalletUI()
     {
-        walletText.text = $"Coins: {VegetableMarket.walletBalance}";
+        walletText.text = $"Coins: {Wallet.walletBalance}";
     }
 
     // Clear the selection

@@ -54,6 +54,7 @@ public class SpiderAI : MonoBehaviour
         // Check if the spider collided with the player
         if (collision.gameObject.CompareTag("Player"))
         {
+            GameObject.Find("UI").GetComponent<Wallet>().ChangeBalance(5); // Player gets 5 coins
             KitchenGame kitchenGame = FindObjectOfType<KitchenGame>();
             kitchenGame.GetComponent<AudioSource>().PlayOneShot(kitchenGame.crushSound, 0.1f);
             Destroy(gameObject);
