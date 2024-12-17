@@ -1406,7 +1406,7 @@ MonoBehaviour:
   maxVelocity: 0
   minBounds: {x: 0, y: 0, z: 0}
   maxBounds: {x: 0, y: 0, z: 0}
-  footstepAudio: {fileID: 8300000, guid: da80608fd0bee004588842dfdb4b3494, type: 3}
+  footstepAudio: {fileID: 8300000, guid: ce875fde86cd3cc499440e426929c8f2, type: 3}
 --- !u!136 &1769658051490169925
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1442,7 +1442,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5b1ed8fbe89154eaf96723b6e5f0aad3, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0

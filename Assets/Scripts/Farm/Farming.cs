@@ -39,7 +39,8 @@ public class Farming : MonoBehaviour
 
         if (!tutorialPlayed)
         {
-            GetComponent<Tutorial>().enabled = true;
+            var tutorial = GetComponent<Tutorial>();
+            if (tutorial) tutorial.enabled = true;
             tutorialPlayed = true;
             MainManager.Instance.tutorialPlayed = true;
         }
