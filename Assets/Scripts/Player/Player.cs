@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public static Equippable equipped;
     public static bool pauseMovement;
 
-    private AudioSource audioSource;
     private Animator controller;
     private Rigidbody rb;
 
@@ -31,7 +30,6 @@ public class Player : MonoBehaviour
         pauseMovement = false;
 
         playerTransform = gameObject.transform;
-        audioSource = gameObject.GetComponent<AudioSource>();
         controller = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
@@ -70,7 +68,7 @@ public class Player : MonoBehaviour
 
         if (controller.GetBool("isWalking"))
         {
-            if (!audioSource.isPlaying) audioSource.PlayOneShot(footstepAudio, 0.05f);
+            if (!Game.audioSource.isPlaying) Game.audioSource.PlayOneShot(footstepAudio, 0.4f);
 
             velocity += 0.1f; // gradual speed change
             if (velocity > maxVelocity) velocity = maxVelocity;
