@@ -106,7 +106,6 @@ public class Farming : MonoBehaviour
 
         if (Player.ObjectDetected("Town")) EnterTown();
         else if (Player.ObjectDetected("Door")) EnterHouse();
-        else if (Player.ObjectDetected("ShippingBin")) OpenBin();
         else objectFound = false;
 
         return objectFound;
@@ -119,11 +118,6 @@ public class Farming : MonoBehaviour
             && pos.x <= maxBounds.x
             && pos.z >= minBounds.z
             && pos.z <= maxBounds.z;
-    }
-
-    void OpenBin()
-    {
-        StartCoroutine(Game.PlayAudio("ShippingBin", 0.15f));
     }
 
     void UseFarmTool()
