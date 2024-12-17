@@ -39,7 +39,6 @@ public class Tip : MonoBehaviour
 
     public static void Remove()
     {
-        Debug.Log(Time.time + "remove");
         Toggle();
     }
 
