@@ -104,6 +104,7 @@ public class KitchenGame : MonoBehaviour
             Item item = Resources.Load<Item>(path);
             Inventory inventory = GameObject.Find("GameManager").GetComponent<Inventory>();
             inventory.Add(item);
+            DishCount.count += 1;
             if (cookQuality == "perfect") {
                 // Bonus item for perfect cook!
                 inventory.Add(item);

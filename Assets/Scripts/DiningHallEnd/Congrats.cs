@@ -9,8 +9,17 @@ public class Congrats : MonoBehaviour
     public TextMeshProUGUI farmerRatingText; 
     
     void OnTriggerEnter() {
-        farmerRatingText.text = "B";
-        dishesCountText.text = "25";
+        int count = DishCount.count;
+        if (count >= 30) {
+            farmerRatingText.text = "A";
+        }
+        else if (count >= 20) {
+            farmerRatingText.text = "B";
+        }
+        else {
+            farmerRatingText.text = "C";
+        }
+        dishesCountText.text = "" + DishCount.count;
         congratsUI.gameObject.SetActive(true);
     }
 }
