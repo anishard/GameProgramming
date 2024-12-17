@@ -5,13 +5,13 @@ using UnityEngine;
 public class Farming : MonoBehaviour
 {
     public static List<GameObject> prefabs;
-    private Vector3 minBounds;
-    private Vector3 maxBounds;
+    private static Vector3 minBounds;
+    private static Vector3 maxBounds;
     private FarmSquare[,] farmland;
 
+    private bool tutorialPlayed;
     private int numPours;
     private const int MAX_POURS = 10;
-    private bool tutorialPlayed = true; // TODO false
 
     void Start()
     {
@@ -24,25 +24,42 @@ public class Farming : MonoBehaviour
         minBounds = new Vector3(-11.25f, float.MaxValue, -6.25f);
         maxBounds = new Vector3(11.25f, float.MaxValue, 6.25f);
 
-        // create a grid of FarmSquares
-        // farmland[0, 0] is by the well, farmland[17, 9] is in the opposite corner
-        farmland = new FarmSquare[18, 10];
-
-        for (int row = 0; row < farmland.GetLength(0); ++row)
-            for (int col = 0; col < farmland.GetLength(1); ++col)
-            {
-                float rightBound = minBounds.x + FarmSquare.length * (row + 1);
-                float lowerBound = maxBounds.z - FarmSquare.length * (col + 1);
-                farmland[row, col] = new FarmSquare(rightBound, lowerBound);
-            }
-
         numPours = MAX_POURS;
+
+        if (MainManager.Instance != null)
+        {
+            tutorialPlayed = MainManager.Instance.tutorialPlayed;
+            farmland = MainManager.Instance.farmland;
+        }
+        else
+        {
+            tutorialPlayed = false;
+            farmland = InitFarmland();
+        }
 
         if (!tutorialPlayed)
         {
             GetComponent<Tutorial>().enabled = true;
             tutorialPlayed = true;
+            MainManager.Instance.tutorialPlayed = true;
         }
+    }
+
+    private FarmSquare[,] InitFarmland()
+    {
+        // create a grid of FarmSquares
+        // farmland[0, 0] is by the well, farmland[17, 9] is in the opposite corner
+        var grid = new FarmSquare[18, 10];
+
+        for (int row = 0; row < grid.GetLength(0); ++row)
+            for (int col = 0; col < grid.GetLength(1); ++col)
+            {
+                float rightBound = minBounds.x + FarmSquare.length * (row + 1);
+                float lowerBound = maxBounds.z - FarmSquare.length * (col + 1);
+                grid[row, col] = new FarmSquare(rightBound, lowerBound);
+            }
+            
+        return grid;
     }
 
     void Update()

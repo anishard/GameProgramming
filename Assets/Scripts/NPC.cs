@@ -16,6 +16,9 @@ public class NPC : MonoBehaviour
         showAlert = false;
         isMidQuest = false;
         isIntroduced = false;
+
+        if (MainManager.Instance != null)
+            isIntroduced = MainManager.Instance.isIntroduced[gameObject.name];
     }
 
     // Update is called once per frame
@@ -30,6 +33,7 @@ public class NPC : MonoBehaviour
             {
                 Dialogue.Activate(gameObject.name + "Intro");
                 isIntroduced = true;
+                MainManager.Instance.isIntroduced[gameObject.name] = true;
             }
             else
                 Dialogue.ActivateNPC(gameObject.name);
