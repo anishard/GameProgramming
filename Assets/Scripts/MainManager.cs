@@ -5,9 +5,12 @@ using UnityEngine;
 public class MainManager : MonoBehaviour
 {
     public static MainManager Instance;
+    
+    // Farming
     public bool tutorialPlayed;
     public FarmSquare[,] farmland;
 
+    // NPC
     public Dictionary<string, bool> isIntroduced;
 
     void Awake()

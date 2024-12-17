@@ -215,6 +215,7 @@ public class Farming : MonoBehaviour
             square.position + new Vector3(0, 2f),
             Quaternion.identity
         );
+        DontDestroyOnLoad(crop);
 
         InventoryUI.Interact(crop);
     }
@@ -266,6 +267,7 @@ public class Farming : MonoBehaviour
             Debug.LogError(prefabName + " does not exist in Resources");
 
         GameObject obj = Instantiate(prefab, square.position, Quaternion.identity);
+        DontDestroyOnLoad(obj);
 
         Vector3 objBase = obj.gameObject.transform.GetChild(0).position;
         obj.transform.position += square.position - objBase;
