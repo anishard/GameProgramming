@@ -3706,6 +3706,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6006710827293322314, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
+      propertyPath: footstepAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: ce875fde86cd3cc499440e426929c8f2, type: 3}
     - target: {fileID: 7378879919806818287, guid: 439d6d49b7151b54fbbe4db631e0a8a3, type: 3}
       propertyPath: m_Name
       value: Player
